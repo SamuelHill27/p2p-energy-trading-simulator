@@ -1,0 +1,45 @@
+{
+    "frequency": 3000,
+    "energy_data": {
+        "path": "assets/energy_data/sunny_day_energy.csv",
+        "solar_panels": {
+            "count": 14,
+            "dimensions": {
+                "length_m": _,
+                "width_m": _
+            },
+            "efficiency": _
+        },
+        "battery": {
+            "capacity_kwh": _,
+        }
+    },
+    "houses": [
+        {
+            "id": "house_1",
+            "appliances": [
+                {
+                    "type": "Washer",
+                    "energy_kwh": 1
+                },
+                {
+                    "type": "Dryer",
+                    "energy_kwh": 1
+                }
+            ],
+            "solar_panels_count": 14
+            "battery": 
+        },
+        {
+            "id": "house_2",
+            "profile": "assets/profiles/cloudy_day.json",
+            "appliances": [
+                {
+                    "type": "Heater",
+                    "energy_kwh": 1.5
+                }
+            ],
+            "solar_panels_count": 0
+        }
+    ]
+}
