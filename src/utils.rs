@@ -7,8 +7,12 @@ pub mod units {
     pub struct Energy(f64);
 
     impl Energy {
-        pub fn new(value: f64) -> Self { Energy(value) }
-        pub fn value(&self) -> f64 { self.0 }
+        pub fn new(value: f64) -> Self {
+            Energy(value)
+        }
+        pub fn value(&self) -> f64 {
+            self.0
+        }
     }
 
     impl Display for Energy {
@@ -21,8 +25,12 @@ pub mod units {
     pub struct Price(f64);
 
     impl Price {
-        pub fn new(value: f64) -> Self { Price(value) }
-        pub fn value(&self) -> f64 { self.0 }
+        pub fn new(value: f64) -> Self {
+            Price(value)
+        }
+        pub fn value(&self) -> f64 {
+            self.0
+        }
     }
 
     impl Display for Price {

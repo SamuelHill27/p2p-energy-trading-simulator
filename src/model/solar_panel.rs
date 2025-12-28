@@ -9,7 +9,7 @@ impl SolarPanel {
     pub fn new(energy_output: Energy, efficiency: f64) -> SolarPanel {
         SolarPanel {
             energy_output,
-            efficiency
+            efficiency,
         }
     }
 

@@ -3,15 +3,12 @@ use super::grid::Grid;
 
 pub struct World {
     grid: Grid,
-    environment: Environment
+    environment: Environment,
 }
 
 impl World {
     pub fn new(grid: Grid, environment: Environment) -> World {
-        World {
-            grid,
-            environment
-        }
+        World { grid, environment }
     }
 
     pub fn environment(&self) -> &Environment {

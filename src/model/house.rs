@@ -1,6 +1,6 @@
-use super::appliance::Appliance;
-use super::solar_panel::SolarPanel; 
 use super::super::utils::units::Energy;
+use super::appliance::Appliance;
+use super::solar_panel::SolarPanel;
 
 use std::sync::atomic::AtomicU64;
 use std::sync::atomic::Ordering::SeqCst;
@@ -8,29 +8,21 @@ use std::sync::atomic::Ordering::SeqCst;
 pub struct House {
     name: String,
     appliances: Vec<Appliance>,
-    solar_panels: Option<Vec<SolarPanel>>
+    solar_panels: Option<Vec<SolarPanel>>,
 }
 
 impl House {
     pub fn new(appliances: Vec<Appliance>, solar_panels: Option<Vec<SolarPanel>>) -> House {
         static COUNTER: AtomicU64 = AtomicU64::new(1);
         House {
-            name: format!("House{}", COUNTER.fetch_add(1, SeqCst) ),
+            name: format!("House{}", COUNTER.fetch_add(1, SeqCst)),
             appliances,
-            solar_panels
+            solar_panels,
         }
     }
 
     pub fn name(&self) -> &String {
         &self.name
-    }
-
-    pub fn appliances(&self) -> &Vec<Appliance> {
-        &self.appliances
-    }
-
-    pub fn solar_panels(&self) -> &Option<Vec<SolarPanel>> {
-        &self.solar_panels
     }
 
     pub fn progress_appliances(&mut self, current_hour: u32) {
@@ -45,5 +37,31 @@ impl House {
                 solar_panel.set_energy_output(new_energy);
             }
         }
+    }
+
+    pub fn energy_consumed(&self) -> Energy {
+        let mut total = Energy::new(0.0);
+
+        for appliance in &self.appliances {
+            total = Energy::new(total.value() + appliance.energy_input().value());
+        }
+
+        total
+    }
+
+    pub fn energy_produced(&self) -> Energy {
+        let mut total = Energy::new(0.0);
+
+        if let Some(solar_panels) = &self.solar_panels {
+            for solar_panel in solar_panels {
+                total = Energy::new(total.value() + solar_panel.energy_output().value());
+            }
+        }
+
+        total
+    }
+
+    pub fn excess_energy(&self) -> Energy {
+        Energy::new(self.energy_produced().value() - self.energy_consumed().value())
     }
 }

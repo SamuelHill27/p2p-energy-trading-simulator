@@ -4,14 +4,14 @@ use super::super::utils::units::Energy;
 #[derive(Debug)]
 pub struct Environment {
     pub light_intensity: f64,
-    pub sky_coverage: f64
+    pub sky_coverage: f64,
 }
 
 impl Environment {
     pub fn new(light_intensity: f64, sky_coverage: f64) -> Environment {
         Environment {
             light_intensity,
-            sky_coverage
+            sky_coverage,
         }
     }
 

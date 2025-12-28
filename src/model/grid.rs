@@ -2,14 +2,14 @@ use super::super::utils::units::Price;
 
 pub struct Grid {
     buy_price: Price,
-    sell_price: Price
+    sell_price: Price,
 }
 
 impl Grid {
     pub fn new(buy_price: Price, sell_price: Price) -> Grid {
         Grid {
             buy_price,
-            sell_price
+            sell_price,
         }
     }
 

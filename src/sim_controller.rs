@@ -1,6 +1,6 @@
-use super::sim_config::SimConfig;
 use super::model::{house::House, world::World};
-use super::services::trade::trade;
+use super::sim_config::SimConfig;
+use super::trade::trade;
 
 use std::thread::sleep;
 use std::time::Duration;
@@ -8,16 +8,20 @@ use std::time::Duration;
 pub struct SimController {
     config: SimConfig,
     houses: Vec<House>,
-    world: World
+    world: World,
 }
 
 impl SimController {
     pub fn new(config: SimConfig, houses: Vec<House>, world: World) -> SimController {
-        SimController {
+        return SimController {
             config,
             houses,
-            world
-        }
+            world,
+        };
+    }
+
+    pub fn _load() {
+        todo!()
     }
 
     pub fn run(&mut self) {

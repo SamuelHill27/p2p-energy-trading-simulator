@@ -4,7 +4,7 @@ pub struct Appliance {
     name: String,
     energy_input: Energy,
     schedule: Vec<u32>,
-    is_running: bool
+    is_running: bool,
 }
 
 impl Appliance {
@@ -13,7 +13,7 @@ impl Appliance {
             name,
             energy_input,
             schedule,
-            is_running: false
+            is_running: false,
         }
     }
 
