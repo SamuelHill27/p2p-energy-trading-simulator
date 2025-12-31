@@ -2,6 +2,25 @@ use rand::Rng;
 
 pub mod units {
     use std::fmt::Display;
+    use std::cmp::Ordering;
+
+    #[derive(Debug, Copy, Clone)]
+    pub struct Period(i16);
+
+    impl Period {
+        pub fn new(value: i16) -> Self {
+            Period(value)
+        }
+        pub fn value(&self) -> i16 {
+            self.0
+        }
+    }
+
+    impl Display for Period {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "{} period", self.0)
+        }
+    }
 
     #[derive(Debug, Copy, Clone)]
     pub struct Energy(f64);
@@ -21,14 +40,14 @@ pub mod units {
         }
     }
 
-    #[derive(Debug, Copy, Clone)]
-    pub struct Price(f64);
+    #[derive(Debug, Copy, Clone, Eq, Hash, PartialEq)]
+    pub struct Price(i16);
 
     impl Price {
-        pub fn new(value: f64) -> Self {
+        pub fn new(value: i16) -> Self {
             Price(value)
         }
-        pub fn value(&self) -> f64 {
+        pub fn value(&self) -> i16 {
             self.0
         }
     }
@@ -36,6 +55,18 @@ pub mod units {
     impl Display for Price {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             write!(f, "{:.2} units currency", self.0)
+        }
+    }
+
+    impl Ord for Price {
+        fn cmp(&self, other: &Self) -> Ordering {
+            self.0.cmp(&other.0)
+        }
+    }
+
+    impl PartialOrd for Price {
+        fn partial_cmp(&self, other: &Self) -> Option<Ordering> { 
+            Some(self.cmp(other)) 
         }
     }
 }
