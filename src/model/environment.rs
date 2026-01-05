@@ -1,5 +1,5 @@
-use super::super::utils::get_random_number;
-use super::super::utils::units::Energy;
+use crate::utils::get_random_number;
+use crate::utils::units::Energy;
 
 #[derive(Debug)]
 pub struct Environment {

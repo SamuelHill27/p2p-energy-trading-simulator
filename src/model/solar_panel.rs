@@ -1,4 +1,4 @@
-use super::super::utils::units::Energy;
+use crate::utils::units::Energy;
 
 pub struct SolarPanel {
     energy_output: Energy,

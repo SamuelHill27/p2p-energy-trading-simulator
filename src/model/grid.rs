@@ -1,4 +1,4 @@
-use super::super::utils::units::Price;
+use crate::utils::units::Price;
 
 pub struct Grid {
     buy_price: Price,

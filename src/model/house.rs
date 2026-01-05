@@ -1,6 +1,6 @@
-use super::super::utils::units::Energy;
-use super::appliance::Appliance;
-use super::solar_panel::SolarPanel;
+use crate::utils::units::Energy;
+use crate::appliance::Appliance;
+use crate::solar_panel::SolarPanel;
 
 use std::sync::atomic::AtomicU64;
 use std::sync::atomic::Ordering::SeqCst;

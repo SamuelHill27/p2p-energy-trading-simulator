@@ -1,5 +1,5 @@
-use super::environment::Environment;
-use super::grid::Grid;
+use crate::environment::Environment;
+use crate::grid::Grid;
 
 pub struct World {
     grid: Grid,

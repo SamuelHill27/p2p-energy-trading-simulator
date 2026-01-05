@@ -1,5 +1,5 @@
-use super::model::{grid::Grid, house::House};
-use super::utils::units::{Energy, Price};
+use crate::model::{grid::Grid, house::House};
+use crate::utils::units::{Energy, Price};
 
 pub fn trade(house: &House, grid: &Grid) {
     println!(
