@@ -7,3 +7,4 @@ pub mod grid;
 pub mod house;
 pub mod solar_panel;
 pub mod world;
+pub mod reporter;

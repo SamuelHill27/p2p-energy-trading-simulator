@@ -1,10 +1,10 @@
 use rand::Rng;
 
 pub mod units {
-    use std::fmt::Display;
     use std::cmp::Ordering;
+    use std::fmt::Display;
 
-    #[derive(Debug, Copy, Clone)]
+    #[derive(Debug, Copy, Clone, Eq, Hash, PartialEq)]
     pub struct Period(i16);
 
     impl Period {
@@ -65,8 +65,8 @@ pub mod units {
     }
 
     impl PartialOrd for Price {
-        fn partial_cmp(&self, other: &Self) -> Option<Ordering> { 
-            Some(self.cmp(other)) 
+        fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+            Some(self.cmp(other))
         }
     }
 }

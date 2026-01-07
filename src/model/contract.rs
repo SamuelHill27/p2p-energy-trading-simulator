@@ -1,11 +1,17 @@
 use crate::utils::units::{Energy, Period, Price};
+use getset::{Getters, Setters};
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Getters, Setters)]
 pub struct Contract {
+    #[getset(get = "pub")]
     participant_id_bid: Option<i16>,
+    #[getset(get = "pub")]
     participant_id_offer: Option<i16>,
+    #[getset(get = "pub", set = "pub")]
     contract_type: ContractType,
+    #[getset(get = "pub", set = "pub")]
     quantity: Energy,
+    #[getset(get = "pub", set = "pub")]
     price: Price,
     end_period: Period,
 }
@@ -29,19 +35,12 @@ impl Contract {
         }
     }
 
-    pub fn quantity(&self) -> Energy {
-        self.quantity
+    pub fn set_other_participant_id(&mut self, participant_id: i16) {
+        match self.contract_type {
+            ContractType::Bid => self.participant_id_offer = Some(participant_id),
+            ContractType::Offer => self.participant_id_bid = Some(participant_id),
+        }
     }
-    pub fn price(&self) -> Price {
-        self.price
-    }
-    pub fn end_period(&self) -> Period {
-        self.end_period
-    }
-    pub fn contract_type(&self) -> ContractType {
-        self.contract_type
-    }
-    
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
