@@ -1,23 +1,28 @@
-use crate::utils::units::Price;
+use crate::utils::units::{Energy, Price};
 
 pub struct Grid {
-    buy_price: Price,
-    sell_price: Price,
+    pub buy_price: Price,
+    pub sell_price: Price,
 }
 
 impl Grid {
     pub fn new(buy_price: Price, sell_price: Price) -> Grid {
+        assert!(buy_price.value() > sell_price.value());
         Grid {
             buy_price,
             sell_price,
         }
     }
 
-    pub fn buy_price(&self) -> Price {
-        self.buy_price
+    fn buy(&self, energy: Energy) -> Price {
+        Price::new(self.buy_price.value() * energy.value().abs() as u32)
     }
 
-    pub fn sell_price(&self) -> Price {
-        self.sell_price
+    fn sell(&self, energy: Energy) -> Price {
+        Price::new(self.sell_price.value() * energy.value().abs() as u32)
+    }
+
+    fn mid_market_price(&self) -> Price {
+        Price::new((self.buy_price.value() + self.sell_price.value()) / 2)
     }
 }

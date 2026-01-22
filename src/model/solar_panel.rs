@@ -18,6 +18,6 @@ impl SolarPanel {
     }
 
     pub fn set_energy_output(&mut self, energy_input: Energy) {
-        self.energy_output = Energy::new(energy_input.value() * self.efficiency);
+        self.energy_output = Energy::new(energy_input.value());
     }
 }
