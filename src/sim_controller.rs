@@ -1,8 +1,7 @@
 use crate::model::house::House;
 use crate::sim_config::SimConfig;
 use crate::trading::market::Market;
-
-use crate::environment::Environment;
+use crate::utils::units::Period;
 
 use core::fmt;
 use std::thread::sleep;
@@ -42,25 +41,18 @@ impl SimController {
     }
 
     pub fn run(&mut self) {
-        let mut environment = Environment::new(0.0, 0.0);
-
-        for hour in 0..1 {
-            println!("--- Hour {} ---", hour);
-
-            environment.progress(hour);
-
+        for hour in 0..self.config.periods {
+            let hour = Period::new(hour);
+            println!("--- {} ---", hour);
             for house in &mut self.houses {
-                // TODO: house.progress() where solar panels have their own schedule and appliances refactored into HashMap
-                house.progress_appliances(hour);
-                house.update_solar_panel_output(environment.calc_energy_output());
-                self.market.create_order(house.id, house.excess_energy().0.to_string(), house.excess_energy().1);
+                house.progress(hour);
+                if let Some((order_type, energy)) = house.energy_order() {
+                    self.market.create_order(house.id, order_type.to_string(), energy);
+                }
             }
-
             self.market.trade(hour);
-
             sleep(Duration::from_millis(self.config.frequency));
         }
-
         self.market.log();
     }
 }

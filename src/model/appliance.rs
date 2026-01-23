@@ -1,36 +1,33 @@
-use crate::utils::units::Energy;
+use crate::utils::units::{Energy, Period};
 
 pub struct Appliance {
     name: String,
     energy_input: Energy,
-    schedule: Vec<u32>,
+    run_schedule: Vec<u32>,
     is_running: bool,
 }
 
 impl Appliance {
-    pub fn new(name: String, energy_input: Energy, schedule: Vec<u32>) -> Appliance {
+    pub fn new(name: String, energy_input: Energy, run_schedule: Vec<u32>) -> Appliance {
         Appliance {
             name,
             energy_input,
-            schedule,
+            run_schedule,
             is_running: false,
         }
     }
 
     pub fn energy_input(&self) -> Energy {
-        if self.is_running {
-            self.energy_input
-        } else {
-            Energy::new(0)
+        match self.is_running {
+            true => self.energy_input,
+            false => Energy::new(0)
         }
     }
 
-    pub fn progress(&mut self, hour: u32) {
-        if self.schedule.contains(&hour) {
-            self.is_running = true;
-            println!("{} is now running", self.name);
-        } else {
-            self.is_running = false;
+    pub fn progress(&mut self, period: Period) {
+        match self.run_schedule.contains(&period.value()) {
+            true => self.is_running = true,
+            false => self.is_running = false
         }
     }
 }

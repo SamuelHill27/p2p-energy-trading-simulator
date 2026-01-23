@@ -1,5 +1,5 @@
 {
-    "frequency": 3000,
+    "frequency": 1000,
     "energy_data": {
         "path": "assets/energy_data/sunny_day_energy.csv",
         "solar_panels": {
@@ -16,30 +16,28 @@
     },
     "houses": [
         {
-            "id": "house_1",
+            "id": 0,
             "appliances": [
                 {
                     "type": "Washer",
-                    "energy_kwh": 1
+                    "energy_kwh": 1,
+                    "schedule": [1, 2]
                 },
                 {
                     "type": "Dryer",
-                    "energy_kwh": 1
+                    "energy_kwh": 2,
+                    "schedule": [2, 3]
                 }
-            ],
-            "solar_panels_count": 14
-            "battery": 
+            ]
         },
         {
-            "id": "house_2",
-            "profile": "assets/profiles/cloudy_day.json",
+            "id": 1,
             "appliances": [
                 {
                     "type": "Heater",
                     "energy_kwh": 1.5
                 }
             ],
-            "solar_panels_count": 0
         }
     ]
 }

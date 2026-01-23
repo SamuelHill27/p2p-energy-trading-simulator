@@ -1,23 +1,19 @@
-use crate::utils::units::Energy;
+use crate::utils::units::{Energy, Period};
 
 pub struct SolarPanel {
-    energy_output: Energy,
-    efficiency: f64,
+    pub current_energy_output: Energy,
+    prod_schedule: Vec<u32>,
 }
 
 impl SolarPanel {
-    pub fn new(energy_output: Energy, efficiency: f64) -> SolarPanel {
+    pub fn new(current_energy_output: Energy, prod_schedule: Vec<u32>) -> SolarPanel {
         SolarPanel {
-            energy_output,
-            efficiency,
+            current_energy_output,
+            prod_schedule,
         }
     }
 
-    pub fn energy_output(&self) -> Energy {
-        self.energy_output
-    }
-
-    pub fn set_energy_output(&mut self, energy_input: Energy) {
-        self.energy_output = Energy::new(energy_input.value());
+    pub fn progress(&mut self, period: Period) {
+        self.current_energy_output = Energy::new(self.prod_schedule[period.value() as usize]);
     }
 }

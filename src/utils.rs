@@ -1,5 +1,3 @@
-use rand::Rng;
-
 pub mod units {
     use std::{fmt::Display, iter::Sum};
 
@@ -44,8 +42,22 @@ pub mod units {
             write!(f, "{} units currency", self.0)
         }
     }
-}
 
-pub fn get_random_number(min: i32, max: i32) -> i32 {
-    rand::rng().random_range(min..max)
+    #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+    pub struct Period(u32);
+
+    impl Period {
+        pub fn new(value: u32) -> Self {
+            Period(value)
+        }
+        pub fn value(&self) -> u32 {
+            self.0
+        }
+    }
+
+    impl Display for Period {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "{} hours", self.0)
+        }
+    }
 }
