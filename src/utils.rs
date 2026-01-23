@@ -1,16 +1,16 @@
 use rand::Rng;
 
 pub mod units {
-    use std::fmt::Display;
+    use std::{fmt::Display, iter::Sum};
 
-    #[derive(Debug, Copy, Clone)]
-    pub struct Energy(i32);
+    #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+    pub struct Energy(u32);
 
     impl Energy {
-        pub fn new(value: i32) -> Self {
+        pub fn new(value: u32) -> Self {
             Energy(value)
         }
-        pub fn value(&self) -> i32 {
+        pub fn value(&self) -> u32 {
             self.0
         }
     }
@@ -21,7 +21,13 @@ pub mod units {
         }
     }
 
-    #[derive(Debug, Copy, Clone)]
+    impl Sum for Energy {
+        fn sum<I: Iterator<Item = Self>>(iter: I) -> Self {
+            iter.fold(Energy(0), |a, b| Energy(a.0 + b.0))
+        }
+    }
+
+    #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
     pub struct Price(u32);
 
     impl Price {

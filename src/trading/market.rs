@@ -1,14 +1,12 @@
-use std::cmp;
-
 use crate::utils::units::{Energy, Price};
 
+use crate::trading::order_book::{OrderBook, OrderSide};
 use crate::model::grid::Grid;
 
-use bourse_book::OrderBook;
-use bourse_book::types::{Order, Side};
+use std::cmp;
 
 pub struct Market {
-    pub book: OrderBook,
+    book: OrderBook,
     grid: Grid,
 }
 
@@ -17,116 +15,73 @@ impl Market {
         Market { book, grid }
     }
 
-    pub fn create_order(&mut self, energy: Energy, trader_id: u32) {
-        if energy.value() == 0 {
-            return;
-        }
-
-        let (order_type, price) = if energy.value() > 0 {
-            (Side::Ask, self.grid.buy_price)
-        } else {
-            (Side::Bid, self.grid.sell_price)
+    pub fn create_order(&mut self, id: u32, order_type: String, volume: Energy) {
+        let (side, price) = match &order_type[..] {
+            "Buy" => (OrderSide::Ask, self.grid.buy_price),
+            "Sell" => (OrderSide::Bid, self.grid.sell_price),
+            _ => panic!("Invalid order type"),
         };
+        self.book.add_order(id, side, price, volume);
+    }
 
-        let energy: u32 = energy.value().abs() as u32;
-        
-        self.book
-            .create_and_place_order(order_type, energy, trader_id, Some(price.value()))
-            .unwrap();
+    pub fn trade(&mut self, period: u32) {
+        let market_price: Price = self.calc_market_price();
+        self.match_orders(market_price);
+
+        let trades = std::mem::take(&mut self.book.orders);
+        self.book.record_trades(period, trades);
+    }
+
+    pub fn log(&self) {
+        self.book.print_trades();
     }
 
     fn calc_market_price(&self) -> Price {
-        let max_vol = cmp::max(self.book.bid_vol(), self.book.ask_vol()) as f64;
-        let min_vol = cmp::min(self.book.bid_vol(), self.book.ask_vol()) as f64;
-        let demand = (max_vol - min_vol) / max_vol;
-
-        let mid_price_bias = (self.grid.buy_price.value() as f64 - self.book.mid_price()) * demand;
-        let market_price = self.book.mid_price() + mid_price_bias;
-
-        Price::new(market_price.round() as u32)
-    }
-
-    fn get_bids_or_asks(&self, side: Side) -> Vec<&Order> {
-        self.book.get_orders()
-            .iter()
-            .filter(|o| bool::from(o.side) == bool::from(side))
-            .map(|o| *o)
-            .collect()
-    }
-
-    pub fn match_orders(&mut self) {
-        let max_vol = cmp::max(self.book.bid_vol(), self.book.ask_vol()) as f64;
-        let min_vol = cmp::min(self.book.bid_vol(), self.book.ask_vol()) as f64;
-        let mut rounding_error = min_vol;
-        let mut proportionate_vol = |vol| {
-            let new_vol = (vol as f64 / max_vol) * min_vol;
-            rounding_error -= new_vol.round();
-            new_vol
+        let max_vol = cmp::max(self.book.bid_vol(), self.book.ask_vol()).value() as f64;
+        let min_vol = cmp::min(self.book.bid_vol(), self.book.ask_vol()).value() as f64;
+        let demand = match (max_vol, min_vol, max_vol - min_vol) {
+            // If difference is zero OR either value is zero
+            (0.0, _, _) | (_, 0.0, _) | (_, _, 0.0) => 0.0,
+            _ => (max_vol - min_vol) / max_vol,
         };
 
-        let mut side = Side::Bid;
-        if self.book.ask_vol() > self.book.bid_vol() {
-            side = Side::Ask;
-        }
-        
-        let market_price = self.calc_market_price();
+        let mid_price_bias = (self.grid.buy_price.value() as f64 - self.grid.mid_price_value()) * demand;
+        let market_price = self.grid.mid_price_value() + mid_price_bias;
 
-        // change prices for full match trading side
-        let opposite_side = Side::from(!bool::from(side));
-        for i in 0..self.get_bids_or_asks(opposite_side).len() {
-            let order = *self.get_bids_or_asks(opposite_side)[i];
-            self.book.modify_order(order.order_id, Some(market_price.value()), Some(order.vol));
-        }
-
-        for i in 0..self.get_bids_or_asks(side).len() {
-            let order = *self.get_bids_or_asks(side)[i];
-            let new_volume = proportionate_vol(order.vol).round() as u32;
-            self.book.modify_order(order.order_id, Some(order.price), Some(order.vol - new_volume));
-            self.book.create_and_place_order(order.side, new_volume, order.trader_id, Some(market_price.value())).unwrap();
-        }
-
-        // adjust for rounding
-        while rounding_error.abs() != 0.0 {
-            let order = *self.get_bids_or_asks(side)[rand::random_range(0..self.get_bids_or_asks(side).len())];
-            self.book.modify_order(order.order_id, Some(order.price), Some(order.vol - 1));
-            if rounding_error > 0.0 {
-                rounding_error -= 1.0;
-            } else {
-                rounding_error += 1.0;
-            }
-        }
-
-        self.display();
+        Price::new(cmp::min(market_price.round() as u32, self.grid.buy_price.value() - 1))
     }
 
-    pub fn display(&self) {
-        let orders = self.book.get_orders();
-        for order in orders {
-            println!(
-                "{} {} at {}",
-                if bool::from(order.side) {
-                    "Buy"
-                } else {
-                    "Sell"
+    fn match_orders(&mut self, market_price: Price) {
+        let max_vol = cmp::max(self.book.bid_vol(), self.book.ask_vol()).value() as f64;
+        let min_vol = cmp::min(self.book.bid_vol(), self.book.ask_vol()).value() as f64;
+        let proportionate_vol = |vol: Energy| {
+            (vol.value() as f64 / max_vol) * min_vol
+        };
+
+        let dominant_side = match self.book.ask_vol() > self.book.bid_vol() {
+            true => OrderSide::Ask,
+            false => OrderSide::Bid
+        };
+
+        let mut new_order_details: Vec<(u32, u32)> = Vec::new();
+        for order in self.book.get_orders_mut() {
+            match order.side == dominant_side {
+                true => {
+                    let new_volume = proportionate_vol(order.volume).round() as u32;
+                    order.set_volume(Energy::new(order.volume.value() - new_volume));
+                    new_order_details.push((order.id, new_volume));
                 },
-                order.vol,
-                order.price
-            );
+                false => {
+                    order.set_price(market_price);
+                }
+            }
+        }
+        for (id, volume) in new_order_details {
+            self.book.add_order(id, dominant_side, market_price, Energy::new(volume));
         }
 
-        let trades = self.book.get_trades();
-        for trade in trades {
-            println!(
-                "{} {} at {}",
-                if bool::from(trade.side) {
-                    "Trade buy"
-                } else {
-                    "Trade sell"
-                },
-                trade.vol,
-                trade.price
-            );
-        }
+        // Not sure if there are scenarios where there ends up being rounding error after distributing volumes
+        assert!(max_vol as u32 - self.book.total_side_volume(dominant_side).value() == 0);
     }
 }
 
@@ -134,46 +89,103 @@ impl Market {
 mod tests {
     use super::*;
 
+    static SCENARIOS: [fn() -> Market; 7] = 
+        [scenario_1, scenario_2, scenario_3, scenario_4, scenario_5, scenario_6, scenario_7];
+
     #[test]
     fn test_calc_market_price() {
-        let mut market = Market::new(
-            OrderBook::new(0, 1, true),
-            Grid::new(Price::new(30), Price::new(10))
-        );
-
-        market.create_order(Energy::new(30), 1);
-        market.create_order(Energy::new(60), 2);
-        market.create_order(Energy::new(-50), 3);
-        market.create_order(Energy::new(-10), 4);
-        assert!(market.calc_market_price().value() == 23, "market price: {}", market.calc_market_price().value());
-
-        market.create_order(Energy::new(11), 5);
-        assert!(market.calc_market_price().value() == 24, "market price: {}", market.calc_market_price().value());
-
-        market.create_order(Energy::new(-50), 6);
-        market.create_order(Energy::new(-7), 7);
-        assert!(market.calc_market_price().value() == 21, "market price: {}", market.calc_market_price().value());
-    
-        market.create_order(Energy::new(-1000), 8);
-        assert!(market.calc_market_price().value() == 29, "market price: {}", market.calc_market_price().value());
+        let scenario_values = [13, 14, 15, 15, 19, 19, 16];
+        for (idx, scenario) in SCENARIOS.iter().enumerate() {
+            let market = scenario();
+            assert!(market.calc_market_price().value() == scenario_values[idx], "market price: {}", market.calc_market_price().value());
+        }
     }
 
     #[test]
     fn test_match_orders() {
-        let mut market = Market::new(
-            OrderBook::new(0, 1, true),
-            Grid::new(Price::new(30), Price::new(10))
-        );
+        for scenario in SCENARIOS.iter() {
+            let mut market = scenario();
+            market.match_orders(market.calc_market_price());
+        }
 
-        market.create_order(Energy::new(30), 1);
-        market.create_order(Energy::new(20), 2);
-        market.create_order(Energy::new(15), 3);
-        market.create_order(Energy::new(40), 4);
-        market.create_order(Energy::new(35), 5);
-        market.create_order(Energy::new(-50), 6);
-        market.create_order(Energy::new(-33), 7);
-        market.match_orders();
-        assert!(market.book.get_orders().len() == 5, "orders: {}", market.book.get_orders().len());
-        assert!(market.book.get_trades().len() == 5, "trades: {}", market.book.get_trades().len());
+        let mut market = SCENARIOS[4]();
+        market.match_orders(market.calc_market_price());
+        market.book.print_orders();
+
+        println!("---");
+
+        let mut market = SCENARIOS[6]();
+        market.match_orders(market.calc_market_price());
+        market.book.print_orders();
+    }
+
+    fn scenario_1() -> Market {
+        Market::new(
+            OrderBook::default(),
+            Grid::new(Price::new(16), Price::new(10))
+        )
+    }
+
+    fn scenario_2() -> Market {
+        Market::new(
+            OrderBook::default(),
+            Grid::new(Price::new(17), Price::new(10))
+        )
+    }
+
+    fn scenario_3() -> Market {
+        let mut market = Market::new(
+            OrderBook::default(),
+            Grid::new(Price::new(20), Price::new(10))
+        );
+        market.create_order(0, OrderSide::Ask.to_string(), Energy::new(20));
+        market.create_order(1, OrderSide::Bid.to_string(), Energy::new(20));
+        market
+    }
+
+    fn scenario_4() -> Market {
+        let mut market = Market::new(
+            OrderBook::default(),
+            Grid::new(Price::new(20), Price::new(10))
+        );
+        market.create_order(0, OrderSide::Ask.to_string(), Energy::new(20));
+        market.create_order(1, OrderSide::Bid.to_string(), Energy::new(0));
+        market
+    }
+
+    fn scenario_5() -> Market {
+        let mut market = Market::new(
+            OrderBook::default(),
+            Grid::new(Price::new(20), Price::new(10))
+        );
+        market.create_order(0, OrderSide::Ask.to_string(), Energy::new(50));
+        market.create_order(1, OrderSide::Ask.to_string(), Energy::new(20));
+        market.create_order(2, OrderSide::Bid.to_string(), Energy::new(10));
+        market
+    }
+
+    fn scenario_6() -> Market {
+        let mut market = Market::new(
+            OrderBook::default(),
+            Grid::new(Price::new(20), Price::new(10))
+        );
+        market.create_order(0, OrderSide::Ask.to_string(), Energy::new(500));
+        market.create_order(1, OrderSide::Bid.to_string(), Energy::new(10));
+        market
+    }
+
+    fn scenario_7() -> Market {
+        let mut market = Market::new(
+            OrderBook::default(),
+            Grid::new(Price::new(20), Price::new(10))
+        );
+        market.create_order(0, OrderSide::Ask.to_string(), Energy::new(15));
+        market.create_order(1, OrderSide::Ask.to_string(), Energy::new(60));
+        market.create_order(2, OrderSide::Ask.to_string(), Energy::new(29));
+        market.create_order(3, OrderSide::Bid.to_string(), Energy::new(10));
+        market.create_order(4, OrderSide::Bid.to_string(), Energy::new(6));
+        market.create_order(5, OrderSide::Bid.to_string(), Energy::new(40));
+        market.create_order(6, OrderSide::Bid.to_string(), Energy::new(20));
+        market
     }
 }

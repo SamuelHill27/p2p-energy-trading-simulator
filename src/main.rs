@@ -7,8 +7,10 @@ mod utils;
 use sim_config::SimConfig;
 use sim_controller::SimController;
 
-use model::*;
 use utils::units::*;
+
+use model::*;
+use trading::*;
 
 fn main() {
     start_sim();
@@ -40,12 +42,14 @@ fn start_sim() {
     )];
     let house2 = house::House::new(appliances, None);
 
+    let houses = vec![house1, house2, house3];
+
     let market = trading::market::Market::new(
-        bourse_book::OrderBook::new(0, 1, true),
+        trading::order_book::OrderBook::default(),
         grid::Grid::new(Price::new(16), Price::new(10)),
     );
 
-    let mut sim = SimController::new(sim_config, vec![house1, house2, house3], market);
+    let mut sim = SimController::new(sim_config, houses, market);
 
     sim.run();
 }
