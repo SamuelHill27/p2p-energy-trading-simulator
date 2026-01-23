@@ -28,6 +28,13 @@ impl Market {
         let market_price: Price = self.calc_market_price();
         self.match_orders(market_price);
 
+        for order in self.book.get_orders_mut() {
+            match order.side {
+                OrderSide::Ask => order.set_price(self.grid.buy(order.volume)),
+                OrderSide::Bid => order.set_price(self.grid.sell(order.volume)),
+            }
+        }
+
         let trades = std::mem::take(&mut self.book.orders);
         self.book.record_trades(period, trades);
     }

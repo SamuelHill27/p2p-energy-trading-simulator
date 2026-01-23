@@ -18,11 +18,11 @@ impl Grid {
         (self.buy_price.value() + self.sell_price.value()) as f64 / 2.0
     }
 
-    fn buy(&self, energy: Energy) -> Price {
+    pub fn buy(&self, energy: Energy) -> Price {
         Price::new(self.buy_price.value() * energy.value())
     }
 
-    fn sell(&self, energy: Energy) -> Price {
+    pub fn sell(&self, energy: Energy) -> Price {
         Price::new(self.sell_price.value() * energy.value())
     }
 }

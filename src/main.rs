@@ -44,8 +44,8 @@ fn start_sim() {
 
     let houses = vec![house1, house2, house3];
 
-    let market = trading::market::Market::new(
-        trading::order_book::OrderBook::default(),
+    let market = market::Market::new(
+        order_book::OrderBook::default(),
         grid::Grid::new(Price::new(16), Price::new(10)),
     );
 

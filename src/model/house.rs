@@ -1,6 +1,7 @@
 use crate::appliance::Appliance;
 use crate::solar_panel::SolarPanel;
 use crate::utils::units::Energy;
+use crate::sim_controller::OrderType;
 
 use std::sync::atomic::AtomicU64;
 use std::sync::atomic::Ordering::SeqCst;
@@ -57,7 +58,11 @@ impl House {
         total
     }
 
-    pub fn excess_energy(&self) -> Energy {
-        Energy::new(self.energy_produced().value() - self.energy_consumed().value())
+    pub fn excess_energy(&self) -> (OrderType, Energy) {
+        let energy = self.energy_produced().value() as i32 - self.energy_consumed().value() as i32;
+        match energy >= 0 {
+            true => (OrderType::Sell, Energy::new(energy.abs() as u32)),
+            false => (OrderType::Buy, Energy::new(energy.abs() as u32)),
+        }
     }
 }

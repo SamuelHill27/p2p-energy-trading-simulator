@@ -8,7 +8,7 @@ use core::fmt;
 use std::thread::sleep;
 use std::time::Duration;
 
-enum OrderType {
+pub enum OrderType {
     Buy,
     Sell
 }
@@ -53,7 +53,7 @@ impl SimController {
                 // TODO: house.progress() where solar panels have their own schedule and appliances refactored into HashMap
                 house.progress_appliances(hour);
                 house.update_solar_panel_output(environment.calc_energy_output());
-                self.market.create_order(house.id, OrderType::Buy.to_string(), house.excess_energy());
+                self.market.create_order(house.id, house.excess_energy().0.to_string(), house.excess_energy().1);
             }
 
             self.market.trade(hour);

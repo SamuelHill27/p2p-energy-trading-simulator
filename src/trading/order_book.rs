@@ -70,7 +70,10 @@ impl OrderBook {
 
     pub fn print_trades(&self) {
         for (period, trades) in &self.trades {
-            println!("Hour {}:\n{:?}", period, trades);
+            println!("Hour {}:", period);
+            for trade in trades {
+                println!("House {} {} {} for total {}", trade.id, trade.side, trade.volume, trade.price);
+            }
         }
     }
 
