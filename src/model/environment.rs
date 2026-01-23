@@ -1,5 +1,5 @@
-use super::super::utils::get_random_number;
-use super::super::utils::units::Energy;
+use crate::utils::get_random_number;
+use crate::utils::units::Energy;
 
 #[derive(Debug)]
 pub struct Environment {
@@ -16,11 +16,11 @@ impl Environment {
     }
 
     pub fn calc_energy_output(&self) -> Energy {
-        Energy::new(self.light_intensity / self.sky_coverage)
+        Energy::new(30)
     }
 
     pub fn progress(&mut self, _hour: u32) {
-        self.light_intensity = get_random_number(120.0, 150.0);
-        self.sky_coverage = get_random_number(12.0, 15.0);
+        self.light_intensity = get_random_number(120, 150) as f64;
+        self.sky_coverage = get_random_number(12, 15) as f64;
     }
 }

@@ -21,7 +21,7 @@ impl Appliance {
         if self.is_running {
             self.energy_input
         } else {
-            Energy::new(0.0)
+            Energy::new(0)
         }
     }
 

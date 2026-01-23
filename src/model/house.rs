@@ -1,12 +1,13 @@
-use super::super::utils::units::Energy;
-use super::appliance::Appliance;
-use super::solar_panel::SolarPanel;
+use crate::appliance::Appliance;
+use crate::solar_panel::SolarPanel;
+use crate::utils::units::Energy;
+use crate::sim_controller::OrderType;
 
 use std::sync::atomic::AtomicU64;
 use std::sync::atomic::Ordering::SeqCst;
 
 pub struct House {
-    name: String,
+    pub id: u32,
     appliances: Vec<Appliance>,
     solar_panels: Option<Vec<SolarPanel>>,
 }
@@ -15,14 +16,10 @@ impl House {
     pub fn new(appliances: Vec<Appliance>, solar_panels: Option<Vec<SolarPanel>>) -> House {
         static COUNTER: AtomicU64 = AtomicU64::new(1);
         House {
-            name: format!("House{}", COUNTER.fetch_add(1, SeqCst)),
+            id: COUNTER.fetch_add(1, SeqCst) as u32,
             appliances,
             solar_panels,
         }
-    }
-
-    pub fn name(&self) -> &String {
-        &self.name
     }
 
     pub fn progress_appliances(&mut self, current_hour: u32) {
@@ -40,7 +37,7 @@ impl House {
     }
 
     pub fn energy_consumed(&self) -> Energy {
-        let mut total = Energy::new(0.0);
+        let mut total = Energy::new(0);
 
         for appliance in &self.appliances {
             total = Energy::new(total.value() + appliance.energy_input().value());
@@ -50,7 +47,7 @@ impl House {
     }
 
     pub fn energy_produced(&self) -> Energy {
-        let mut total = Energy::new(0.0);
+        let mut total = Energy::new(0);
 
         if let Some(solar_panels) = &self.solar_panels {
             for solar_panel in solar_panels {
@@ -61,7 +58,11 @@ impl House {
         total
     }
 
-    pub fn excess_energy(&self) -> Energy {
-        Energy::new(self.energy_produced().value() - self.energy_consumed().value())
+    pub fn excess_energy(&self) -> (OrderType, Energy) {
+        let energy = self.energy_produced().value() as i32 - self.energy_consumed().value() as i32;
+        match energy >= 0 {
+            true => (OrderType::Sell, Energy::new(energy.abs() as u32)),
+            false => (OrderType::Buy, Energy::new(energy.abs() as u32)),
+        }
     }
 }
