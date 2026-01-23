@@ -1,6 +1,6 @@
 use std::{collections::HashMap, fmt::Display};
 
-use crate::utils::units::{Energy, Price};
+use crate::utils::units::{Energy, Period, Price};
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub enum OrderSide {
@@ -38,7 +38,7 @@ impl Order {
 #[derive(Default)]
 pub struct OrderBook {
     pub orders: Vec<Order>,
-    pub trades: HashMap<u32, Vec<Order>>,
+    pub trades: HashMap<Period, Vec<Order>>,
 }
 
 impl OrderBook {
@@ -46,7 +46,7 @@ impl OrderBook {
         self.orders.push(Order { id, side, price: price, volume: volume });
     }
 
-    pub fn record_trades(&mut self, period: u32, orders: Vec<Order>) {
+    pub fn record_trades(&mut self, period: Period, orders: Vec<Order>) {
         self.trades.insert(period, orders);
     }
 

@@ -1,7 +1,7 @@
-use crate::utils::units::{Energy, Price};
+use crate::utils::units::{Energy, Period, Price};
 
 use crate::trading::order_book::{OrderBook, OrderSide};
-use crate::model::grid::Grid;
+use crate::trading::grid::Grid;
 
 use std::cmp;
 
@@ -24,7 +24,7 @@ impl Market {
         self.book.add_order(id, side, price, volume);
     }
 
-    pub fn trade(&mut self, period: u32) {
+    pub fn trade(&mut self, period: Period) {
         let market_price: Price = self.calc_market_price();
         self.match_orders(market_price);
 
