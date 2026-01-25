@@ -1,27 +1,20 @@
 use crate::appliance::Appliance;
 use crate::solar_panel::SolarPanel;
+use crate::trading::order_book::OrderSide;
 use crate::utils::units::{Energy, Period};
-use crate::sim_controller::OrderType;
 
-use std::sync::atomic::AtomicU64;
-use std::sync::atomic::Ordering::SeqCst;
+use serde::{Deserialize, Serialize};
 
+#[derive(Serialize, Deserialize)]
 pub struct House {
     pub id: u32,
+    #[serde(default)]
     appliances: Vec<Appliance>,
+    #[serde(default)]
     solar_panels: Vec<SolarPanel>,
 }
 
 impl House {
-    pub fn new(appliances: Vec<Appliance>, solar_panels: Vec<SolarPanel>) -> House {
-        static COUNTER: AtomicU64 = AtomicU64::new(0);
-        House {
-            id: COUNTER.fetch_add(1, SeqCst) as u32,
-            appliances,
-            solar_panels,
-        }
-    }
-
     pub fn progress(&mut self, period: Period) {
         for appliance in &mut self.appliances {
             appliance.progress(period);
@@ -47,12 +40,13 @@ impl House {
         total
     }
 
-    pub fn energy_order(&self) -> Option<(OrderType, Energy)> {
-        let net_energy = self.energy_produced().value() as i32 - self.energy_consumed().value() as i32;
+    pub fn energy_order(&self) -> Option<(OrderSide, Energy)> {
+        let net_energy =
+            self.energy_produced().value() as i32 - self.energy_consumed().value() as i32;
         match net_energy {
-            ne if ne > 0 => Some((OrderType::Sell, Energy::new(net_energy as u32))),
-            ne if ne < 0 => Some((OrderType::Buy, Energy::new(net_energy.abs() as u32))),
-            _ => None
+            ne if ne > 0 => Some((OrderSide::Ask, Energy::new(net_energy as u32))),
+            ne if ne < 0 => Some((OrderSide::Bid, Energy::new(net_energy.abs() as u32))),
+            _ => None,
         }
     }
 }
