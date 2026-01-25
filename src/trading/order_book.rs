@@ -23,6 +23,7 @@ pub struct Order {
     pub side: OrderSide,
     pub price: Price,
     pub volume: Energy,
+    pub matched: bool,
 }
 
 impl Order {
@@ -33,6 +34,10 @@ impl Order {
     pub fn set_volume(&mut self, volume: Energy) {
         self.volume = volume;
     }
+
+    pub fn set_matched(&mut self, matched: bool) {
+        self.matched = matched;
+    }
 }
 
 #[derive(Default)]
@@ -42,8 +47,21 @@ pub struct OrderBook {
 }
 
 impl OrderBook {
-    pub fn add_order(&mut self, id: u32, side: OrderSide, price: Price, volume: Energy) {
-        self.orders.push(Order { id, side, price: price, volume: volume });
+    pub fn add_order(
+        &mut self,
+        id: u32,
+        side: OrderSide,
+        price: Price,
+        volume: Energy,
+        matched: Option<bool>,
+    ) {
+        self.orders.push(Order {
+            id,
+            side,
+            price,
+            volume,
+            matched: matched.unwrap_or(false),
+        });
     }
 
     pub fn record_trades(&mut self, period: Period, orders: Vec<Order>) {
@@ -60,21 +78,6 @@ impl OrderBook {
 
     pub fn ask_vol(&self) -> Energy {
         self.total_side_volume(OrderSide::Ask)
-    }
-
-    pub fn print_orders(&self) {
-        for order in &self.orders {
-            println!("{:?}", order);
-        }
-    }
-
-    pub fn print_trades(&self) {
-        for (period, trades) in &self.trades {
-            println!("Hour {}:", period);
-            for trade in trades {
-                println!("House {} {} {} for total {}", trade.id, trade.side, trade.volume, trade.price);
-            }
-        }
     }
 
     pub fn total_side_volume(&self, side: OrderSide) -> Energy {

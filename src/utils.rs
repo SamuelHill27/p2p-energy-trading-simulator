@@ -1,7 +1,10 @@
 pub mod units {
+    use serde::{Deserialize, Serialize};
     use std::{fmt::Display, iter::Sum};
 
-    #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+    #[derive(
+        Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize, Default,
+    )]
     pub struct Energy(u32);
 
     impl Energy {

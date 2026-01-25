@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "appliances": [
+      {
+        "name": "Fridge",
+        "energy_input": 5,
+        "run_schedule": [1]
+      }
+    ],
+    "solar_panels": [
+      {
+        "prod_schedule": [10, 10, 10]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "appliances": [
+      {
+        "name": "Oven",
+        "energy_input": 20,
+        "run_schedule": [1, 2]
+      }
+    ]
+  }
+]

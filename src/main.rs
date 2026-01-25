@@ -17,32 +17,12 @@ fn main() {
 }
 
 fn start_sim() {
-    let sim_config = SimConfig { frequency: 1000, periods: 24 };
+    let sim_config = SimConfig {
+        frequency: 1000,
+        periods: 24,
+    };
 
-    let appliances = vec![appliance::Appliance::new(
-        "dishwasher".to_string(),
-        Energy::new(10),
-        vec![0],
-    )];
-    let solar_panels = vec![solar_panel::SolarPanel::new(Energy::new(10), vec![])];
-    let house1 = house::House::new(appliances, solar_panels);
-
-    let appliances = vec![appliance::Appliance::new(
-        "dishwasher".to_string(),
-        Energy::new(10),
-        vec![0],
-    )];
-    let solar_panels = vec![solar_panel::SolarPanel::new(Energy::new(10), vec![])];
-    let house3 = house::House::new(appliances, solar_panels);
-
-    let appliances = vec![appliance::Appliance::new(
-        "oven".to_string(),
-        Energy::new(10),
-        vec![0],
-    )];
-    let house2 = house::House::new(appliances, vec![]);
-
-    let houses = vec![house1, house2, house3];
+    let houses = sim_config.load_houses();
 
     let market = market::Market::new(
         order_book::OrderBook::default(),
