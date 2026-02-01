@@ -1,6 +1,6 @@
 pub mod appliance;
-mod contract;
-mod contract_price_group;
+pub mod contract;
+pub mod contract_price_group;
 pub mod environment;
 pub mod exchange;
 pub mod grid;

@@ -2,10 +2,25 @@ use crate::{model::contract::Contract, utils::units::Period};
 use std::collections::{HashMap, VecDeque};
 
 pub struct Reporter {
-    matched_contracts: HashMap<Period, VecDeque<Contract>>
+    pub matched_contracts: HashMap<Period, VecDeque<Contract>>
 }
 
 impl Reporter {
+        /// Prints all matched contracts for all periods
+        pub fn print_matched_contracts(&self) {
+            for (period, contracts) in &self.matched_contracts {
+                println!("Period {}:", period.value());
+                for contract in contracts {
+                    println!(
+                        "  Price: {}, Quantity: {}, Bidder: {:?}, Offer: {:?}",
+                        contract.price().value(),
+                        contract.quantity().value(),
+                        contract.participant_id_bid(),
+                        contract.participant_id_offer()
+                    );
+                }
+            }
+        }
     pub fn new() -> Self {
         Reporter {
             matched_contracts: HashMap::new()

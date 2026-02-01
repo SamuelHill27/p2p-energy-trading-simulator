@@ -16,7 +16,7 @@ impl Environment {
     }
 
     pub fn calc_energy_output(&self) -> Energy {
-        Energy::new(self.light_intensity / self.sky_coverage)
+        Energy::new((self.light_intensity / self.sky_coverage) as i32)
     }
 
     pub fn progress(&mut self, _hour: u32) {

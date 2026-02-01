@@ -40,7 +40,7 @@ impl House {
     }
 
     pub fn energy_consumed(&self) -> Energy {
-        let mut total = Energy::new(0.0);
+        let mut total = Energy::new(0);
 
         for appliance in &self.appliances {
             total = Energy::new(total.value() + appliance.energy_input().value());
@@ -50,7 +50,7 @@ impl House {
     }
 
     pub fn energy_produced(&self) -> Energy {
-        let mut total = Energy::new(0.0);
+        let mut total = Energy::new(0);
 
         if let Some(solar_panels) = &self.solar_panels {
             for solar_panel in solar_panels {

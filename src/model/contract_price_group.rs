@@ -23,7 +23,7 @@ impl ContractPriceGroup {
         self.price
     }
 
-    pub fn total_volume(&self) -> f64 {
+    pub fn total_volume(&self) -> i32 {
         self.contracts
             .iter()
             .map(|contract| contract.quantity().value())
@@ -34,7 +34,7 @@ impl ContractPriceGroup {
         // Match the incoming contract against FIFO contracts at this price.
         let mut matched_contracts: VecDeque<Contract> = VecDeque::new();
 
-        while new_contract.quantity().value() > 0.0 {
+        while new_contract.quantity().value() > 0 {
             if let Some(currentContract) = self.contracts.front_mut() {
                 if currentContract.quantity().value() <= new_contract.quantity().value() {
                     // Fully match the front contract
@@ -57,7 +57,7 @@ impl ContractPriceGroup {
                     matched_contracts.push_back(matched_contract);
 
                     // Incoming contract is fully satisfied
-                    new_contract.set_quantity(Energy::new(0.0));
+                    new_contract.set_quantity(Energy::new(0));
                 }
             } else {
                 // No more contracts to match against
@@ -78,7 +78,7 @@ fn create_matched_contract(base_contract: &Contract, other_contract: &Contract) 
     matched_contract.set_other_participant_id(
         other_contract
             .participant_id_bid()
-            .unwrap_or(other_contract.participant_id_offer().unwrap()),
+            .unwrap_or_else(|| other_contract.participant_id_offer().unwrap()),
     );
     matched_contract
 }

@@ -23,13 +23,13 @@ pub mod units {
     }
 
     #[derive(Debug, Copy, Clone)]
-    pub struct Energy(f64);
+    pub struct Energy(i32);
 
     impl Energy {
-        pub fn new(value: f64) -> Self {
+        pub fn new(value: i32) -> Self {
             Energy(value)
         }
-        pub fn value(&self) -> f64 {
+        pub fn value(&self) -> i32 {
             self.0
         }
     }
@@ -41,13 +41,13 @@ pub mod units {
     }
 
     #[derive(Debug, Copy, Clone, Eq, Hash, PartialEq)]
-    pub struct Price(i16);
+    pub struct Price(i32);
 
     impl Price {
-        pub fn new(value: i16) -> Self {
+        pub fn new(value: i32) -> Self {
             Price(value)
         }
-        pub fn value(&self) -> i16 {
+        pub fn value(&self) -> i32 {
             self.0
         }
     }

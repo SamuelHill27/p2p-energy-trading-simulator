@@ -4,9 +4,9 @@ use getset::{Getters, Setters};
 #[derive(Debug, Clone, Getters, Setters)]
 pub struct Contract {
     #[getset(get = "pub")]
-    participant_id_bid: Option<i16>,
+    participant_id_bid: Option<i32>,
     #[getset(get = "pub")]
-    participant_id_offer: Option<i16>,
+    participant_id_offer: Option<i32>,
     #[getset(get = "pub", set = "pub")]
     contract_type: ContractType,
     #[getset(get = "pub", set = "pub")]
@@ -18,8 +18,8 @@ pub struct Contract {
 
 impl Contract {
     pub fn new(
-        participant_id_bid: Option<i16>,
-        participant_id_offer: Option<i16>,
+        participant_id_bid: Option<i32>,
+        participant_id_offer: Option<i32>,
         contract_type: ContractType,
         quantity: Energy,
         price: Price,
@@ -35,7 +35,7 @@ impl Contract {
         }
     }
 
-    pub fn set_other_participant_id(&mut self, participant_id: i16) {
+    pub fn set_other_participant_id(&mut self, participant_id: i32) {
         match self.contract_type {
             ContractType::Bid => self.participant_id_offer = Some(participant_id),
             ContractType::Offer => self.participant_id_bid = Some(participant_id),

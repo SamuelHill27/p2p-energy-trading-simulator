@@ -6,7 +6,7 @@ pub fn trade(house: &House, grid: &Grid) {
         "{} generating {} and is {} {} at {}",
         house.name(),
         house.energy_produced(),
-        if house.excess_energy().value() < 0.0 {
+        if house.excess_energy().value() < 0 {
             "buying"
         } else {
             "selling"
@@ -17,7 +17,7 @@ pub fn trade(house: &House, grid: &Grid) {
 }
 
 fn make_trade(house: &House, grid: &Grid) -> Price {
-    if house.excess_energy().value() < 0.0 {
+    if house.excess_energy().value() < 0 {
         buy_from_grid(grid, Energy::new(house.excess_energy().value().abs()))
     } else {
         sell_to_grid(grid, house.excess_energy())

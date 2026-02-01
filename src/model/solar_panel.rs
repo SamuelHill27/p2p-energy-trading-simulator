@@ -2,11 +2,11 @@ use super::super::utils::units::Energy;
 
 pub struct SolarPanel {
     energy_output: Energy,
-    efficiency: f64,
+    efficiency: i32,
 }
 
 impl SolarPanel {
-    pub fn new(energy_output: Energy, efficiency: f64) -> SolarPanel {
+    pub fn new(energy_output: Energy, efficiency: i32) -> SolarPanel {
         SolarPanel {
             energy_output,
             efficiency,
