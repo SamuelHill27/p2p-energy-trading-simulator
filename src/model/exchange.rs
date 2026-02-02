@@ -487,29 +487,31 @@ pub struct Exchange {
 }
 
 impl Exchange {
-            /// Prints all matched contracts for all periods
-            pub fn print_matched_contracts(&self) {
-                self.reporter.print_matched_contracts();
-            }
-        /// Prints all bids ordered by price (highest to lowest)
-        pub fn print_bids(&self) {
-            println!("Bids (highest to lowest):");
-            for (Reverse(price), cpg) in self.bids.iter() {
-                for contract in &cpg.contracts {
-                    println!("  Price: {}, Quantity: {}, Bidder: {:?}, Offer: {:?}", price.value(), contract.quantity().value(), contract.participant_id_bid(), contract.participant_id_offer());
-                }
-            }
-        }
+    /// Prints all matched contracts for all periods
+    pub fn print_matched_contracts(&self) {
+        self.reporter.print_matched_contracts();
+    }
 
-        /// Prints all offers ordered by price (lowest to highest)
-        pub fn print_offers(&self) {
-            println!("Offers (lowest to highest):");
-            for (price, cpg) in self.offers.iter() {
-                for contract in &cpg.contracts {
-                    println!("  Price: {}, Quantity: {}, Bidder: {:?}, Offer: {:?}", price.value(), contract.quantity().value(), contract.participant_id_bid(), contract.participant_id_offer());
-                }
+    /// Prints all bids ordered by price (highest to lowest)
+    pub fn print_bids(&self) {
+        println!("Bids (highest to lowest):");
+        for (Reverse(price), cpg) in self.bids.iter() {
+            for contract in &cpg.contracts {
+                println!("  Price: {}, Quantity: {}, Bidder: {:?}, Offer: {:?}", price.value(), contract.quantity().value(), contract.participant_id_bid(), contract.participant_id_offer());
             }
         }
+    }
+
+    /// Prints all offers ordered by price (lowest to highest)
+    pub fn print_offers(&self) {
+        println!("Offers (lowest to highest):");
+        for (price, cpg) in self.offers.iter() {
+            for contract in &cpg.contracts {
+                println!("  Price: {}, Quantity: {}, Bidder: {:?}, Offer: {:?}", price.value(), contract.quantity().value(), contract.participant_id_bid(), contract.participant_id_offer());
+            }
+        }
+    }
+
     // Private new function
     pub fn new() -> Self {
         Exchange {
