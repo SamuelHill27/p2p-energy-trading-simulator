@@ -1,29 +1,28 @@
-use crate::model::house::House;
-use crate::sim_config::SimConfig;
-use crate::trading::market::Market;
 use crate::utils::units::Period;
+use crate::model::house::House;
+use crate::trading::market::Market;
+use crate::chart;
 
-use std::thread::sleep;
-use std::time::Duration;
 
-pub struct SimController {
-    config: SimConfig,
+pub struct Sim {
+    periods: u32,
     houses: Vec<House>,
     market: Market,
 }
 
-impl SimController {
-    pub fn new(config: SimConfig, houses: Vec<House>, market: Market) -> SimController {
-        return SimController {
-            config,
+impl Sim {
+    pub fn new(periods: u32, houses: Vec<House>, market: Market) -> Sim {
+        return Sim {
+            periods,
             houses,
             market,
         };
     }
 
     pub fn run(&mut self) {
-        for hour in 0..self.config.periods {
+        for hour in 0..self.periods {
             let hour = Period::new(hour);
+            self.market.progress(hour);
             for house in &mut self.houses {
                 house.progress(hour);
                 if let Some((order_type, energy)) = house.energy_order() {
@@ -31,14 +30,17 @@ impl SimController {
                 }
             }
             self.market.trade(hour);
-            self.display(hour);
-            sleep(Duration::from_millis(self.config.frequency));
+            self.debug_display(hour);
         }
     }
 
-    fn display(&self, hour: Period) {
+    pub fn generate_charts(&self) {
+        chart::generate(&self.market.book.trades, self.periods, &self.market.grid);
+    }
+
+    fn debug_display(&self, hour: Period) {
         println!("--- {} ---", hour);
-        println!("GRID: buy price: {}, sell price: {}", 16, 10);
+        println!("GRID: buy price: {}, sell price: {}", self.market.grid.buy_price, self.market.grid.sell_price);
         for house in &self.houses {
             if house.energy_consumed().value() > 0 || house.energy_produced().value() > 0 {
                 println!(
@@ -56,7 +58,11 @@ impl SimController {
                 trade.side,
                 trade.volume,
                 trade.price,
-                trade.price.value() / trade.volume.value()
+                if trade.price.value() > 0 {
+                    trade.price.value() / trade.volume.value()
+                } else {
+                    0
+                }
             );
         }
     }

@@ -1,16 +1,23 @@
 use crate::utils::units::{Energy, Period};
-use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize, Serialize)]
+
 pub struct Appliance {
-    name: String,
+    _name: String,
     energy_input: Energy,
     run_schedule: Vec<u32>,
-    #[serde(default)]
     is_running: bool,
 }
 
 impl Appliance {
+    pub fn new(name: String, energy_input: Energy, run_schedule: Vec<u32>) -> Self {
+        Appliance {
+            _name: name,
+            energy_input,
+            run_schedule,
+            is_running: false,
+        }
+    }
+    
     pub fn energy_input(&self) -> Energy {
         match self.is_running {
             true => self.energy_input,
