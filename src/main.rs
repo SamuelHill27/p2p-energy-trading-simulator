@@ -13,7 +13,7 @@ use std::fs;
 
 
 fn main() {
-    let mut sim = build_sim("assets/config.json");
+    let mut sim = build_sim("resources/config.json");
     sim.run();
     sim.generate_charts();
 }
