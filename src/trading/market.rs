@@ -1,13 +1,14 @@
 use crate::utils::units::{Energy, Period, Price};
 
 use crate::trading::grid::Grid;
-use crate::trading::order_book::{OrderBook, OrderSide};
+use crate::trading::order_book::{OrderBook, Order, OrderSide};
 
 use std::cmp;
+use std::collections::HashMap;
 
 
 pub struct Market {
-    pub book: OrderBook,
+    book: OrderBook,
     pub grid: Grid,
 }
 
@@ -17,6 +18,10 @@ impl Market {
             book: OrderBook::default(),
             grid,
         }
+    }
+    
+    pub fn trades(&self) -> &HashMap<Period, Vec<Order>> {
+        self.book.trades()
     }
 
     pub fn progress(&mut self, hour: Period) {
@@ -36,20 +41,19 @@ impl Market {
         self.match_orders(market_price); // distribute order volumes fairly
 
         // make the trades
-        for order in self.book.get_orders_mut() {
+        for order in self.book.orders_mut() {
             match order.matched {
                 true => {
-                    order.set_price(Price::new(market_price.value() * order.volume.value()));
+                    order.price = Price::new(market_price.value() * order.volume.value());
                 }
                 false => match order.side {
-                    OrderSide::Ask => order.set_price(self.grid.sell(order.volume)),
-                    OrderSide::Bid => order.set_price(self.grid.buy(order.volume)),
+                    OrderSide::Ask => order.price = self.grid.sell(order.volume),
+                    OrderSide::Bid => order.price = self.grid.buy(order.volume),
                 },
             }
         }
 
-        let trades = std::mem::take(&mut self.book.orders);
-        self.book.record_trades(period, trades);
+        self.book.record_trades(period);
     }
 
     fn calc_market_price(&self) -> Price {
@@ -82,24 +86,19 @@ impl Market {
         };
 
         let mut new_order_details: Vec<(u32, u32)> = Vec::new();
-        let mut orders_to_remove: Vec<u32> = Vec::new();
-        for order in self.book.get_orders_mut() {
+        for order in self.book.orders_mut() {
             match order.side == dominant_side {
                 true => {
                     let new_volume = proportionate_vol(order.volume).round() as u32;
-                    order.set_volume(Energy::new(order.volume.value() - new_volume));
-                    // edge case to handle volume for bid and ask being equal
-                    if order.volume.value() == 0 {
-                        orders_to_remove.push(order.id);
-                    }
+                    order.volume = Energy::new(order.volume.value() - new_volume);
                     // Are there orders to match against
                     if new_volume > 0 {
                         new_order_details.push((order.id, new_volume));
                     }
                 }
                 false => {
-                    order.set_price(market_price);
-                    order.set_matched(true);
+                    order.price = market_price;
+                    order.matched = true;
                 }
             }
         }

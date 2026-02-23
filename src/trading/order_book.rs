@@ -27,24 +27,10 @@ pub struct Order {
     pub matched: bool,
 }
 
-impl Order {
-    pub fn set_price(&mut self, price: Price) {
-        self.price = price;
-    }
-
-    pub fn set_volume(&mut self, volume: Energy) {
-        self.volume = volume;
-    }
-
-    pub fn set_matched(&mut self, matched: bool) {
-        self.matched = matched;
-    }
-}
-
 #[derive(Default)]
 pub struct OrderBook {
-    pub orders: Vec<Order>,
-    pub trades: HashMap<Period, Vec<Order>>,
+    orders: Vec<Order>,
+    trades: HashMap<Period, Vec<Order>>,
 }
 
 impl OrderBook {
@@ -69,12 +55,18 @@ impl OrderBook {
         self.orders.retain(|order| order.volume.value() > 0);
     }
 
-    pub fn record_trades(&mut self, period: Period, orders: Vec<Order>) {
-        self.trades.insert(period, orders);
+    // clearing orders and updating trade history
+    pub fn record_trades(&mut self, period: Period) {
+        let trades = std::mem::take(&mut self.orders); 
+        self.trades.insert(period, trades);
     }
 
-    pub fn get_orders_mut(&mut self) -> &mut Vec<Order> {
+    pub fn orders_mut(&mut self) -> &mut Vec<Order> {
         &mut self.orders
+    }
+    
+    pub fn trades(&self) -> &HashMap<Period, Vec<Order>> {
+        &self.trades
     }
 
     pub fn bid_vol(&self) -> Energy {

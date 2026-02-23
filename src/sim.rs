@@ -11,12 +11,12 @@ pub struct Sim {
 }
 
 impl Sim {
-    pub fn new(periods: u32, houses: Vec<House>, market: Market) -> Sim {
-        return Sim {
+    pub fn new(periods: u32, houses: Vec<House>, market: Market) -> Self {
+        Sim {
             periods,
             houses,
             market,
-        };
+        }
     }
 
     pub fn run(&mut self) {
@@ -35,7 +35,7 @@ impl Sim {
     }
 
     pub fn generate_charts(&self) {
-        chart::generate(&self.market.book.trades, self.periods, &self.market.grid);
+        chart::generate(&self.market.trades(), self.periods, &self.market.grid);
     }
 
     fn debug_display(&self, hour: Period) {
@@ -51,7 +51,7 @@ impl Sim {
                 );
             }
         }
-        for trade in &self.market.book.trades[&hour] {
+        for trade in &self.market.trades()[&hour] {
             println!(
                 "TRADE: House {} {} {} for {} (at {} units currency per units energy)",
                 trade.id,

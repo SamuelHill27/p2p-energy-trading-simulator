@@ -7,6 +7,7 @@ use serde::{Deserialize, Serialize};
 pub struct Grid {
     buy_schedule: Vec<Price>,
     sell_schedule: Vec<Price>,
+    // fixed-rate grid
     #[serde(default)]
     pub buy_price: Price,
     #[serde(default)]

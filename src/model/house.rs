@@ -1,7 +1,7 @@
 use crate::utils::units::{Energy, Period};
 use crate::model::appliance::Appliance;
 use crate::model::solar_panel::SolarPanel;
-use crate::trading::order_book::OrderSide;
+use crate::trading::OrderSide;
 
 
 pub struct House {

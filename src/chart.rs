@@ -1,5 +1,5 @@
 use crate::utils::units::Period;
-use crate::trading::order_book::{Order, OrderSide};
+use crate::trading::{Order, OrderSide};
 use crate::trading::grid::Grid;
 use charts_rs::{LineChart, THEME_GRAFANA};
 
