@@ -1,20 +1,24 @@
-use crate::appliance::Appliance;
-use crate::solar_panel::SolarPanel;
-use crate::trading::order_book::OrderSide;
 use crate::utils::units::{Energy, Period};
+use crate::model::appliance::Appliance;
+use crate::model::solar_panel::SolarPanel;
+use crate::trading::order_book::OrderSide;
 
-use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
 pub struct House {
     pub id: u32,
-    #[serde(default)]
     appliances: Vec<Appliance>,
-    #[serde(default)]
     solar_panels: Vec<SolarPanel>,
 }
 
 impl House {
+    pub fn new(id: u32, appliances: Vec<Appliance>, solar_panels: Vec<SolarPanel>) -> Self {
+        House {
+            id,
+            appliances,
+            solar_panels,
+        }
+    }
+
     pub fn progress(&mut self, period: Period) {
         for appliance in &mut self.appliances {
             appliance.progress(period);
@@ -25,19 +29,19 @@ impl House {
     }
 
     pub fn energy_consumed(&self) -> Energy {
-        let mut total = Energy::new(0);
+        let mut total = 0;
         for appliance in &self.appliances {
-            total = Energy::new(total.value() + appliance.energy_input().value());
+            total += appliance.energy_input().value();
         }
-        total
+        Energy::new(total)
     }
-
+    
     pub fn energy_produced(&self) -> Energy {
-        let mut total = Energy::new(0);
+        let mut total = 0;
         for solar_panel in &self.solar_panels {
-            total = Energy::new(total.value() + solar_panel.current_energy_output.value());
+            total += solar_panel.current_energy_output.value();
         }
-        total
+        Energy::new(total)
     }
 
     pub fn energy_order(&self) -> Option<(OrderSide, Energy)> {

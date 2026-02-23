@@ -1,35 +1,27 @@
+mod chart;
+mod config;
 mod model;
-mod sim_config;
-mod sim_controller;
+mod sim;
 mod trading;
 mod utils;
 
-use sim_config::SimConfig;
-use sim_controller::SimController;
+use config::loader::Config;
+use sim::Sim;
+use trading::market::Market;
 
-use utils::units::*;
+use std::fs;
 
-use model::*;
-use trading::*;
 
 fn main() {
-    start_sim();
+    let mut sim = build_sim("resources/config.json");
+    sim.run();
+    sim.generate_charts();
 }
 
-fn start_sim() {
-    let sim_config = SimConfig {
-        frequency: 1000,
-        periods: 24,
-    };
-
-    let houses = sim_config.load_houses();
-
-    let market = market::Market::new(
-        order_book::OrderBook::default(),
-        grid::Grid::new(Price::new(16), Price::new(10)),
-    );
-
-    let mut sim = SimController::new(sim_config, houses, market);
-
-    sim.run();
+fn build_sim(config_path: &str) -> Sim {
+    let json_string = fs::read_to_string(config_path).unwrap();
+    let config: Config = serde_json::from_str(&json_string).unwrap();
+    let houses = config.load_houses();
+    let market = Market::new(config.grid);
+    Sim::new(config.periods, houses, market)
 }

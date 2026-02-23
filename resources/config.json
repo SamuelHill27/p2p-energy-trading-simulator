@@ -1,0 +1,17 @@
+{
+  "periods": 3,
+  "grid": {
+    "buy_schedule": [10, 15, 20],
+    "sell_schedule": [5, 7, 9]
+  },
+  "neighborhood": [
+    {
+      "preset": "resources/house_configs/summer_clear_prosumer.json",
+      "count": 3
+    },
+    {
+      "preset": "resources/house_configs/consumer.json",
+      "count": 9
+    }
+  ]
+}

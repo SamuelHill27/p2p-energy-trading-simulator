@@ -1,17 +1,22 @@
-use crate::utils::units::{Energy, Price};
+use crate::utils::units::{Energy, Period, Price};
 
+use serde::{Deserialize, Serialize};
+
+
+#[derive(Serialize, Deserialize)]
 pub struct Grid {
+    buy_schedule: Vec<Price>,
+    sell_schedule: Vec<Price>,
+    #[serde(default)]
     pub buy_price: Price,
+    #[serde(default)]
     pub sell_price: Price,
 }
 
 impl Grid {
-    pub fn new(buy_price: Price, sell_price: Price) -> Grid {
-        assert!(buy_price.value() > sell_price.value() + 1);
-        Grid {
-            buy_price,
-            sell_price,
-        }
+    pub fn progress(&mut self, period: Period) {
+        self.buy_price = self.buy_schedule[period.value() as usize];
+        self.sell_price = self.sell_schedule[period.value() as usize];
     }
 
     pub fn mid_price_value(&self) -> f64 {

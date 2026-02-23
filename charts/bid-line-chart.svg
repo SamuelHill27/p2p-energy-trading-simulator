@@ -1,0 +1,74 @@
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="600" height="400" fill="#1F1D1D"/>
+<g>
+<line stroke-width="2" x1="120.5" y1="15" x2="145.5" y2="15" stroke="#7EB26D"/>
+<circle cx="133" cy="15" r="5.5" stroke-width="2" stroke="#7EB26D" fill="#7EB26D"/>
+<text font-size="14" x="148.5" y="19" font-family="Roboto" fill="#D8D9DA">
+Average Bid Price
+</text>
+</g>
+<g>
+<line stroke-width="2" x1="269.5" y1="15" x2="294.5" y2="15" stroke="#EAB839"/>
+<circle cx="282" cy="15" r="5.5" stroke-width="2" stroke="#EAB839" fill="#EAB839"/>
+<text font-size="14" x="297.5" y="19" font-family="Roboto" fill="#D8D9DA">
+Average Bid Price with Grid
+</text>
+</g>
+<g stroke="#444343">
+<line stroke-width="1" x1="71" y1="27" x2="595" y2="27"/><line stroke-width="1" x1="71" y1="83.3" x2="595" y2="83.3"/><line stroke-width="1" x1="71" y1="139.7" x2="595" y2="139.7"/><line stroke-width="1" x1="71" y1="196" x2="595" y2="196"/><line stroke-width="1" x1="71" y1="252.3" x2="595" y2="252.3"/><line stroke-width="1" x1="71" y1="308.7" x2="595" y2="308.7"/>
+</g>
+<g>
+
+<text font-size="14" x="2" y="32" font-family="Roboto" fill="#B9B8CE">
+210 Price
+</text>
+<text font-size="14" x="2" y="88.3" font-family="Roboto" fill="#B9B8CE">
+175 Price
+</text>
+<text font-size="14" x="2" y="144.7" font-family="Roboto" fill="#B9B8CE">
+140 Price
+</text>
+<text font-size="14" x="2" y="201" font-family="Roboto" fill="#B9B8CE">
+105 Price
+</text>
+<text font-size="14" x="10" y="257.3" font-family="Roboto" fill="#B9B8CE">
+70 Price
+</text>
+<text font-size="14" x="10" y="313.7" font-family="Roboto" fill="#B9B8CE">
+35 Price
+</text>
+<text font-size="14" x="18" y="370" font-family="Roboto" fill="#B9B8CE">
+0 Price
+</text>
+</g>
+<g>
+<g stroke="#B9B8CE">
+<line stroke-width="1" x1="71" y1="365" x2="595" y2="365"/>
+<line stroke-width="1" x1="71" y1="365" x2="71" y2="370"/>
+<line stroke-width="1" x1="245.7" y1="365" x2="245.7" y2="370"/>
+<line stroke-width="1" x1="420.3" y1="365" x2="420.3" y2="370"/>
+<line stroke-width="1" x1="595" y1="365" x2="595" y2="370"/>
+</g>
+<text font-size="14" x="134.3" y="384" font-family="Roboto" fill="#B9B8CE">
+0 hours
+</text>
+<text font-size="14" x="309" y="384" font-family="Roboto" fill="#B9B8CE">
+1 hours
+</text>
+<text font-size="14" x="483.7" y="384" font-family="Roboto" fill="#B9B8CE">
+2 hours
+</text>
+</g>
+<g>
+<path d="M 158.3 204 L 333 123.6 L 507.7 43.1" stroke-width="2" fill="none" stroke="#7EB26D"/>
+<circle cx="158.3" cy="204" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="333" cy="123.6" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="507.7" cy="43.1" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+</g>
+<g>
+<path d="M 158.3 204 L 333 123.6 L 507.7 43.1" stroke-width="2" fill="none" stroke="#EAB839"/>
+<circle cx="158.3" cy="204" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="333" cy="123.6" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="507.7" cy="43.1" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+</g>
+</svg>
