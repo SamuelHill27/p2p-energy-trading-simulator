@@ -2,7 +2,6 @@ use crate::utils::units::{Energy, Period, Price};
 
 use std::{collections::HashMap, fmt::Display};
 
-
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub enum OrderSide {
     Bid,
@@ -50,21 +49,21 @@ impl OrderBook {
             matched: matched.unwrap_or(false),
         });
     }
-    
+
     pub fn remove_empty_orders(&mut self) {
         self.orders.retain(|order| order.volume.value() > 0);
     }
 
     // clearing orders and updating trade history
     pub fn record_trades(&mut self, period: Period) {
-        let trades = std::mem::take(&mut self.orders); 
+        let trades = std::mem::take(&mut self.orders);
         self.trades.insert(period, trades);
     }
 
     pub fn orders_mut(&mut self) -> &mut Vec<Order> {
         &mut self.orders
     }
-    
+
     pub fn trades(&self) -> &HashMap<Period, Vec<Order>> {
         &self.trades
     }

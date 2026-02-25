@@ -1,42 +1,38 @@
 use crate::utils::units::{Energy, Period, Price};
 
+use crate::config::loader::GridType;
 use crate::trading::grid::Grid;
-use crate::trading::order_book::{OrderBook, Order, OrderSide};
+use crate::trading::order_book::{Order, OrderBook, OrderSide};
 
 use std::cmp;
 use std::collections::HashMap;
 
-
 pub struct Market {
     book: OrderBook,
-    pub grid: Grid,
+    pub grid: GridType,
 }
 
 impl Market {
-    pub fn new(grid: Grid) -> Self {
+    pub fn new(grid: GridType) -> Self {
         Market {
             book: OrderBook::default(),
             grid,
         }
     }
-    
+
     pub fn trades(&self) -> &HashMap<Period, Vec<Order>> {
         self.book.trades()
     }
 
-    pub fn progress(&mut self, hour: Period) {
-        self.grid.progress(hour);
-    }
-
     pub fn create_order(&mut self, id: u32, order_type: OrderSide, volume: Energy) {
         let price = match order_type {
-            OrderSide::Ask => self.grid.buy_price,
-            OrderSide::Bid => self.grid.sell_price,
+            OrderSide::Ask => self.grid.buy_price(),
+            OrderSide::Bid => self.grid.sell_price(),
         };
         self.book.add_order(id, order_type, price, volume, None);
     }
 
-    pub fn trade(&mut self, period: Period) {
+    pub fn trade(&mut self) {
         let market_price: Price = self.calc_market_price();
         self.match_orders(market_price); // distribute order volumes fairly
 
@@ -53,7 +49,7 @@ impl Market {
             }
         }
 
-        self.book.record_trades(period);
+        self.book.record_trades(Period::current());
     }
 
     fn calc_market_price(&self) -> Price {
@@ -66,12 +62,12 @@ impl Market {
         };
 
         let mid_price_bias =
-            (self.grid.buy_price.value() as f64 - self.grid.mid_price_value()) * demand;
+            (self.grid.buy_price().value() as f64 - self.grid.mid_price_value()) * demand;
         let market_price = self.grid.mid_price_value() + mid_price_bias;
 
         Price::new(cmp::min(
             market_price.round() as u32,
-            self.grid.buy_price.value() - 1,
+            self.grid.buy_price().value() - 1,
         ))
     }
 
@@ -102,7 +98,8 @@ impl Market {
                 }
             }
         }
-        for (id, volume) in new_order_details { // add new orders
+        for (id, volume) in new_order_details {
+            // add new orders
             self.book.add_order(
                 id,
                 dominant_side,

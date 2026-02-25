@@ -1,8 +1,8 @@
-use crate::utils::units::Period;
-use crate::model::house::House;
-use crate::trading::market::Market;
 use crate::chart;
-
+use crate::model::house::House;
+use crate::trading::grid::Grid;
+use crate::trading::market::Market;
+use crate::utils::units::Period;
 
 pub struct Sim {
     periods: u32,
@@ -20,17 +20,15 @@ impl Sim {
     }
 
     pub fn run(&mut self) {
-        for hour in 0..self.periods {
-            let hour = Period::new(hour);
-            self.market.progress(hour);
+        for _ in 0..self.periods {
             for house in &mut self.houses {
-                house.progress(hour);
                 if let Some((order_type, energy)) = house.energy_order() {
                     self.market.create_order(house.id, order_type, energy);
                 }
             }
-            self.market.trade(hour);
-            self.debug_display(hour);
+            self.market.trade();
+            self.debug_display();
+            Period::increment();
         }
     }
 
@@ -38,20 +36,29 @@ impl Sim {
         chart::generate(&self.market.trades(), self.periods, &self.market.grid);
     }
 
-    fn debug_display(&self, hour: Period) {
-        println!("--- {} ---", hour);
-        println!("GRID: buy price: {}, sell price: {}", self.market.grid.buy_price, self.market.grid.sell_price);
+    fn debug_display(&self) {
+        println!("--- {} ---", Period::current());
+        println!(
+            "GRID: buy price: {}, sell price: {}",
+            self.market.grid.buy_price(),
+            self.market.grid.sell_price()
+        );
+
         for house in &self.houses {
-            if house.energy_consumed().value() > 0 || house.energy_produced().value() > 0 {
+            let energy_consumed =
+                house.energy_consumption_schedule[Period::current().value() as usize];
+            let energy_produced =
+                house.energy_production_schedule[Period::current().value() as usize];
+            if energy_consumed.value() > 0 || energy_produced.value() > 0 {
                 println!(
                     "HOUSE: House {} consumed {} and produced {}",
                     house.id,
-                    house.energy_consumed(),
-                    house.energy_produced()
+                    energy_consumed.value(),
+                    energy_produced.value()
                 );
             }
         }
-        for trade in &self.market.trades()[&hour] {
+        for trade in &self.market.trades()[&Period::current()] {
             println!(
                 "TRADE: House {} {} {} for {} (at {} units currency per units energy)",
                 trade.id,
