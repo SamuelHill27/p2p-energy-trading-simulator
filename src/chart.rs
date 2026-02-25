@@ -7,14 +7,15 @@ use charts_rs::{LineChart, THEME_GRAFANA};
 use std::collections::HashMap;
 use std::ops::Div;
 
+
 pub fn generate(trades: &HashMap<Period, Vec<Order>>, periods: u32, grid: &GridType) {
     let mut bid_trade_prices = vec![];
     let mut ask_trade_prices = vec![];
     let mut bid_grid_prices = vec![];
     let mut ask_grid_prices = vec![];
 
-    for _ in 0..periods {
-        let trades = &trades[&Period::current()];
+    for period in 0..periods {
+        let trades = &trades[&Period::new(period)];
 
         let total_bid_price = trades
             .iter()
@@ -93,7 +94,7 @@ pub fn generate(trades: &HashMap<Period, Vec<Order>>, periods: u32, grid: &GridT
             ("Average Bid Price with Grid", bid_grid_prices).into(),
         ],
         (0..periods)
-            .map(|_| format!("{}", Period::current()))
+            .map(|period| format!("{}", period))
             .collect(),
         THEME_GRAFANA,
     );
@@ -104,7 +105,7 @@ pub fn generate(trades: &HashMap<Period, Vec<Order>>, periods: u32, grid: &GridT
             ("Average Ask Price with Grid", ask_grid_prices).into(),
         ],
         (0..periods)
-            .map(|_| format!("{}", Period::current()))
+            .map(|period| format!("{}", period))
             .collect(),
         THEME_GRAFANA,
     );

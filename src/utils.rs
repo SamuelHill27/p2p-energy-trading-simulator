@@ -61,13 +61,20 @@ pub mod units {
         pub fn current() -> Self {
             CURRENT_PERIOD.with(|p| *p.borrow())
         }
+        
+        pub fn new(value: u32) -> Self {
+            Period(value)
+        }
 
         pub fn value(&self) -> u32 {
             self.0
         }
 
         pub(crate) fn increment() {
-            CURRENT_PERIOD.with(|p| Period((*p.borrow_mut()).value() + 1));
+            CURRENT_PERIOD.with(|p| {
+                let mut period = p.borrow_mut();
+                *period = Period(period.value() + 1);
+            });
         }
     }
 

@@ -3,8 +3,8 @@ use crate::utils::units::{Energy, Period};
 
 pub struct House {
     pub id: u32,
-    pub energy_consumption_schedule: Vec<Energy>,
-    pub energy_production_schedule: Vec<Energy>,
+    energy_consumption_schedule: Vec<Energy>,
+    energy_production_schedule: Vec<Energy>,
 }
 
 impl House {
@@ -19,10 +19,20 @@ impl House {
             energy_production_schedule,
         }
     }
+    
+    pub fn current_energy_production(&self) -> Energy {
+        match self.energy_production_schedule.get(Period::current().value() as usize) {
+            Some(energy) => *energy,
+            None => Energy::new(0),
+        }
+    }
+    
+    pub fn current_energy_consumption(&self) -> Energy {
+        self.energy_consumption_schedule[Period::current().value() as usize]
+    }
 
     pub fn energy_order(&self) -> Option<(OrderSide, Energy)> {
-        let net_energy = self.energy_production_schedule[Period::current().value() as usize].value()
-            as i32
+        let net_energy = self.current_energy_production().value() as i32
             - self.energy_consumption_schedule[Period::current().value() as usize].value() as i32;
         match net_energy {
             ne if ne > 0 => Some((OrderSide::Ask, Energy::new(net_energy as u32))),
