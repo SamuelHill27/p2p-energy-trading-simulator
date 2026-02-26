@@ -5,8 +5,9 @@ edition = "2024"
 
 [dependencies]
 charts-rs = "0.3.27"
-chrono = "0.4.44"
+chrono = { version = "0.4.44", features = ["serde"] }
 csv = "1.4.0"
 rand = "0.9.2"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.149"
+serde_with = "3.17.0"

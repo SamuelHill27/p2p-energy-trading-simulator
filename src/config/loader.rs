@@ -1,12 +1,9 @@
-use crate::config::data_reader;
 use crate::model::house::House;
+use crate::config::data_query::HouseData;
 use crate::trading::grid::Grid;
-use crate::config::data_reader::{ConsumerData, ProsumerData};
+use crate::config::data_query;
 
 use serde::{Deserialize, Serialize};
-use rand::seq::SliceRandom;
-use std::fs;
-use std::path::PathBuf;
 
 
 #[derive(Serialize, Deserialize)]
@@ -19,35 +16,26 @@ struct NeighborhoodConfig {
 }
 
 impl NeighborhoodConfig {
-    fn datasets(&self) -> (Vec<ConsumerData>, Vec<ProsumerData>) {
-        let mut energy_consumption_datasets = self.select_datasets(&self.energy_consumptions_dir, self.num_of_consumers + self.num_of_prosumers);
-        let solar_generation_datasets = self.select_datasets(&self.energy_productions_dir, self.num_of_prosumers);
-        let prosumer_energy_consumption_datasets = energy_consumption_datasets.split_off(self.num_of_consumers);
-        let consumers = data_reader::consumer_data(energy_consumption_datasets);
-        let prosumers = data_reader::prosumer_data(prosumer_energy_consumption_datasets, solar_generation_datasets);
-        (consumers, prosumers)
-    }
-    
-    fn select_datasets(&self, datasets_dir: &String, num_of_datasets: usize) -> Vec<PathBuf> {
-        let mut entries: Vec<_> = fs::read_dir(datasets_dir)
-            .unwrap()
-            .filter_map(Result::ok)
-            .collect();
-        if entries.len() < num_of_datasets {
-            panic!(
-                "Tried to take {} entries, but only {} were found",
-                num_of_datasets,
-                entries.len()
-            );
-        }
-        if self.random_selection {
-            entries.shuffle(&mut rand::rng());
-        }
-        entries
-            .iter()
-            .take(num_of_datasets)
-            .map(|entry| entry.path())
-            .collect()
+    fn load_house_data(&self, periods: usize) -> Vec<HouseData> {
+        let mut consumption_datasets = data_query::select_datasets(&self.energy_consumptions_dir, self.num_of_consumers + self.num_of_prosumers, self.random_selection);
+        let solar_generation_datasets = data_query::select_datasets(&self.energy_productions_dir, self.num_of_prosumers, self.random_selection);
+        let prosumer_consumption_datasets = consumption_datasets.split_off(self.num_of_consumers);
+        assert_eq!(solar_generation_datasets.len(), prosumer_consumption_datasets.len());
+        
+        let consumer_consumption = consumption_datasets.iter()
+            .map(|dataset_path| data_query::select_entries(dataset_path.clone(), periods))
+            .collect::<Vec<_>>();
+        let consumers = consumer_consumption.into_iter().map(|dataset| HouseData::new(dataset, Vec::new())).collect::<Vec<_>>();
+        
+        let prosumer_consumption = prosumer_consumption_datasets.iter()
+            .map(|dataset_path| data_query::select_entries(dataset_path.clone(), periods))
+            .collect::<Vec<_>>();
+        let prosumer_generation = solar_generation_datasets.iter()
+            .map(|dataset_path| data_query::select_entries(dataset_path.clone(), periods))
+            .collect::<Vec<_>>();
+        let prosumers = prosumer_consumption.into_iter().zip(prosumer_generation.into_iter()).map(|(consumption, generation)| HouseData::new(consumption, generation)).collect::<Vec<_>>();
+        
+        consumers.into_iter().chain(prosumers.into_iter()).collect::<Vec<_>>()
     }
 }
 
@@ -60,16 +48,11 @@ pub struct Config {
 
 impl Config {
     pub fn load_houses(&self) -> Vec<House> {
-        let (consumers, prosumers) = self.neighborhood.datasets();
+        let house_data = self.neighborhood.load_house_data(self.periods as usize);
         let mut houses = Vec::new();
         let mut i = 1;
-        for consumer in consumers {
-            let house = House::new(i, consumer.consumption_energy(), Vec::new());
-            houses.push(house);
-            i += 1;
-        };
-        for prosumer in prosumers {
-            let house = House::new(i, prosumer.consumption_energy(), prosumer.production_energy());
+        for house in house_data {
+            let house = House::new(i, house.consumption_energy(), house.generation_energy());
             houses.push(house);
             i += 1;
         };

@@ -1,104 +1,72 @@
 use crate::utils::units::Energy;
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, de::DeserializeOwned};
+use std::fs::File;
 use std::path::PathBuf;
+use csv::ReaderBuilder;
+use chrono::{NaiveDateTime};
+use serde_with::{serde_as, DisplayFromStr};
 
 
-#[derive(Serialize, Deserialize)]
-struct LCLEnergyConsumptionPeriod {
+#[derive(Debug, Deserialize)]
+#[serde(untagged)]
+pub enum DatasetRecord {
+    LCLEnergyConsumption(LCLEnergyConsumptionRecord),
+    UkPvSolarGeneration(UkPvSolarGenerationRecord),
+}
+
+impl DatasetRecord {
+    pub fn datetime(&self) -> NaiveDateTime {
+        match self {
+            DatasetRecord::LCLEnergyConsumption(record) => record.date_time,
+            DatasetRecord::UkPvSolarGeneration(record) => record.datetime_gmt,
+        }
+    }
+    
+    pub fn energy(&self) -> Energy {
+        match self {
+            DatasetRecord::LCLEnergyConsumption(record) => Energy::new(record.consumption_wh.round() as u32),
+            DatasetRecord::UkPvSolarGeneration(record) => Energy::new(record.generation_wh.round() as u32),
+        }
+    }
+}
+
+#[serde_as]
+#[derive(Debug, Deserialize)]
+pub struct LCLEnergyConsumptionRecord {
     #[serde(rename = "LCLid")]
-    lclid: String,
+    _lclid: String,
     #[serde(rename = "stdorToU")]
-    std_or_tou: String,
+    _std_or_tou: String,
+    #[serde_as(as = "DisplayFromStr")]
     #[serde(rename = "DateTime")]
-    date_time: String,
+    date_time: NaiveDateTime,
     #[serde(rename = "consumption_Wh")]
     consumption_wh: f64,
 }
 
-impl LCLEnergyConsumptionPeriod {
-    pub fn load_dataset(dataset_path: PathBuf) -> Vec<Self> {
-        let mut rdr = csv::Reader::from_path(dataset_path).unwrap();
-        let mut periods: Vec<Self> = Vec::new();
-        for result in rdr.deserialize() {
-            match result {
-                Ok(period) => {
-                    periods.push(period);
-                }
-                Err(e) => eprintln!("Error deserializing record: {}", e),
-            }
-        }
-        periods
-    }
-}
-
-#[derive(Serialize, Deserialize)]
-struct UkPvSolarGenerationPeriod {
+#[serde_as]
+#[derive(Debug, Deserialize)]
+pub struct UkPvSolarGenerationRecord {
     #[serde(rename = "ss_id")]
-    ss_id: String,
+    _ss_id: String,
+    #[serde_as(as = "DisplayFromStr")]
     #[serde(rename = "datetime_GMT")]
-    datetime_gmt: String,
+    datetime_gmt: NaiveDateTime,
     #[serde(rename = "generation_Wh")]
     generation_wh: f64,
 }
 
-impl UkPvSolarGenerationPeriod {
-    pub fn load_dataset(dataset_path: PathBuf) -> Vec<Self> {
-        let mut rdr = csv::Reader::from_path(dataset_path).unwrap();
-        let mut periods: Vec<Self> = Vec::new();
-        for result in rdr.deserialize() {
-            match result {
-                Ok(period) => {
-                    periods.push(period);
-                }
-                Err(e) => eprintln!("Error deserializing record: {}", e),
-            }
-        }
-        periods
-    }
-}
-
-pub struct ProsumerData {
-    lcl_data: Vec<LCLEnergyConsumptionPeriod>,
-    pv_data: Vec<UkPvSolarGenerationPeriod>,
-}
-
-impl ProsumerData {
-    pub fn consumption_energy(&self) -> Vec<Energy> {
-        self.lcl_data.iter().map(|period| Energy::new(period.consumption_wh.round() as u32)).collect()
-    }
+pub fn load_dataset<T: DeserializeOwned>(dataset_path: PathBuf) -> Vec<T> {
+    let file = File::open(&dataset_path).expect("Failed to open file");
+    let mut rdr = ReaderBuilder::new().from_reader(file);
     
-    pub fn production_energy(&self) -> Vec<Energy> {
-        self.pv_data.iter().map(|period| Energy::new(period.generation_wh.round() as u32)).collect()
+    let mut records = Vec::new();
+    for result in rdr.deserialize() {
+        match result {
+            Ok(record) => records.push(record),
+            Err(e) => eprintln!("Error deserializing record: {}", e),
+        }
     }
-}
-
-pub struct ConsumerData {
-    lcl_data: Vec<LCLEnergyConsumptionPeriod>,
-}
-
-impl ConsumerData {
-    pub fn consumption_energy(&self) -> Vec<Energy> {
-        self.lcl_data.iter().map(|period| Energy::new(period.consumption_wh.round() as u32)).collect()
-    }
-}
-
-pub fn consumer_data(consumption_dataset_paths: Vec<PathBuf>) -> Vec<ConsumerData> {
-    let mut consumers = Vec::new();
-    for dataset_path in consumption_dataset_paths {
-        let consumption_periods = LCLEnergyConsumptionPeriod::load_dataset(dataset_path);
-        consumers.push(ConsumerData { lcl_data: consumption_periods });
-    }
-    consumers
-}
-
-pub fn prosumer_data(consumption_dataset_paths: Vec<PathBuf>, production_dataset_paths: Vec<PathBuf>) -> Vec<ProsumerData> {
-    assert_eq!(consumption_dataset_paths.len(), production_dataset_paths.len());
-    let mut prosumers = Vec::new();
-    for i in 0..consumption_dataset_paths.len() {
-        let consumption_periods = LCLEnergyConsumptionPeriod::load_dataset(consumption_dataset_paths[i].clone());
-        let production_periods = UkPvSolarGenerationPeriod::load_dataset(production_dataset_paths[i].clone());
-        prosumers.push(ProsumerData { lcl_data: consumption_periods, pv_data: production_periods });
-    }
-    prosumers
+    records
 }
