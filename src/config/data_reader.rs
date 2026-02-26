@@ -83,9 +83,9 @@ impl ConsumerData {
     }
 }
 
-pub fn consumer_data(dataset_paths: Vec<PathBuf>) -> Vec<ConsumerData> {
+pub fn consumer_data(consumption_dataset_paths: Vec<PathBuf>) -> Vec<ConsumerData> {
     let mut consumers = Vec::new();
-    for dataset_path in dataset_paths {
+    for dataset_path in consumption_dataset_paths {
         let consumption_periods = LCLEnergyConsumptionPeriod::load_dataset(dataset_path);
         consumers.push(ConsumerData { lcl_data: consumption_periods });
     }

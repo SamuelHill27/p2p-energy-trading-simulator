@@ -1,6 +1,4 @@
 use crate::utils::units::{Energy, Period, Price};
-
-use crate::config::loader::GridType;
 use crate::trading::grid::Grid;
 use crate::trading::order_book::{Order, OrderBook, OrderSide};
 
@@ -9,11 +7,11 @@ use std::collections::HashMap;
 
 pub struct Market {
     book: OrderBook,
-    pub grid: GridType,
+    pub grid: Grid,
 }
 
 impl Market {
-    pub fn new(grid: GridType) -> Self {
+    pub fn new(grid: Grid) -> Self {
         Market {
             book: OrderBook::default(),
             grid,

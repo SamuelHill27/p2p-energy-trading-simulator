@@ -1,7 +1,6 @@
 use crate::config::data_reader;
 use crate::model::house::House;
-use crate::trading::grid::{FixedGrid, Grid, VariableGrid};
-use crate::utils::units::Price;
+use crate::trading::grid::Grid;
 use crate::config::data_reader::{ConsumerData, ProsumerData};
 
 use serde::{Deserialize, Serialize};
@@ -9,31 +8,6 @@ use rand::seq::SliceRandom;
 use std::fs;
 use std::path::PathBuf;
 
-
-#[derive(Clone, Serialize, Deserialize)]
-#[serde(tag = "type", content = "data")]
-pub enum GridType {
-    #[serde(rename = "fixed")]
-    Fixed(FixedGrid),
-    #[serde(rename = "variable")]
-    Variable(VariableGrid),
-}
-
-impl Grid for GridType {
-    fn buy_price(&self) -> Price {
-        match self {
-            GridType::Fixed(grid) => grid.buy_price(),
-            GridType::Variable(grid) => grid.buy_price(),
-        }
-    }
-
-    fn sell_price(&self) -> Price {
-        match self {
-            GridType::Fixed(grid) => grid.sell_price(),
-            GridType::Variable(grid) => grid.sell_price(),
-        }
-    }
-}
 
 #[derive(Serialize, Deserialize)]
 struct NeighborhoodConfig {
@@ -80,7 +54,7 @@ impl NeighborhoodConfig {
 #[derive(Serialize, Deserialize)]
 pub struct Config {
     pub periods: u32,
-    pub grid: GridType,
+    pub grid: Grid,
     neighborhood: NeighborhoodConfig,
 }
 
