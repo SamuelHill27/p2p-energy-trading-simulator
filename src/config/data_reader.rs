@@ -1,64 +1,39 @@
-use crate::utils::units::Energy;
-
 use serde::{Deserialize, de::DeserializeOwned};
 use std::fs::File;
 use std::path::PathBuf;
 use csv::ReaderBuilder;
-use chrono::{NaiveDateTime};
+use chrono::{DateTime, FixedOffset, NaiveDateTime};
 use serde_with::{serde_as, DisplayFromStr};
 
-
-#[derive(Debug, Deserialize)]
-#[serde(untagged)]
-pub enum DatasetRecord {
-    LCLEnergyConsumption(LCLEnergyConsumptionRecord),
-    UkPvSolarGeneration(UkPvSolarGenerationRecord),
-}
-
-impl DatasetRecord {
-    pub fn datetime(&self) -> NaiveDateTime {
-        match self {
-            DatasetRecord::LCLEnergyConsumption(record) => record.date_time,
-            DatasetRecord::UkPvSolarGeneration(record) => record.datetime_gmt,
-        }
-    }
-    
-    pub fn energy(&self) -> Energy {
-        match self {
-            DatasetRecord::LCLEnergyConsumption(record) => Energy::new(record.consumption_wh.round() as u32),
-            DatasetRecord::UkPvSolarGeneration(record) => Energy::new(record.generation_wh.round() as u32),
-        }
-    }
-}
 
 #[serde_as]
 #[derive(Debug, Deserialize)]
 pub struct LCLEnergyConsumptionRecord {
     #[serde(rename = "LCLid")]
-    _lclid: String,
+    pub _lclid: String,
     #[serde(rename = "stdorToU")]
-    _std_or_tou: String,
+    pub _std_or_tou: String,
     #[serde_as(as = "DisplayFromStr")]
     #[serde(rename = "DateTime")]
-    date_time: NaiveDateTime,
+    pub date_time: NaiveDateTime,
     #[serde(rename = "consumption_Wh")]
-    consumption_wh: f64,
+    pub consumption_wh: f64,
 }
 
 #[serde_as]
 #[derive(Debug, Deserialize)]
 pub struct UkPvSolarGenerationRecord {
     #[serde(rename = "ss_id")]
-    _ss_id: String,
+    pub _ss_id: String,
     #[serde_as(as = "DisplayFromStr")]
     #[serde(rename = "datetime_GMT")]
-    datetime_gmt: NaiveDateTime,
+    pub datetime_gmt: DateTime<FixedOffset>,
     #[serde(rename = "generation_Wh")]
-    generation_wh: f64,
+    pub generation_wh: f64,
 }
 
-pub fn load_dataset<T: DeserializeOwned>(dataset_path: PathBuf) -> Vec<T> {
-    let file = File::open(&dataset_path).expect("Failed to open file");
+pub fn load_dataset<T: DeserializeOwned>(dataset_path: &PathBuf) -> Vec<T> {
+    let file = File::open(dataset_path).expect("Failed to open file");
     let mut rdr = ReaderBuilder::new().from_reader(file);
     
     let mut records = Vec::new();
