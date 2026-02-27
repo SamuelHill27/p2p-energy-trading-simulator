@@ -20,8 +20,8 @@ impl HouseData {
     }
     
     pub fn retain_periods(&mut self, periods: usize) {
-        self.consumption_data.retain(|record| datetime_filter(record.date_time, periods));
-        self.generation_data.retain(|record| datetime_filter(record.datetime_gmt.naive_utc(), periods));
+        self.consumption_data.retain(|record| datetime_filter(record.datetime(), periods));
+        self.generation_data.retain(|record| datetime_filter(record.datetime().naive_local(), periods));
     }
 }
 
