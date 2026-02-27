@@ -1,6 +1,5 @@
 use crate::chart;
 use crate::model::house::House;
-use crate::trading::grid::Grid;
 use crate::trading::market::Market;
 use crate::utils::units::Period;
 

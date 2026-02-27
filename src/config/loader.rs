@@ -13,6 +13,7 @@ struct NeighborhoodConfig {
     energy_productions_dir: String,
     num_of_prosumers: usize,
     num_of_consumers: usize,
+    start_period: String,
     random_selection: bool,
 }
 
@@ -27,7 +28,7 @@ impl NeighborhoodConfig {
         let mut consumers = consumption_datasets.into_iter().map(|dataset| HouseData::from(dataset)).collect::<Vec<_>>();
         let mut prosumers = prosumer_consumption_datasets.into_iter().zip(solar_generation_datasets.into_iter()).map(|(consumption, generation)| HouseData::from((consumption, generation))).collect::<Vec<_>>();
         
-        consumers.iter_mut().chain(prosumers.iter_mut()).for_each(|house| house.retain_periods(periods));
+        consumers.iter_mut().chain(prosumers.iter_mut()).for_each(|house| house.retain_periods(periods, self.start_period.as_str()));
         consumers.into_iter().chain(prosumers.into_iter()).collect::<Vec<_>>()
     }
     

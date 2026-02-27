@@ -19,9 +19,11 @@ impl HouseData {
         self.generation_data.iter().map(|record| Energy::new(record.generation_wh.round() as u32)).collect()
     }
     
-    pub fn retain_periods(&mut self, periods: usize) {
-        self.consumption_data.retain(|record| datetime_filter(record.datetime(), periods));
-        self.generation_data.retain(|record| datetime_filter(record.datetime().naive_local(), periods));
+    pub fn retain_periods(&mut self, periods: usize, start_period: &str) {
+        let start_date = NaiveDateTime::parse_from_str(start_period, "%Y-%m-%d %H:%M:%S").unwrap();
+        let end_date = start_date + Duration::days(periods as i64);
+        self.consumption_data.retain(|record| record.datetime() >= start_date && record.datetime() < end_date);
+        self.generation_data.retain(|record| record.datetime().naive_local() >= start_date && record.datetime().naive_local() < end_date);
     }
 }
 
@@ -41,10 +43,4 @@ impl From<(PathBuf, PathBuf)> for HouseData {
             generation_data: load_dataset::<UkPvSolarGenerationRecord>(&generation_dataset),
         }
     }
-}
-
-fn datetime_filter(datetime: NaiveDateTime, periods: usize) -> bool {
-    let start_date = NaiveDateTime::parse_from_str("2013-06-01T00:00:00+00:00", "%Y-%m-%dT%H:%M:%S%:z").unwrap();
-    let end_date = start_date + Duration::days(periods as i64);
-    datetime >= start_date && datetime < end_date
 }

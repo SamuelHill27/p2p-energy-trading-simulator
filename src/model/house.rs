@@ -28,12 +28,15 @@ impl House {
     }
     
     pub fn current_energy_consumption(&self) -> Energy {
-        self.energy_consumption_schedule[Period::current().value() as usize]
+        match self.energy_consumption_schedule.get(Period::current().value() as usize) {
+            Some(energy) => *energy,
+            None => panic!("No energy consumption data for current period: {}, house: {}", Period::current().value(), self.id),
+        }
     }
 
     pub fn energy_order(&self) -> Option<(OrderSide, Energy)> {
         let net_energy = self.current_energy_production().value() as i32
-            - self.energy_consumption_schedule[Period::current().value() as usize].value() as i32;
+            - self.current_energy_consumption().value() as i32;
         match net_energy {
             ne if ne > 0 => Some((OrderSide::Ask, Energy::new(net_energy as u32))),
             ne if ne < 0 => Some((OrderSide::Bid, Energy::new(net_energy.abs() as u32))),
