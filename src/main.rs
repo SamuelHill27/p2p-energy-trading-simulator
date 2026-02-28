@@ -22,5 +22,5 @@ fn build_sim(config_path: &str) -> Sim {
     let config: Config = serde_json::from_str(&json_string).unwrap();
     let houses = config.load_houses();
     let market = Market::new(config.grid.clone());
-    Sim::new(config.periods, houses, market)
+    Sim::new(config.period_config(), houses, market)
 }

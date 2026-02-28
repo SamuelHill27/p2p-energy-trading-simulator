@@ -2,15 +2,16 @@ use crate::charts::{chart, average_price_total};
 use crate::model::house::House;
 use crate::trading::market::Market;
 use crate::utils::units::Period;
+use crate::config::loader::PeriodConfig;
 
 pub struct Sim {
-    periods: u32,
+    periods: PeriodConfig,
     houses: Vec<House>,
     market: Market,
 }
 
 impl Sim {
-    pub fn new(periods: u32, houses: Vec<House>, market: Market) -> Self {
+    pub fn new(periods: PeriodConfig, houses: Vec<House>, market: Market) -> Self {
         Sim {
             periods,
             houses,
@@ -19,7 +20,7 @@ impl Sim {
     }
 
     pub fn run(&mut self) {
-        for _ in 0..self.periods {
+        for _ in 0..self.periods.count() {
             for house in &mut self.houses {
                 if let Some((order_type, energy)) = house.energy_order() {
                     self.market.create_order(house.id, order_type, energy);
@@ -32,7 +33,7 @@ impl Sim {
     }
 
     pub fn generate_charts(&self) {
-        let (trades, periods, grid) = (self.market.trades(), self.periods, &self.market.grid);
+        let (trades, periods, grid) = (self.market.trades(), &self.periods, &self.market.grid);
         chart::generate(trades, periods, grid);
         average_price_total::generate(&mut trades.clone(), periods, grid);
     }

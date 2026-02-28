@@ -1,25 +1,26 @@
 use crate::charts::utils;
 use crate::utils::units::Period;
 use crate::trading::{Order, OrderSide, grid::Grid};
+use crate::config::loader::PeriodConfig;
 
 use charts_rs::{LineChart, THEME_GRAFANA};
 use std::collections::HashMap;
 
 
-pub fn generate(trades: &mut HashMap<Period, Vec<Order>>, periods: u32, grid: &Grid) {
+pub fn generate(trades: &mut HashMap<Period, Vec<Order>>, periods: &PeriodConfig, grid: &Grid) {
     let line_chart_bid = line_chart(trades, periods, grid, OrderSide::Bid);
     std::fs::write("charts/average-price-total-bid.svg", line_chart_bid.svg().unwrap()).unwrap();
     let line_chart_ask = line_chart(trades, periods, grid, OrderSide::Ask);
     std::fs::write("charts/average-price-total-ask.svg", line_chart_ask.svg().unwrap()).unwrap();
 }
 
-fn line_chart(trades: &mut HashMap<Period, Vec<Order>>, periods: u32, grid: &Grid, order_side: OrderSide) -> LineChart {
+fn line_chart(trades: &mut HashMap<Period, Vec<Order>>, periods: &PeriodConfig, grid: &Grid, order_side: OrderSide) -> LineChart {
     let mut line_chart = LineChart::new_with_theme(
         vec![
             ("Average Bid Prices", average_period_prices(trades, order_side)).into(),
             ("Average Ask Prices with Grid", average_period_prices_grid(trades, order_side, grid)).into(),
         ],
-        (0..periods)
+        (0..periods.count())
             .map(|period| format!("{}", if period > 0 { period as f32 / 2.0 } else { 0.0 }))
             .collect(),
         THEME_GRAFANA,

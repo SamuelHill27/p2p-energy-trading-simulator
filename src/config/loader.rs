@@ -6,6 +6,19 @@ use serde::{Deserialize, Serialize};
 use rand::seq::SliceRandom;
 use std::fs;
 use std::path::PathBuf;
+use chrono::{NaiveDate, Datelike};
+
+
+pub struct PeriodConfig {
+    start: i64,
+    end: i64,
+}
+
+impl PeriodConfig {
+    pub fn count(&self) -> usize {
+        (self.end - self.start) as usize
+    }
+}
 
 #[derive(Serialize, Deserialize)]
 struct NeighborhoodConfig {
@@ -13,7 +26,6 @@ struct NeighborhoodConfig {
     energy_productions_dir: String,
     num_of_prosumers: usize,
     num_of_consumers: usize,
-    start_period: String,
     random_selection: bool,
 }
 
@@ -56,7 +68,8 @@ impl NeighborhoodConfig {
 
 #[derive(Serialize, Deserialize)]
 pub struct Config {
-    pub periods: u32,
+    start_period: String,
+    end_period: String,
     pub grid: Grid,
     neighborhood: NeighborhoodConfig,
 }
@@ -75,5 +88,14 @@ impl Config {
             i += 1;
         };
         houses
+    }
+    
+    pub fn period_config(&self) -> PeriodConfig {
+        let start_date = NaiveDate::parse_from_str(self.start_period.as_str(), "%Y-%m-%d %H:%M:%S").unwrap();
+        let end_date = NaiveDate::parse_from_str(self.end_period.as_str(), "%Y-%m-%d %H:%M:%S").unwrap();
+        let start_of_year = NaiveDate::from_ymd_opt(start_date.year(), 1, 1).unwrap();
+        let start = start_date.signed_duration_since(start_of_year).num_days();
+        let end = end_date.signed_duration_since(start_of_year).num_days();
+        PeriodConfig { start, end }
     }
 }
