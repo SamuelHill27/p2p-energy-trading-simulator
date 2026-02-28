@@ -1,4 +1,4 @@
-use crate::chart;
+use crate::charts::{chart, average_price_total};
 use crate::model::house::House;
 use crate::trading::market::Market;
 use crate::utils::units::Period;
@@ -32,7 +32,9 @@ impl Sim {
     }
 
     pub fn generate_charts(&self) {
-        chart::generate(&self.market.trades(), self.periods, &self.market.grid);
+        let (trades, periods, grid) = (self.market.trades(), self.periods, &self.market.grid);
+        chart::generate(trades, periods, grid);
+        average_price_total::generate(&mut trades.clone(), periods, grid);
     }
 
     fn debug_display(&self) {

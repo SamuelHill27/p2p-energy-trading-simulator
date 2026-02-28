@@ -18,17 +18,16 @@ struct NeighborhoodConfig {
 }
 
 impl NeighborhoodConfig {
-    fn load_house_data(&self, periods: usize) -> Vec<HouseData> {
+    fn load_house_data(&self) -> Vec<HouseData> {
         let mut consumption_datasets = self.select_datasets(&self.energy_consumptions_dir, self.num_of_consumers + self.num_of_prosumers);
         let solar_generation_datasets = self.select_datasets(&self.energy_productions_dir, self.num_of_prosumers);
         
         let prosumer_consumption_datasets = consumption_datasets.split_off(self.num_of_consumers);
         assert_eq!(solar_generation_datasets.len(), prosumer_consumption_datasets.len());
         
-        let mut consumers = consumption_datasets.into_iter().map(|dataset| HouseData::from(dataset)).collect::<Vec<_>>();
-        let mut prosumers = prosumer_consumption_datasets.into_iter().zip(solar_generation_datasets.into_iter()).map(|(consumption, generation)| HouseData::from((consumption, generation))).collect::<Vec<_>>();
+        let consumers = consumption_datasets.into_iter().map(|dataset| HouseData::from(dataset)).collect::<Vec<_>>();
+        let prosumers = prosumer_consumption_datasets.into_iter().zip(solar_generation_datasets.into_iter()).map(|(consumption, generation)| HouseData::from((consumption, generation))).collect::<Vec<_>>();
         
-        consumers.iter_mut().chain(prosumers.iter_mut()).for_each(|house| house.retain_periods(periods, self.start_period.as_str()));
         consumers.into_iter().chain(prosumers.into_iter()).collect::<Vec<_>>()
     }
     
@@ -64,10 +63,13 @@ pub struct Config {
 
 impl Config {
     pub fn load_houses(&self) -> Vec<House> {
-        let house_data = self.neighborhood.load_house_data(self.periods as usize);
+        let house_data = self.neighborhood.load_house_data();
         let mut houses = Vec::new();
-        let mut i = 1;
+        let mut i: u32 = 1;
         for house in house_data {
+            if let None = house.consumption_data.get((i-1) as usize) {
+                panic!("no consumption data? house: {}, id: {}", i, house.consumption_data.get((i-2) as usize).unwrap().lclid);
+            };
             let house = House::new(i, house.consumption_energy(), house.generation_energy());
             houses.push(house);
             i += 1;

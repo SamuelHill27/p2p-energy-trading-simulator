@@ -7,6 +7,16 @@ use std::collections::HashMap;
 use std::ops::Div;
 
 
+// charts I want:
+// 
+// average bid over month/year with and without market
+// average ask over month/year with and without market
+// 
+// average compounding bids over year with and without market
+// average compounding asks over year with and without market
+// 
+// average reduced load on grid
+
 pub fn generate(trades: &HashMap<Period, Vec<Order>>, periods: u32, grid: &Grid) {
     single_period_grid_compare(trades, grid);
     single_period(trades);

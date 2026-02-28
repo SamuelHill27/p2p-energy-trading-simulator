@@ -1,4 +1,4 @@
-mod chart;
+mod charts;
 mod config;
 mod model;
 mod sim;

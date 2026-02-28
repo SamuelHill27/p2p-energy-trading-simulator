@@ -30,7 +30,9 @@ impl House {
     pub fn current_energy_consumption(&self) -> Energy {
         match self.energy_consumption_schedule.get(Period::current().value() as usize) {
             Some(energy) => *energy,
-            None => panic!("No energy consumption data for current period: {}, house: {}", Period::current().value(), self.id),
+            None => {
+                panic!("No energy consumption data for current period: {}, house: {}", Period::current().value(), self.id);
+            }
         }
     }
 
