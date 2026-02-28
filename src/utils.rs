@@ -80,7 +80,7 @@ pub mod units {
 
     impl Display for Period {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "{} hours", self.0)
+            write!(f, "{} half-hours", self.0)
         }
     }
 }

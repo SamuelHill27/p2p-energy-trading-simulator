@@ -34,7 +34,7 @@ impl Sim {
 
     pub fn generate_charts(&self) {
         let (trades, periods, grid) = (self.market.trades(), &self.periods, &self.market.grid);
-        chart::generate(trades, periods, grid);
+        //chart::generate(trades, periods, grid);
         average_price_total::generate(&mut trades.clone(), periods, grid);
     }
 

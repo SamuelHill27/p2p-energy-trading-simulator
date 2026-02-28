@@ -17,11 +17,11 @@ pub fn generate(trades: &mut HashMap<Period, Vec<Order>>, periods: &PeriodConfig
 fn line_chart(trades: &mut HashMap<Period, Vec<Order>>, periods: &PeriodConfig, grid: &Grid, order_side: OrderSide) -> LineChart {
     let mut line_chart = LineChart::new_with_theme(
         vec![
-            ("Average Bid Prices", average_period_prices(trades, order_side)).into(),
-            ("Average Ask Prices with Grid", average_period_prices_grid(trades, order_side, grid)).into(),
+            (format!("Average {} Prices", order_side).as_str(), average_period_prices(trades, order_side)).into(),
+            (format!("Average {} Prices with Grid", order_side).as_str(), average_period_prices_grid(trades, order_side, grid)).into(),
         ],
         (0..periods.count())
-            .map(|period| format!("{}", if period > 0 { period as f32 / 2.0 } else { 0.0 }))
+            .map(|period| format!("{}", period))
             .collect(),
         THEME_GRAFANA,
     );
@@ -31,12 +31,14 @@ fn line_chart(trades: &mut HashMap<Period, Vec<Order>>, periods: &PeriodConfig, 
 
 fn average_period_prices(trades: &HashMap<Period, Vec<Order>>, order_side: OrderSide) -> Vec<f32> {
     trades.iter().map(|(_, trades_at_period)| {
-        utils::average_period_price(trades_at_period, order_side)
-    }).collect::<Vec<_>>()
+        utils::total_period_price(trades_at_period, order_side)
+    }).collect::<Vec<f32>>()
+    //.chunks(48).map(|day| day.iter().sum::<f32>() / day.len() as f32).collect()
 }
 
 fn average_period_prices_grid(trades: &mut HashMap<Period, Vec<Order>>, order_side: OrderSide, grid: &Grid) -> Vec<f32> {
     trades.iter_mut().map(|(_, trades_at_period)| {
-        utils::average_period_price_grid_only(trades_at_period, order_side, grid)
-    }).collect::<Vec<_>>()
+        utils::total_period_price_grid_only(trades_at_period, order_side, grid)
+    }).collect::<Vec<f32>>()
+    //.chunks(48).map(|day| day.iter().sum::<f32>() / day.len() as f32).collect()
 }

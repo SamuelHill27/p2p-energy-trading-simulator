@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 use rand::seq::SliceRandom;
 use std::fs;
 use std::path::PathBuf;
-use chrono::{NaiveDate, Datelike};
+use chrono::{Datelike, NaiveDateTime};
 
 
 pub struct PeriodConfig {
@@ -18,6 +18,11 @@ impl PeriodConfig {
     pub fn count(&self) -> usize {
         (self.end - self.start) as usize
     }
+    
+    pub fn days(&self) -> usize {
+        self.count() / 48
+    }
+    
 }
 
 #[derive(Serialize, Deserialize)]
@@ -91,11 +96,11 @@ impl Config {
     }
     
     pub fn period_config(&self) -> PeriodConfig {
-        let start_date = NaiveDate::parse_from_str(self.start_period.as_str(), "%Y-%m-%d %H:%M:%S").unwrap();
-        let end_date = NaiveDate::parse_from_str(self.end_period.as_str(), "%Y-%m-%d %H:%M:%S").unwrap();
-        let start_of_year = NaiveDate::from_ymd_opt(start_date.year(), 1, 1).unwrap();
-        let start = start_date.signed_duration_since(start_of_year).num_days();
-        let end = end_date.signed_duration_since(start_of_year).num_days();
+        let start_date = NaiveDateTime::parse_from_str(self.start_period.as_str(), "%Y-%m-%d %H:%M:%S").unwrap();
+        let end_date = NaiveDateTime::parse_from_str(self.end_period.as_str(), "%Y-%m-%d %H:%M:%S").unwrap();
+        let start_of_year = NaiveDateTime::parse_from_str(format!("{}-01-01 00:00:00", start_date.year()).as_str(), "%Y-%m-%d %H:%M:%S").unwrap();
+        let start = start_date.signed_duration_since(start_of_year).num_minutes() / 30;
+        let end = end_date.signed_duration_since(start_of_year).num_minutes() / 30;
         PeriodConfig { start, end }
     }
 }
