@@ -17,10 +17,10 @@ pub fn generate(trades: &mut HashMap<Period, Vec<Order>>, periods: &PeriodConfig
 fn line_chart(trades: &mut HashMap<Period, Vec<Order>>, periods: &PeriodConfig, grid: &Grid, order_side: OrderSide) -> LineChart {
     let mut line_chart = LineChart::new_with_theme(
         vec![
-            (format!("Average {} Prices", order_side).as_str(), average_period_prices(trades, order_side)).into(),
-            (format!("Average {} Prices with Grid", order_side).as_str(), average_period_prices_grid(trades, order_side, grid)).into(),
+            (format!("Average {} Prices", order_side).as_str(), average_prices(trades, order_side)).into(),
+            (format!("Average {} Prices with Grid", order_side).as_str(), average_prices_no_market(trades, order_side, grid)).into(),
         ],
-        (0..periods.count())
+        (0..periods.days())
             .map(|period| format!("{}", period))
             .collect(),
         THEME_GRAFANA,
@@ -29,16 +29,16 @@ fn line_chart(trades: &mut HashMap<Period, Vec<Order>>, periods: &PeriodConfig, 
     line_chart
 }
 
-fn average_period_prices(trades: &HashMap<Period, Vec<Order>>, order_side: OrderSide) -> Vec<f32> {
-    trades.iter().map(|(_, trades_at_period)| {
-        utils::total_period_price(trades_at_period, order_side)
-    }).collect::<Vec<f32>>()
-    //.chunks(48).map(|day| day.iter().sum::<f32>() / day.len() as f32).collect()
+fn average_prices(trades: &HashMap<Period, Vec<Order>>, order_side: OrderSide) -> Vec<f32> {
+    let total_period_prices = trades.iter().map(|(_, trades_at_period)| {
+        utils::total_period_price_market(trades_at_period, order_side)
+    }).collect::<Vec<f32>>();
+    utils::average_day_prices(&total_period_prices)
 }
 
-fn average_period_prices_grid(trades: &mut HashMap<Period, Vec<Order>>, order_side: OrderSide, grid: &Grid) -> Vec<f32> {
-    trades.iter_mut().map(|(_, trades_at_period)| {
-        utils::total_period_price_grid_only(trades_at_period, order_side, grid)
-    }).collect::<Vec<f32>>()
-    //.chunks(48).map(|day| day.iter().sum::<f32>() / day.len() as f32).collect()
+fn average_prices_no_market(trades: &mut HashMap<Period, Vec<Order>>, order_side: OrderSide, grid: &Grid) -> Vec<f32> {
+    let total_period_prices = trades.iter_mut().map(|(_, trades_at_period)| {
+        utils::total_period_price_market_grid_only(trades_at_period, order_side, grid)
+    }).collect::<Vec<f32>>();
+    utils::average_day_prices(&total_period_prices)
 }
