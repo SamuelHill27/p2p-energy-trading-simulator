@@ -1,6 +1,6 @@
 {
   "start_period": "2013-01-01 00:00:00",
-  "end_period": "2013-01-31 23:30:00",
+  "end_period": "2013-12-31 23:30:00",
   "grid": {
     "type": "fixed",
     "buy_price": 25,
@@ -10,7 +10,7 @@
     "energy_consumptions_dir": "resources/raw/LCL_energy_consumption/greater_london_2013",
     "energy_productions_dir": "resources/raw/uk_pv_solar_generation/greater_london_2013",
     "num_of_prosumers": 9,
-    "num_of_consumers": 18,
+    "num_of_consumers": 9,
     "random_selection": false
   }
 }

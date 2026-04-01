@@ -23,6 +23,9 @@ impl PeriodConfig {
         self.count() / 48
     }
     
+    pub fn months(&self) -> usize {
+        self.days() / 30
+    }
 }
 
 #[derive(Serialize, Deserialize)]
