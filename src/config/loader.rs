@@ -84,17 +84,19 @@ pub struct Config {
 
 impl Config {
     pub fn load_houses(&self) -> Vec<House> {
+        use chrono::NaiveDateTime;
         let house_data = self.neighborhood.load_house_data();
         let mut houses = Vec::new();
         let mut i: u32 = 1;
-        for house in house_data {
-            if let None = house.consumption_data.get((i-1) as usize) {
-                panic!("no consumption data? house: {}, id: {}", i, house.consumption_data.get((i-2) as usize).unwrap().lclid);
-            };
+        let start_date = NaiveDateTime::parse_from_str(self.start_period.as_str(), "%Y-%m-%d %H:%M:%S").unwrap();
+        let period_count = self.period_config().count();
+        for mut house in house_data {
+            house.build_consumption_schedule(&start_date, period_count);
+            house.build_generation_schedule(&start_date, period_count);
             let house = House::new(i, house.consumption_energy(), house.generation_energy());
             houses.push(house);
             i += 1;
-        };
+        }
         houses
     }
     

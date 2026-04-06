@@ -18,7 +18,7 @@ use charts_rs::{LineChart, THEME_GRAFANA};
 // 
 // average reduced load on grid
 
-pub fn generate(trades: &HashMap<Period, Vec<Order>>, periods: &PeriodConfig, grid: &Grid) {
+pub fn generate(trades: &HashMap<Period, Vec<Order>>, _periods: &PeriodConfig, grid: &Grid) {
     single_period_grid_compare(trades, grid);
     single_period(trades);
 }

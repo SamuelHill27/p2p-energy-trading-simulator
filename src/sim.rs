@@ -1,4 +1,4 @@
-use crate::charts::{average_price_total, compounding_price_total};
+use crate::charts::{average_price_total, compounding_price_total, average_grid_demand, average_grid_demand_hourly, average_grid_demand_monthly};
 use crate::model::house::House;
 use crate::trading::market::Market;
 use crate::utils::units::Period;
@@ -20,14 +20,14 @@ impl Sim {
     }
 
     pub fn run(&mut self) {
-        for i in 0..self.periods.count() {
+        for _i in 0..self.periods.count() {
             for house in &mut self.houses {
                 if let Some((order_type, energy)) = house.energy_order() {
                     self.market.create_order(house.id, order_type, energy);
                 }
             }
             self.market.trade();
-            self.debug_display();
+            //self.debug_display();
             Period::increment();
         }
     }
@@ -37,6 +37,9 @@ impl Sim {
         //chart::generate(trades, periods, grid);
         average_price_total::generate(&mut trades.clone(), periods, grid);
         compounding_price_total::generate(&mut trades.clone(), periods, grid);
+        average_grid_demand::generate(trades, periods, grid);
+        average_grid_demand_hourly::generate(trades, periods, grid);
+        average_grid_demand_monthly::generate(trades, periods, grid);
     }
 
     fn debug_display(&self) {
