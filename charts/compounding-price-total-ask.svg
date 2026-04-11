@@ -1,40 +1,43 @@
 <svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
 <rect x="0" y="0" width="600" height="400" fill="#1F1D1D"/>
+<text font-size="18" x="172.5" y="5" dy="15" font-weight="bold" dominant-baseline="middle" font-family="Roboto" fill="#D8D9DA">
+Average Sell Prices Per Month
+</text>
 <g>
-<line stroke-width="2" x1="108.5" y1="15" x2="133.5" y2="15" stroke="#7EB26D"/>
-<circle cx="121" cy="15" r="5.5" stroke-width="2" stroke="#7EB26D" fill="#7EB26D"/>
-<text font-size="14" x="136.5" y="19" font-family="Roboto" fill="#D8D9DA">
+<line stroke-width="2" x1="108.5" y1="55" x2="133.5" y2="55" stroke="#7EB26D"/>
+<circle cx="121" cy="55" r="5.5" stroke-width="2" stroke="#7EB26D" fill="#7EB26D"/>
+<text font-size="14" x="136.5" y="59" font-family="Roboto" fill="#D8D9DA">
 Average Sell Prices
 </text>
 </g>
 <g>
-<line stroke-width="2" x1="269.5" y1="15" x2="294.5" y2="15" stroke="#EAB839"/>
-<circle cx="282" cy="15" r="5.5" stroke-width="2" stroke="#EAB839" fill="#EAB839"/>
-<text font-size="14" x="297.5" y="19" font-family="Roboto" fill="#D8D9DA">
+<line stroke-width="2" x1="269.5" y1="55" x2="294.5" y2="55" stroke="#EAB839"/>
+<circle cx="282" cy="55" r="5.5" stroke-width="2" stroke="#EAB839" fill="#EAB839"/>
+<text font-size="14" x="297.5" y="59" font-family="Roboto" fill="#D8D9DA">
 Average Sell Prices with Grid
 </text>
 </g>
 <g stroke="#444343">
-<line stroke-width="1" x1="43" y1="27" x2="595" y2="27"/><line stroke-width="1" x1="43" y1="83.3" x2="595" y2="83.3"/><line stroke-width="1" x1="43" y1="139.7" x2="595" y2="139.7"/><line stroke-width="1" x1="43" y1="196" x2="595" y2="196"/><line stroke-width="1" x1="43" y1="252.3" x2="595" y2="252.3"/><line stroke-width="1" x1="43" y1="308.7" x2="595" y2="308.7"/>
+<line stroke-width="1" x1="43" y1="77" x2="595" y2="77"/><line stroke-width="1" x1="43" y1="125" x2="595" y2="125"/><line stroke-width="1" x1="43" y1="173" x2="595" y2="173"/><line stroke-width="1" x1="43" y1="221" x2="595" y2="221"/><line stroke-width="1" x1="43" y1="269" x2="595" y2="269"/><line stroke-width="1" x1="43" y1="317" x2="595" y2="317"/>
 </g>
 <g>
 
-<text font-size="14" x="2" y="32" font-family="Roboto" fill="#B9B8CE">
+<text font-size="14" x="2" y="82" font-family="Roboto" fill="#B9B8CE">
 £240
 </text>
-<text font-size="14" x="2" y="88.3" font-family="Roboto" fill="#B9B8CE">
+<text font-size="14" x="2" y="130" font-family="Roboto" fill="#B9B8CE">
 £200
 </text>
-<text font-size="14" x="2" y="144.7" font-family="Roboto" fill="#B9B8CE">
+<text font-size="14" x="2" y="178" font-family="Roboto" fill="#B9B8CE">
 £160
 </text>
-<text font-size="14" x="2" y="201" font-family="Roboto" fill="#B9B8CE">
+<text font-size="14" x="2" y="226" font-family="Roboto" fill="#B9B8CE">
 £120
 </text>
-<text font-size="14" x="10" y="257.3" font-family="Roboto" fill="#B9B8CE">
+<text font-size="14" x="10" y="274" font-family="Roboto" fill="#B9B8CE">
 £80
 </text>
-<text font-size="14" x="10" y="313.7" font-family="Roboto" fill="#B9B8CE">
+<text font-size="14" x="10" y="322" font-family="Roboto" fill="#B9B8CE">
 £40
 </text>
 <text font-size="14" x="18" y="370" font-family="Roboto" fill="#B9B8CE">
@@ -96,33 +99,33 @@ Average Sell Prices with Grid
 </text>
 </g>
 <g>
-<path d="M 66 351.9 L 112 325 L 158 298.4 L 204 273.6 L 250 249.3 L 296 222.8 L 342 196.1 L 388 170.3 L 434 142.8 L 480 117.5 L 526 89.5 L 572 64.8" stroke-width="2" fill="none" stroke="#7EB26D"/>
-<circle cx="66" cy="351.9" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="112" cy="325" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="158" cy="298.4" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="204" cy="273.6" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="250" cy="249.3" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="296" cy="222.8" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="342" cy="196.1" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="388" cy="170.3" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="434" cy="142.8" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="480" cy="117.5" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="526" cy="89.5" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="572" cy="64.8" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<path d="M 66 353 L 112 331.6 L 158 310.8 L 204 289.5 L 250 266.1 L 296 243 L 342 219.5 L 388 196.7 L 434 174.3 L 480 152 L 526 129 L 572 107.8" stroke-width="2" fill="none" stroke="#7EB26D"/>
+<circle cx="66" cy="353" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="112" cy="331.6" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="158" cy="310.8" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="204" cy="289.5" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="250" cy="266.1" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="296" cy="243" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="342" cy="219.5" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="388" cy="196.7" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="434" cy="174.3" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="480" cy="152" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="526" cy="129" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="572" cy="107.8" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
 </g>
 <g>
-<path d="M 66 358.5 L 112 344.9 L 158 331.7 L 204 319.4 L 250 307.5 L 296 294.3 L 342 281.1 L 388 268.4 L 434 254.4 L 480 241.7 L 526 227.8 L 572 215.4" stroke-width="2" fill="none" stroke="#EAB839"/>
-<circle cx="66" cy="358.5" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="112" cy="344.9" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="158" cy="331.7" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="204" cy="319.4" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="250" cy="307.5" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="296" cy="294.3" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="342" cy="281.1" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="388" cy="268.4" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="434" cy="254.4" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="480" cy="241.7" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="526" cy="227.8" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="572" cy="215.4" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<path d="M 66 359.1 L 112 348.5 L 158 338.3 L 204 327.7 L 250 316.1 L 296 304.6 L 342 292.8 L 388 281.4 L 434 270.2 L 480 259 L 526 247.3 L 572 236.7" stroke-width="2" fill="none" stroke="#EAB839"/>
+<circle cx="66" cy="359.1" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="112" cy="348.5" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="158" cy="338.3" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="204" cy="327.7" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="250" cy="316.1" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="296" cy="304.6" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="342" cy="292.8" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="388" cy="281.4" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="434" cy="270.2" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="480" cy="259" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="526" cy="247.3" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="572" cy="236.7" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
 </g>
 </svg>

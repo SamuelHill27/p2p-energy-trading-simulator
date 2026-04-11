@@ -111,18 +111,18 @@ Grid Demand without P2P
 <circle cx="573.3" cy="94.6" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
 </g>
 <g>
-<path d="M 95.7 31 L 139.1 55 L 182.5 73.1 L 226 144 L 269.4 182.6 L 312.8 195.4 L 356.2 216.8 L 399.6 214 L 443 183 L 486.5 151.7 L 529.9 117 L 573.3 84.3" stroke-width="2" fill="none" stroke="#EAB839"/>
+<path d="M 95.7 31 L 139.1 55 L 182.5 74 L 226 144.3 L 269.4 183.1 L 312.8 196.3 L 356.2 217.2 L 399.6 213.1 L 443 182.5 L 486.5 149.9 L 529.9 115.9 L 573.3 84.3" stroke-width="2" fill="none" stroke="#EAB839"/>
 <circle cx="95.7" cy="31" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
 <circle cx="139.1" cy="55" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="182.5" cy="73.1" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="226" cy="144" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="269.4" cy="182.6" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="312.8" cy="195.4" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="356.2" cy="216.8" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="399.6" cy="214" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="443" cy="183" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="486.5" cy="151.7" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="529.9" cy="117" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="182.5" cy="74" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="226" cy="144.3" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="269.4" cy="183.1" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="312.8" cy="196.3" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="356.2" cy="217.2" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="399.6" cy="213.1" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="443" cy="182.5" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="486.5" cy="149.9" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="529.9" cy="115.9" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
 <circle cx="573.3" cy="84.3" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
 </g>
 </svg>

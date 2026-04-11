@@ -1,6 +1,6 @@
-use crate::utils::units::{Energy, Period, Price};
 use crate::trading::grid::Grid;
 use crate::trading::order_book::{Order, OrderBook, OrderSide};
+use crate::utils::units::{Energy, Period, Price};
 
 use std::cmp;
 use std::collections::HashMap;

@@ -1,8 +1,11 @@
-use crate::charts::{average_price_total, compounding_price_total, average_grid_demand, average_grid_demand_hourly, average_grid_demand_monthly};
+use crate::charts::{
+    average_grid_demand, average_grid_demand_hourly, average_grid_demand_monthly,
+    average_price_total, compounding_price_total,
+};
+use crate::config::loader::PeriodConfig;
 use crate::model::house::House;
 use crate::trading::market::Market;
 use crate::utils::units::Period;
-use crate::config::loader::PeriodConfig;
 
 pub struct Sim {
     periods: PeriodConfig,
@@ -51,10 +54,8 @@ impl Sim {
         );
 
         for house in &self.houses {
-            let energy_consumed =
-                house.current_energy_consumption();
-            let energy_produced =
-                house.current_energy_production();
+            let energy_consumed = house.current_energy_consumption();
+            let energy_produced = house.current_energy_production();
             if energy_consumed.value() > 0 || energy_produced.value() > 0 {
                 println!(
                     "HOUSE: House {} consumed {} and produced {}",

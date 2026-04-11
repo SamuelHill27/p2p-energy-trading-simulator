@@ -1,9 +1,10 @@
+use crate::config::data_reader::{
+    LCLEnergyConsumptionRecord, UkPvSolarGenerationRecord, load_dataset,
+};
 use crate::utils::units::Energy;
-use crate::config::data_reader::{LCLEnergyConsumptionRecord, UkPvSolarGenerationRecord, load_dataset};
 use chrono::NaiveDateTime;
 
 use std::path::PathBuf;
-
 
 pub struct HouseData {
     pub consumption_data: Vec<LCLEnergyConsumptionRecord>,
@@ -33,7 +34,8 @@ impl HouseData {
         for record in &self.generation_data {
             if let Ok(dt) = DateTime::parse_from_str(&record._datetime_gmt, "%Y-%m-%d %H:%M:%S%z") {
                 let naive_dt = dt.naive_local();
-                let period = ((naive_dt.signed_duration_since(*start_date).num_minutes()) / 30) as usize;
+                let period =
+                    ((naive_dt.signed_duration_since(*start_date).num_minutes()) / 30) as usize;
                 if period < period_count {
                     schedule[period] = Some(Energy::new(record.generation_wh.round() as u32));
                 }
@@ -43,10 +45,16 @@ impl HouseData {
     }
 
     pub fn consumption_energy(&self) -> Vec<Energy> {
-        self.consumption_schedule.iter().map(|e| e.unwrap_or(Energy::new(0))).collect()
+        self.consumption_schedule
+            .iter()
+            .map(|e| e.unwrap_or(Energy::new(0)))
+            .collect()
     }
     pub fn generation_energy(&self) -> Vec<Energy> {
-        self.generation_schedule.iter().map(|e| e.unwrap_or(Energy::new(0))).collect()
+        self.generation_schedule
+            .iter()
+            .map(|e| e.unwrap_or(Energy::new(0)))
+            .collect()
     }
 }
 

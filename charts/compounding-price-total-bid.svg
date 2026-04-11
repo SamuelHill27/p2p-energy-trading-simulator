@@ -1,41 +1,44 @@
 <svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
 <rect x="0" y="0" width="600" height="400" fill="#1F1D1D"/>
+<text font-size="18" x="172.5" y="5" dy="15" font-weight="bold" dominant-baseline="middle" font-family="Roboto" fill="#D8D9DA">
+Average Buy Prices Per Month
+</text>
 <g>
-<line stroke-width="2" x1="109.5" y1="15" x2="134.5" y2="15" stroke="#7EB26D"/>
-<circle cx="122" cy="15" r="5.5" stroke-width="2" stroke="#7EB26D" fill="#7EB26D"/>
-<text font-size="14" x="137.5" y="19" font-family="Roboto" fill="#D8D9DA">
+<line stroke-width="2" x1="109.5" y1="55" x2="134.5" y2="55" stroke="#7EB26D"/>
+<circle cx="122" cy="55" r="5.5" stroke-width="2" stroke="#7EB26D" fill="#7EB26D"/>
+<text font-size="14" x="137.5" y="59" font-family="Roboto" fill="#D8D9DA">
 Average Buy Prices
 </text>
 </g>
 <g>
-<line stroke-width="2" x1="269.5" y1="15" x2="294.5" y2="15" stroke="#EAB839"/>
-<circle cx="282" cy="15" r="5.5" stroke-width="2" stroke="#EAB839" fill="#EAB839"/>
-<text font-size="14" x="297.5" y="19" font-family="Roboto" fill="#D8D9DA">
+<line stroke-width="2" x1="269.5" y1="55" x2="294.5" y2="55" stroke="#EAB839"/>
+<circle cx="282" cy="55" r="5.5" stroke-width="2" stroke="#EAB839" fill="#EAB839"/>
+<text font-size="14" x="297.5" y="59" font-family="Roboto" fill="#D8D9DA">
 Average Buy Prices with Grid
 </text>
 </g>
 <g stroke="#444343">
-<line stroke-width="1" x1="43" y1="27" x2="595" y2="27"/><line stroke-width="1" x1="43" y1="83.3" x2="595" y2="83.3"/><line stroke-width="1" x1="43" y1="139.7" x2="595" y2="139.7"/><line stroke-width="1" x1="43" y1="196" x2="595" y2="196"/><line stroke-width="1" x1="43" y1="252.3" x2="595" y2="252.3"/><line stroke-width="1" x1="43" y1="308.7" x2="595" y2="308.7"/>
+<line stroke-width="1" x1="43" y1="77" x2="595" y2="77"/><line stroke-width="1" x1="43" y1="125" x2="595" y2="125"/><line stroke-width="1" x1="43" y1="173" x2="595" y2="173"/><line stroke-width="1" x1="43" y1="221" x2="595" y2="221"/><line stroke-width="1" x1="43" y1="269" x2="595" y2="269"/><line stroke-width="1" x1="43" y1="317" x2="595" y2="317"/>
 </g>
 <g>
 
-<text font-size="14" x="2" y="32" font-family="Roboto" fill="#B9B8CE">
-£510
+<text font-size="14" x="2" y="82" font-family="Roboto" fill="#B9B8CE">
+£480
 </text>
-<text font-size="14" x="2" y="88.3" font-family="Roboto" fill="#B9B8CE">
-£425
+<text font-size="14" x="2" y="130" font-family="Roboto" fill="#B9B8CE">
+£400
 </text>
-<text font-size="14" x="2" y="144.7" font-family="Roboto" fill="#B9B8CE">
-£340
+<text font-size="14" x="2" y="178" font-family="Roboto" fill="#B9B8CE">
+£320
 </text>
-<text font-size="14" x="2" y="201" font-family="Roboto" fill="#B9B8CE">
-£255
+<text font-size="14" x="2" y="226" font-family="Roboto" fill="#B9B8CE">
+£240
 </text>
-<text font-size="14" x="2" y="257.3" font-family="Roboto" fill="#B9B8CE">
-£170
+<text font-size="14" x="2" y="274" font-family="Roboto" fill="#B9B8CE">
+£160
 </text>
-<text font-size="14" x="10" y="313.7" font-family="Roboto" fill="#B9B8CE">
-£85
+<text font-size="14" x="10" y="322" font-family="Roboto" fill="#B9B8CE">
+£80
 </text>
 <text font-size="14" x="18" y="370" font-family="Roboto" fill="#B9B8CE">
 £0
@@ -96,33 +99,33 @@ Average Buy Prices with Grid
 </text>
 </g>
 <g>
-<path d="M 66 351.5 L 112 326 L 158 299.5 L 204 274.7 L 250 249.9 L 296 223.5 L 342 196.9 L 388 169.7 L 434 143.4 L 480 117.3 L 526 91.2 L 572 69.3" stroke-width="2" fill="none" stroke="#7EB26D"/>
-<circle cx="66" cy="351.5" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="112" cy="326" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="158" cy="299.5" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="204" cy="274.7" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="250" cy="249.9" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="296" cy="223.5" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="342" cy="196.9" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="388" cy="169.7" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="434" cy="143.4" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="480" cy="117.3" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="526" cy="91.2" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="572" cy="69.3" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<path d="M 66 353.1 L 112 329.2 L 158 307.1 L 204 285.3 L 250 262.9 L 296 239.9 L 342 216.7 L 388 193.6 L 434 170.9 L 480 148.7 L 526 125.7 L 572 104.9" stroke-width="2" fill="none" stroke="#7EB26D"/>
+<circle cx="66" cy="353.1" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="112" cy="329.2" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="158" cy="307.1" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="204" cy="285.3" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="250" cy="262.9" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="296" cy="239.9" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="342" cy="216.7" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="388" cy="193.6" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="434" cy="170.9" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="480" cy="148.7" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="526" cy="125.7" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="572" cy="104.9" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
 </g>
 <g>
-<path d="M 66 350.4 L 112 322.7 L 158 294.1 L 204 267.2 L 250 240.4 L 296 211.9 L 342 183.1 L 388 153.7 L 434 125.1 L 480 97 L 526 68.4 L 572 44.5" stroke-width="2" fill="none" stroke="#EAB839"/>
-<circle cx="66" cy="350.4" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="112" cy="322.7" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="158" cy="294.1" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="204" cy="267.2" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="250" cy="240.4" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="296" cy="211.9" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="342" cy="183.1" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="388" cy="153.7" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="434" cy="125.1" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="480" cy="97" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="526" cy="68.4" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="572" cy="44.5" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<path d="M 66 352 L 112 326.2 L 158 302.3 L 204 278.5 L 250 254 L 296 228.9 L 342 203.6 L 388 178.4 L 434 153.7 L 480 129.6 L 526 104.7 L 572 82.1" stroke-width="2" fill="none" stroke="#EAB839"/>
+<circle cx="66" cy="352" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="112" cy="326.2" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="158" cy="302.3" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="204" cy="278.5" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="250" cy="254" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="296" cy="228.9" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="342" cy="203.6" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="388" cy="178.4" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="434" cy="153.7" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="480" cy="129.6" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="526" cy="104.7" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="572" cy="82.1" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
 </g>
 </svg>
