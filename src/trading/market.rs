@@ -65,7 +65,7 @@ impl Market {
 
         Price::new(cmp::min(
             market_price.round() as u32,
-            self.grid.buy_price().value() - 1, // - 1 to ensure market price is always below grid price
+            self.grid.buy_price().value() - 1, // minus 1 to ensure market price is always below grid price
         ))
     }
 
@@ -86,7 +86,7 @@ impl Market {
                 true => {
                     let new_volume = proportion_vol(order.volume).round() as u32;
                     order.volume = Energy::new(order.volume.value() - new_volume);
-                    // Are there orders to match against
+                    // Are there orders to match against?
                     if new_volume > 0 {
                         new_order_details.push((order.id, new_volume));
                     }

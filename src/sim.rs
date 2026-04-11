@@ -20,7 +20,7 @@ impl Sim {
     }
 
     pub fn run(&mut self) {
-        for i in 0..self.periods.count() {
+        for _ in 0..self.periods.count() {
             for house in &mut self.houses {
                 if let Some((order_type, energy)) = house.energy_order() {
                     self.market.create_order(house.id, order_type, energy);
