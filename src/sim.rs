@@ -40,6 +40,20 @@ impl Sim {
         average_grid_demand::generate(trades, periods, grid);
         average_grid_demand_hourly::generate(trades, periods, grid);
         average_grid_demand_monthly::generate(trades, periods, grid);
+        crate::charts::average_grid_demand_half_hour::generate(trades, periods, grid);
+
+        // Generate hourly grid demand data CSV
+        let (with_p2p, without_p2p) = crate::charts::hourly_grid_demand_data::hourly_grid_demand_data(trades, periods);
+        let mut wtr = csv::Writer::from_path("charts/hourly_grid_demand_data.csv").unwrap();
+        wtr.write_record(&["hour", "with_p2p", "without_p2p"]).unwrap();
+        for hour in 0..24 {
+            wtr.write_record(&[
+                hour.to_string(),
+                format!("{:.2}", with_p2p[hour]),
+                format!("{:.2}", without_p2p[hour]),
+            ]).unwrap();
+        }
+        wtr.flush().unwrap();
     }
 
     fn debug_display(&self) {

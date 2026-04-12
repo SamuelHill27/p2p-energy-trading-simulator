@@ -1,3 +1,6 @@
+[lib]
+name = "energy_trading_sim"
+path = "src/lib.rs"
 [package]
 name = "energy_trading_sim"
 version = "0.1.0"

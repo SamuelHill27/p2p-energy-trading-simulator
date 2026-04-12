@@ -1,13 +1,9 @@
-mod charts;
-mod config;
-mod model;
-mod sim;
-mod trading;
-mod utils;
 
-use config::loader::Config;
-use sim::Sim;
-use trading::market::Market;
+
+
+use energy_trading_sim::loader::Config;
+use energy_trading_sim::Sim;
+use energy_trading_sim::market::Market;
 
 use std::fs;
 
