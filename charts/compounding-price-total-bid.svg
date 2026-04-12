@@ -23,22 +23,22 @@ Average Buy Prices with Grid
 <g>
 
 <text font-size="14" x="2" y="82" font-family="Roboto" fill="#B9B8CE">
-£480
+£900
 </text>
 <text font-size="14" x="2" y="130" font-family="Roboto" fill="#B9B8CE">
-£400
+£750
 </text>
 <text font-size="14" x="2" y="178" font-family="Roboto" fill="#B9B8CE">
-£320
+£600
 </text>
 <text font-size="14" x="2" y="226" font-family="Roboto" fill="#B9B8CE">
-£240
+£450
 </text>
 <text font-size="14" x="2" y="274" font-family="Roboto" fill="#B9B8CE">
-£160
+£300
 </text>
-<text font-size="14" x="10" y="322" font-family="Roboto" fill="#B9B8CE">
-£80
+<text font-size="14" x="2" y="322" font-family="Roboto" fill="#B9B8CE">
+£150
 </text>
 <text font-size="14" x="18" y="370" font-family="Roboto" fill="#B9B8CE">
 £0
@@ -99,33 +99,33 @@ Average Buy Prices with Grid
 </text>
 </g>
 <g>
-<path d="M 66 353.1 L 112 329.2 L 158 307.1 L 204 285.3 L 250 262.9 L 296 239.9 L 342 216.7 L 388 193.6 L 434 170.9 L 480 148.7 L 526 125.7 L 572 104.9" stroke-width="2" fill="none" stroke="#7EB26D"/>
-<circle cx="66" cy="353.1" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="112" cy="329.2" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="158" cy="307.1" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="204" cy="285.3" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="250" cy="262.9" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="296" cy="239.9" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="342" cy="216.7" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="388" cy="193.6" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="434" cy="170.9" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="480" cy="148.7" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="526" cy="125.7" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="572" cy="104.9" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<path d="M 66 353.7 L 112 330.8 L 158 308.3 L 204 284.9 L 250 262 L 296 239.1 L 342 215.6 L 388 191.8 L 434 169.1 L 480 146.9 L 526 124.4 L 572 104.2" stroke-width="2" fill="none" stroke="#7EB26D"/>
+<circle cx="66" cy="353.7" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="112" cy="330.8" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="158" cy="308.3" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="204" cy="284.9" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="250" cy="262" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="296" cy="239.1" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="342" cy="215.6" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="388" cy="191.8" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="434" cy="169.1" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="480" cy="146.9" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="526" cy="124.4" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="572" cy="104.2" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
 </g>
 <g>
-<path d="M 66 352 L 112 326.2 L 158 302.3 L 204 278.5 L 250 254 L 296 228.9 L 342 203.6 L 388 178.4 L 434 153.7 L 480 129.6 L 526 104.7 L 572 82.1" stroke-width="2" fill="none" stroke="#EAB839"/>
-<circle cx="66" cy="352" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="112" cy="326.2" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="158" cy="302.3" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="204" cy="278.5" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="250" cy="254" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="296" cy="228.9" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="342" cy="203.6" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="388" cy="178.4" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="434" cy="153.7" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<path d="M 66 352.8 L 112 328 L 158 303.8 L 204 278.6 L 250 253.7 L 296 229.1 L 342 203.8 L 388 178 L 434 153.4 L 480 129.6 L 526 105.3 L 572 83.5" stroke-width="2" fill="none" stroke="#EAB839"/>
+<circle cx="66" cy="352.8" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="112" cy="328" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="158" cy="303.8" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="204" cy="278.6" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="250" cy="253.7" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="296" cy="229.1" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="342" cy="203.8" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="388" cy="178" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="434" cy="153.4" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
 <circle cx="480" cy="129.6" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="526" cy="104.7" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="572" cy="82.1" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="526" cy="105.3" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="572" cy="83.5" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
 </g>
 </svg>

@@ -6,22 +6,22 @@
 <g>
 
 <text font-size="14" x="2" y="10" font-family="Roboto" fill="#B9B8CE">
-£240
+£300
 </text>
 <text font-size="14" x="2" y="70" font-family="Roboto" fill="#B9B8CE">
-£200
+£250
 </text>
 <text font-size="14" x="2" y="130" font-family="Roboto" fill="#B9B8CE">
-£160
+£200
 </text>
 <text font-size="14" x="2" y="190" font-family="Roboto" fill="#B9B8CE">
-£120
+£150
 </text>
-<text font-size="14" x="10" y="250" font-family="Roboto" fill="#B9B8CE">
-£80
+<text font-size="14" x="2" y="250" font-family="Roboto" fill="#B9B8CE">
+£100
 </text>
 <text font-size="14" x="10" y="310" font-family="Roboto" fill="#B9B8CE">
-£40
+£50
 </text>
 <text font-size="14" x="18" y="370" font-family="Roboto" fill="#B9B8CE">
 £0
@@ -41,6 +41,6 @@ With Market
 Without Market
 </text>
 </g>
-<rect x="48" y="32.6" width="266" height="332.4" fill="#7EB26D"/>
-<rect x="324" y="199.2" width="266" height="165.8" fill="#7EB26D"/>
+<rect x="48" y="39.6" width="266" height="325.4" fill="#7EB26D"/>
+<rect x="324" y="230.9" width="266" height="134.1" fill="#7EB26D"/>
 </svg>

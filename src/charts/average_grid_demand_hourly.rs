@@ -12,12 +12,12 @@ pub fn generate(trades: &HashMap<Period, Vec<Order>>, periods: &PeriodConfig, gr
         vec![
             (
                 "Grid Demand with P2P",
-                with_p2p.iter().map(|v| v / 1000.0).collect::<Vec<_>>(),
+                with_p2p.iter().map(|v| v / 10000.0).collect::<Vec<_>>(),
             )
                 .into(),
             (
                 "Grid Demand without P2P",
-                without_p2p.iter().map(|v| v / 1000.0).collect::<Vec<_>>(),
+                without_p2p.iter().map(|v| v / 10000.0).collect::<Vec<_>>(),
             )
                 .into(),
         ],
