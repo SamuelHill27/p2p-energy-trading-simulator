@@ -47,12 +47,20 @@ pub fn create_hourly_grid_demand_chart(with_p2p: Vec<f32>, without_p2p: Vec<f32>
     use charts_rs::{LineChart, THEME_GRAFANA};
     let mut line_chart = LineChart::new_with_theme(
         vec![
-            ("Grid Demand with P2P", with_p2p).into(),
-            ("Grid Demand without P2P", without_p2p).into(),
+            ("Grid Demand with P2P", with_p2p.iter().map(|v| v / 10000.0).collect::<Vec<f32>>()).into(),
+            ("Grid Demand without P2P", without_p2p.iter().map(|v| v / 10000.0).collect::<Vec<f32>>()).into(),
         ],
-        (0..24).map(|h| format!("{:02}", h)).collect(),
+        (0..24).map(|h| format!("{}", h)).collect(),
         THEME_GRAFANA,
     );
-    line_chart.y_axis_configs[0].axis_formatter = Some("{c} units".to_string());
+        // Set chart title
+    line_chart.title_text = format!("Average Grid Demand Over 24 Hours");
+    line_chart.legend_margin = Some(charts_rs::Box {
+        top: line_chart.title_height + 10.0, // Add extra space below the title
+        bottom: 10.0,
+        ..Default::default()
+    });
+
+    line_chart.y_axis_configs[0].axis_formatter = Some("{c} kWh".to_string());
     std::fs::write(output_path, line_chart.svg().unwrap()).unwrap();
 }
