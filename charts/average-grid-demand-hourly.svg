@@ -174,27 +174,27 @@ Grid Demand without P2P
 <circle cx="583.9" cy="172.9" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
 </g>
 <g>
-<path d="M 73.1 93.3 L 95.3 163.7 L 117.5 206.6 L 139.7 221.9 L 161.9 227.6 L 184.1 221.8 L 206.4 210.8 L 228.6 223.8 L 250.8 197.3 L 273 201.1 L 295.2 216.6 L 317.4 213.7 L 339.6 207.4 L 361.8 211.1 L 384 213.6 L 406.2 216.9 L 428.4 196.8 L 450.6 144.1 L 472.9 100.1 L 495.1 81.6 L 517.3 88.7 L 539.5 106 L 561.7 128.7 L 583.9 172.9" stroke-width="2" fill="none" stroke="#EAB839"/>
+<path d="M 73.1 93.3 L 95.3 163.7 L 117.5 206.6 L 139.7 221.9 L 161.9 227.6 L 184.1 221.9 L 206.4 211.2 L 228.6 223.9 L 250.8 198.1 L 273 201.8 L 295.2 216.2 L 317.4 214 L 339.6 207.9 L 361.8 212 L 384 213.5 L 406.2 216.6 L 428.4 196.8 L 450.6 143.6 L 472.9 100 L 495.1 81.5 L 517.3 88.7 L 539.5 106 L 561.7 128.7 L 583.9 172.9" stroke-width="2" fill="none" stroke="#EAB839"/>
 <circle cx="73.1" cy="93.3" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
 <circle cx="95.3" cy="163.7" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
 <circle cx="117.5" cy="206.6" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
 <circle cx="139.7" cy="221.9" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
 <circle cx="161.9" cy="227.6" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="184.1" cy="221.8" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="206.4" cy="210.8" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="228.6" cy="223.8" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="250.8" cy="197.3" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="273" cy="201.1" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="295.2" cy="216.6" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="317.4" cy="213.7" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="339.6" cy="207.4" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="361.8" cy="211.1" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="384" cy="213.6" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="406.2" cy="216.9" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="184.1" cy="221.9" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="206.4" cy="211.2" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="228.6" cy="223.9" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="250.8" cy="198.1" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="273" cy="201.8" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="295.2" cy="216.2" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="317.4" cy="214" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="339.6" cy="207.9" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="361.8" cy="212" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="384" cy="213.5" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="406.2" cy="216.6" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
 <circle cx="428.4" cy="196.8" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="450.6" cy="144.1" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="472.9" cy="100.1" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="495.1" cy="81.6" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="450.6" cy="143.6" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="472.9" cy="100" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="495.1" cy="81.5" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
 <circle cx="517.3" cy="88.7" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
 <circle cx="539.5" cy="106" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
 <circle cx="561.7" cy="128.7" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>

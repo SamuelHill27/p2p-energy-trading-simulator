@@ -1,6 +1,5 @@
 use crate::charts::{
-    average_grid_demand, average_grid_demand_hourly, average_grid_demand_monthly,
-    average_price_total, compounding_price_total,
+    average_grid_demand_hourly, average_grid_demand_monthly, compounding_price_total,
 };
 use crate::config::loader::PeriodConfig;
 use crate::model::house::House;
@@ -30,17 +29,17 @@ impl Sim {
                 }
             }
             self.market.trade();
-            //self.debug_display();
+            #[cfg(debug_assertions)]
+            {
+                self.debug_display();
+            }
             Period::increment();
         }
     }
 
     pub fn generate_charts(&self) {
         let (trades, periods, grid) = (self.market.trades(), &self.periods, &self.market.grid);
-        //chart::generate(trades, periods, grid);
-        average_price_total::generate(&mut trades.clone(), periods, grid);
         compounding_price_total::generate(&mut trades.clone(), periods, grid);
-        average_grid_demand::generate(trades, periods, grid);
         average_grid_demand_hourly::generate(trades, periods, grid);
         average_grid_demand_monthly::generate(trades, periods, grid);
     }

@@ -6,7 +6,7 @@ use std::path::PathBuf;
 #[derive(Debug, Deserialize)]
 pub struct LCLEnergyConsumptionRecord {
     #[serde(rename = "LCLid")]
-    pub lclid: String,
+    pub _lclid: String,
     #[serde(rename = "stdorToU")]
     pub _std_or_tou: String,
     #[serde(rename = "DateTime")]

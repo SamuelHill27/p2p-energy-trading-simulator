@@ -6,7 +6,7 @@ use crate::utils::units::Period;
 use charts_rs::{BarChart, LineChart, THEME_GRAFANA};
 use std::collections::HashMap;
 
-pub fn generate(trades: &mut HashMap<Period, Vec<Order>>, periods: &PeriodConfig, grid: &Grid) {
+pub fn generate(trades: &mut HashMap<Period, Vec<Order>>, _periods: &PeriodConfig, grid: &Grid) {
     let line_chart_bid = line_chart(trades, grid, OrderSide::Bid);
     std::fs::write(
         "charts/compounding-price-total-bid.svg",

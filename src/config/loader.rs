@@ -18,12 +18,12 @@ impl PeriodConfig {
         (self.end - self.start) as usize
     }
 
-    pub fn days(&self) -> usize {
+    pub fn _days(&self) -> usize {
         self.count() / 48
     }
 
-    pub fn months(&self) -> usize {
-        self.days() / 30
+    pub fn _months(&self) -> usize {
+        self._days() / 30
     }
 }
 
