@@ -28,6 +28,7 @@ impl HouseData {
         self.consumption_schedule = schedule;
     }
 
+    /// Builds the generation schedule for the configured periods.
     pub fn build_generation_schedule(&mut self, start_date: &NaiveDateTime, period_count: usize) {
         let mut schedule = vec![None; period_count];
         use chrono::DateTime;
@@ -44,12 +45,14 @@ impl HouseData {
         self.generation_schedule = schedule;
     }
 
+    /// Converts the optional consumption schedule into a concrete energy vector.
     pub fn consumption_energy(&self) -> Vec<Energy> {
         self.consumption_schedule
             .iter()
             .map(|e| e.unwrap_or(Energy::new(0)))
             .collect()
     }
+    /// Converts the optional generation schedule into a concrete energy vector.
     pub fn generation_energy(&self) -> Vec<Energy> {
         self.generation_schedule
             .iter()

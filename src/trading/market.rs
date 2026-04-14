@@ -5,12 +5,14 @@ use crate::utils::units::{Energy, Period, Price};
 use std::cmp;
 use std::collections::HashMap;
 
+/// Represents the market that clears energy orders each period.
 pub struct Market {
     book: OrderBook,
     pub grid: Grid,
 }
 
 impl Market {
+    /// Creates a new market with the provided grid pricing structure.
     pub fn new(grid: Grid) -> Self {
         Market {
             book: OrderBook::default(),
@@ -18,10 +20,12 @@ impl Market {
         }
     }
 
+    /// Returns the trade history keyed by period.
     pub fn trades(&self) -> &HashMap<Period, Vec<Order>> {
         self.book.trades()
     }
 
+    /// Creates an order from a house for the current period.
     pub fn create_order(&mut self, id: u32, order_type: OrderSide, volume: Energy) {
         let price = match order_type {
             OrderSide::Ask => self.grid.buy_price(),
@@ -30,6 +34,7 @@ impl Market {
         self.book.add_order(id, order_type, price, volume, None);
     }
 
+    /// Clears the market for the current period and settles trades.
     pub fn trade(&mut self) {
         let market_price: Price = self.calc_market_price();
         self.match_orders(market_price); // distribute order volumes fairly
@@ -50,6 +55,7 @@ impl Market {
         self.book.record_trades(Period::current());
     }
 
+    /// Calculates the market-clearing price based on current order volumes.
     fn calc_market_price(&self) -> Price {
         let max_vol = cmp::max(self.book.bid_vol(), self.book.ask_vol()).value() as f64;
         let min_vol = cmp::min(self.book.bid_vol(), self.book.ask_vol()).value() as f64;
@@ -69,6 +75,7 @@ impl Market {
         ))
     }
 
+    /// Matches orders using the market price and redistributes traded volume.
     fn match_orders(&mut self, market_price: Price) {
         let max_vol = cmp::max(self.book.bid_vol(), self.book.ask_vol()).value() as f64;
         let min_vol = cmp::min(self.book.bid_vol(), self.book.ask_vol()).value() as f64;

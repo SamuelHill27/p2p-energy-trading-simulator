@@ -25,6 +25,7 @@ pub struct UkPvSolarGenerationRecord {
     pub generation_wh: f64,
 }
 
+/// Loads a CSV dataset into a vector of deserialized records.
 pub fn load_dataset<T: DeserializeOwned>(dataset_path: &PathBuf) -> Vec<T> {
     let file = File::open(dataset_path).expect("Failed to open file");
     let mut rdr = ReaderBuilder::new().from_reader(file);

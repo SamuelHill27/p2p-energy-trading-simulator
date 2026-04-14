@@ -1,3 +1,5 @@
+//! Utility types for energy, price, and period handling.
+
 pub mod units {
     use serde::{Deserialize, Serialize};
     use std::cell::RefCell;
@@ -10,9 +12,12 @@ pub mod units {
     pub struct Energy(u32);
 
     impl Energy {
-        pub fn new(value: u32) -> Self {
+        /// Creates a new energy quantity.
+    pub fn new(value: u32) -> Self {
             Energy(value)
         }
+
+        /// Returns the underlying energy value.
         pub fn value(&self) -> u32 {
             self.0
         }
@@ -36,9 +41,12 @@ pub mod units {
     pub struct Price(u32);
 
     impl Price {
-        pub fn new(value: u32) -> Self {
+        /// Creates a new price quantity.
+    pub fn new(value: u32) -> Self {
             Price(value)
         }
+
+        /// Returns the underlying price value.
         pub fn value(&self) -> u32 {
             self.0
         }
@@ -58,18 +66,22 @@ pub mod units {
     }
 
     impl Period {
-        pub fn current() -> Self {
+        /// Returns the current period tracked by the simulation.
+    pub fn current() -> Self {
             CURRENT_PERIOD.with(|p| *p.borrow())
         }
 
+        /// Creates a new period value.
         pub fn new(value: u32) -> Self {
             Period(value)
         }
 
+        /// Returns the numeric index of the current period.
         pub fn value(&self) -> u32 {
             self.0
         }
 
+        /// Advances the global current period by one half-hour.
         pub(crate) fn increment() {
             CURRENT_PERIOD.with(|p| {
                 let mut period = p.borrow_mut();

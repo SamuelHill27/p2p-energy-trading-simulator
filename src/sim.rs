@@ -6,6 +6,7 @@ use crate::model::house::House;
 use crate::trading::market::Market;
 use crate::utils::units::Period;
 
+/// A simulation runner for periods, houses, and market interactions.
 pub struct Sim {
     periods: PeriodConfig,
     houses: Vec<House>,
@@ -13,6 +14,7 @@ pub struct Sim {
 }
 
 impl Sim {
+    /// Creates a new simulation instance.
     pub fn new(periods: PeriodConfig, houses: Vec<House>, market: Market) -> Self {
         Sim {
             periods,
@@ -21,6 +23,9 @@ impl Sim {
         }
     }
 
+    /// Runs the simulation over the configured periods.
+    ///
+    /// For each period, houses submit orders and the market clears trades.
     pub fn run(&mut self) {
         for _ in 0..self.periods.count() {
             for house in &mut self.houses {
@@ -37,6 +42,7 @@ impl Sim {
         }
     }
 
+    /// Generates analysis charts from the completed simulation results.
     pub fn generate_charts(&self) {
         let (trades, periods, grid) = (self.market.trades(), &self.periods, &self.market.grid);
         compounding_price_total::generate(&mut trades.clone(), periods, grid);
@@ -44,6 +50,8 @@ impl Sim {
         average_grid_demand_monthly::generate(trades, periods, grid);
     }
 
+    /// Prints debug output for the current simulation state.
+    #[cfg(debug_assertions)]
     fn debug_display(&self) {
         println!("--- {} ---", Period::current());
         println!(

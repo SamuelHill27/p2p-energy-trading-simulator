@@ -15,6 +15,7 @@ pub enum Grid {
 }
 
 impl Grid {
+    /// Returns the current buy price from the grid.
     pub fn buy_price(&self) -> Price {
         match self {
             Grid::Fixed { buy_price, .. } => *buy_price,
@@ -22,6 +23,7 @@ impl Grid {
         }
     }
 
+    /// Returns the current sell price from the grid.
     pub fn sell_price(&self) -> Price {
         match self {
             Grid::Fixed { sell_price, .. } => *sell_price,
@@ -31,14 +33,17 @@ impl Grid {
         }
     }
 
+    /// Computes the midpoint between the grid buy and sell prices.
     pub fn mid_price_value(&self) -> f64 {
         (self.buy_price().value() + self.sell_price().value()) as f64 / 2.0
     }
 
+    /// Calculates the total grid purchase price for the requested energy.
     pub fn buy(&self, energy: Energy) -> Price {
         Price::new(self.buy_price().value() * energy.value())
     }
 
+    /// Calculates the total grid sale revenue for the supplied energy.
     pub fn sell(&self, energy: Energy) -> Price {
         Price::new(self.sell_price().value() * energy.value())
     }
