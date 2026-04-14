@@ -2,12 +2,12 @@ use crate::config::loader::PeriodConfig;
 use crate::trading::{Order, OrderSide, grid::Grid};
 use crate::utils::units::Period;
 use charts_rs::{LineChart, THEME_GRAFANA};
-use chrono::NaiveDateTime;
 use std::collections::HashMap;
 
 /// Generates a chart comparing average grid demand per hour of day (0-23) with and without P2P trades.
 pub fn generate(trades: &HashMap<Period, Vec<Order>>, periods: &PeriodConfig, grid: &Grid) {
     let (with_p2p, without_p2p) = average_grid_demand_hourly(trades, periods, grid);
+
     let mut line_chart = LineChart::new_with_theme(
         vec![
             (
@@ -75,15 +75,6 @@ fn average_grid_demand_hourly(
             .filter(|order| order.side == OrderSide::Bid)
             .map(|order| order.volume.value())
             .sum();
-
-        if hour > 17 {
-            let start_date =
-                NaiveDateTime::parse_from_str("2013-01-01 00:00:00", "%Y-%m-%d %H:%M:%S").unwrap();
-            let datetime = period.datetime_from_start(&start_date);
-            orders.iter()
-            .filter(|order| order.side == OrderSide::Ask)
-            .for_each(|order| println!("Ask order: period={}, datetime={}, id={}, volume={}, price={}, matched={}; ", period.value(), datetime, order.id, order.volume.value(), order.price.value(), order.matched));
-        }
 
         // If no PV, force with_p2p = without_p2p
         if !any_pv {
