@@ -4,7 +4,7 @@ use crate::utils::units::Period;
 use charts_rs::{LineChart, THEME_GRAFANA};
 use std::collections::HashMap;
 
-/// Generates a chart comparing average grid demand per month (0-11) with and without P2P trades.
+// Generates a chart comparing average grid demand per month (0-11) with and without P2P trades.
 pub fn generate(trades: &HashMap<Period, Vec<Order>>, periods: &PeriodConfig, grid: &Grid) {
     let (with_p2p, without_p2p) = average_grid_demand_monthly(trades, periods, grid);
     let mut line_chart = LineChart::new_with_theme(
@@ -23,7 +23,7 @@ pub fn generate(trades: &HashMap<Period, Vec<Order>>, periods: &PeriodConfig, gr
     .unwrap();
 }
 
-/// Returns (with_p2p, without_p2p) average grid demand per month (0-11).
+// Returns (with_p2p, without_p2p) average grid demand per month (0-11).
 fn average_grid_demand_monthly(
     trades: &HashMap<Period, Vec<Order>>,
     periods: &PeriodConfig,

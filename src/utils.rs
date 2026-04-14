@@ -77,8 +77,8 @@ pub mod units {
             });
         }
 
-        /// Returns the date and time corresponding to this period, given a start date.
-        /// Each period is assumed to be a half-hour (30 minutes) interval from the start.
+        // Returns the date and time corresponding to this period, given a start date.
+        // Each period is assumed to be a half-hour (30 minutes) interval from the start.
         pub fn datetime_from_start(&self, start: &chrono::NaiveDateTime) -> chrono::NaiveDateTime {
             use chrono::Duration;
             *start + Duration::minutes((self.0 as i64) * 30)

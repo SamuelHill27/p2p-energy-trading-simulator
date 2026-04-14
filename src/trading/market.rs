@@ -109,7 +109,7 @@ impl Market {
         }
         self.book.remove_empty_orders();
 
-        // Not sure if there are scenarios where there ends up being rounding error after distributing volumes
+        // Ensure no rounding errors remain after distributing volumes
         assert!(max_vol as u32 - self.book.total_side_volume(dominant_side).value() == 0);
     }
 }

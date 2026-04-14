@@ -5,7 +5,7 @@ use charts_rs::{LineChart, THEME_GRAFANA};
 use chrono::NaiveDateTime;
 use std::collections::HashMap;
 
-/// Generates a chart comparing average grid demand per hour of day (0-23) with and without P2P trades.
+// Generates a chart comparing average grid demand per hour of day (0-23) with and without P2P trades.
 pub fn generate(trades: &HashMap<Period, Vec<Order>>, periods: &PeriodConfig, grid: &Grid) {
     let (with_p2p, without_p2p) = average_grid_demand_hourly(trades, periods, grid);
     let mut line_chart = LineChart::new_with_theme(
@@ -41,7 +41,7 @@ pub fn generate(trades: &HashMap<Period, Vec<Order>>, periods: &PeriodConfig, gr
     .unwrap();
 }
 
-/// Returns (with_p2p, without_p2p) average grid demand per hour of day (0-23).
+// Returns (with_p2p, without_p2p) average grid demand per hour of day (0-23).
 fn average_grid_demand_hourly(
     trades: &HashMap<Period, Vec<Order>>,
     periods: &PeriodConfig,
@@ -68,13 +68,6 @@ fn average_grid_demand_hourly(
             .map(|order| order.volume.value())
             .sum();
 
-        // let p2p_supplied: u32 = orders.iter()
-        //     .filter(|order| order.side == OrderSide::Bid && order.matched)
-        //     .map(|order| order.volume.value())
-        //     .sum();
-
-        // let total_demand: u32 = grid_supplied + p2p_supplied;
-
         // Without P2P: grid supplies all demand (all Bid orders)
         let total_demand: u32 = orders
             .iter()
@@ -83,7 +76,6 @@ fn average_grid_demand_hourly(
             .sum();
 
         if hour > 17 {
-            // println!("Period {}: total_demand={}, grid_supplied={}, any_pv={}", period.value(), total_demand, grid_supplied, any_pv);
             let start_date =
                 NaiveDateTime::parse_from_str("2013-01-01 00:00:00", "%Y-%m-%d %H:%M:%S").unwrap();
             let datetime = period.datetime_from_start(&start_date);
