@@ -57,7 +57,7 @@ fn line_chart(
     );
 
     // Set chart title
-    line_chart.title_text = format!("Average {} Prices Per Month", order_side);
+    line_chart.title_text = format!("Compounding {} Prices Per Month", order_side);
     line_chart.legend_margin = Some(charts_rs::Box {
         top: line_chart.title_height + 10.0, // Add extra space below the title
         bottom: 10.0,
