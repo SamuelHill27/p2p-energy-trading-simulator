@@ -8,20 +8,24 @@ use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::PathBuf;
 
+/// Configuration describing the number of simulation periods.
 pub struct PeriodConfig {
     start: i64,
     end: i64,
 }
 
 impl PeriodConfig {
+    /// Returns the number of half-hour periods in the configured range.
     pub fn count(&self) -> usize {
         (self.end - self.start) as usize
     }
 
+    /// Returns the number of days in the configured period range.
     pub fn _days(&self) -> usize {
         self.count() / 48
     }
 
+    /// Returns the number of months in the configured period range.
     pub fn _months(&self) -> usize {
         self._days() / 30
     }
@@ -37,6 +41,7 @@ struct NeighborhoodConfig {
 }
 
 impl NeighborhoodConfig {
+    /// Loads house-level consumption and generation datasets.
     fn load_house_data(&self) -> Vec<HouseData> {
         let mut consumption_datasets = self.select_datasets(
             &self.energy_consumptions_dir,
@@ -67,6 +72,7 @@ impl NeighborhoodConfig {
             .collect::<Vec<_>>()
     }
 
+    /// Selects dataset files from a directory, optionally shuffling.
     fn select_datasets(&self, datasets_dir: &String, num_of_datasets: usize) -> Vec<PathBuf> {
         let mut datasets: Vec<_> = fs::read_dir(datasets_dir)
             .unwrap()
@@ -98,7 +104,9 @@ pub struct Config {
     neighborhood: NeighborhoodConfig,
 }
 
+/// Top-level configuration for the energy trading simulation.
 impl Config {
+    /// Loads house definitions from configured datasets.
     pub fn load_houses(&self) -> Vec<House> {
         use chrono::NaiveDateTime;
         let house_data = self.neighborhood.load_house_data();
@@ -117,6 +125,7 @@ impl Config {
         houses
     }
 
+    /// Builds the period configuration from start and end timestamps.
     pub fn period_config(&self) -> PeriodConfig {
         let start_date =
             NaiveDateTime::parse_from_str(self.start_period.as_str(), "%Y-%m-%d %H:%M:%S").unwrap();

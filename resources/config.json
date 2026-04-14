@@ -4,7 +4,7 @@
   "grid": {
     "type": "fixed",
     "buy_price": 25,
-    "sell_price": 12
+    "sell_price": 7
   },
   "neighborhood": {
     "energy_consumptions_dir": "resources/raw/LCL_energy_consumption/greater_london_2013",

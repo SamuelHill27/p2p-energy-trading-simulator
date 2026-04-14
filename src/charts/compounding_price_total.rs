@@ -6,6 +6,7 @@ use crate::utils::units::Period;
 use charts_rs::{BarChart, LineChart, THEME_GRAFANA};
 use std::collections::HashMap;
 
+/// Generates compounding price charts for both buy and sell orders.
 pub fn generate(trades: &mut HashMap<Period, Vec<Order>>, _periods: &PeriodConfig, grid: &Grid) {
     let line_chart_bid = line_chart(trades, grid, OrderSide::Bid);
     std::fs::write(
@@ -34,6 +35,7 @@ pub fn generate(trades: &mut HashMap<Period, Vec<Order>>, _periods: &PeriodConfi
     .unwrap();
 }
 
+/// Builds a line chart of compounding prices for the selected side.
 fn line_chart(
     trades: &mut HashMap<Period, Vec<Order>>,
     grid: &Grid,
@@ -68,6 +70,7 @@ fn line_chart(
     line_chart
 }
 
+/// Builds a bar chart comparing compounding gains with and without the market.
 fn bar_chart(
     trades: &mut HashMap<Period, Vec<Order>>,
     grid: &Grid,
@@ -93,6 +96,7 @@ fn bar_chart(
     bar_chart
 }
 
+/// Computes compounding period prices for market trades.
 fn compounding_prices(trades: &HashMap<Period, Vec<Order>>, order_side: OrderSide) -> Vec<f32> {
     let mut total_period_prices = trades
         .iter()
@@ -111,6 +115,7 @@ fn compounding_prices(trades: &HashMap<Period, Vec<Order>>, order_side: OrderSid
         .collect::<Vec<f32>>()
 }
 
+/// Computes compounding period prices using grid-only pricing.
 fn compounding_prices_no_market(
     trades: &mut HashMap<Period, Vec<Order>>,
     order_side: OrderSide,
@@ -135,6 +140,7 @@ fn compounding_prices_no_market(
         .collect::<Vec<f32>>()
 }
 
+/// Returns the total annual gain for market-based trades.
 fn year_gain(trades: &HashMap<Period, Vec<Order>>, order_side: OrderSide) -> f32 {
     trades
         .iter()
@@ -143,6 +149,7 @@ fn year_gain(trades: &HashMap<Period, Vec<Order>>, order_side: OrderSide) -> f32
         / 1000.0
 }
 
+/// Returns the total annual gain when grid pricing is used instead of market matching.
 fn year_gain_no_market(
     trades: &mut HashMap<Period, Vec<Order>>,
     order_side: OrderSide,

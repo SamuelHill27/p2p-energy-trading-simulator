@@ -147,10 +147,10 @@ Grid Demand without P2P
 </text>
 </g>
 <g>
-<path d="M 73.1 93.3 L 95.3 163.7 L 117.5 206.6 L 139.7 221.9 L 161.9 227.6 L 184.1 222.1 L 206.4 214.8 L 228.6 241.3 L 250.8 234.4 L 273 253.6 L 295.2 280 L 317.4 288.1 L 339.6 280.5 L 361.8 278.5 L 384 270.2 L 406.2 262.9 L 428.4 233.2 L 450.6 161.8 L 472.9 102.8 L 495.1 81.6 L 517.3 88.7 L 539.5 106 L 561.7 128.7 L 583.9 172.9" stroke-width="2" fill="none" stroke="#7EB26D"/>
-<circle cx="73.1" cy="93.3" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="95.3" cy="163.7" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
-<circle cx="117.5" cy="206.6" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<path d="M 73.1 190.9 L 95.3 214.7 L 117.5 227.5 L 139.7 221.9 L 161.9 227.6 L 184.1 222.1 L 206.4 214.8 L 228.6 241.3 L 250.8 234.4 L 273 253.6 L 295.2 280 L 317.4 288.1 L 339.6 280.5 L 361.8 278.5 L 384 270.2 L 406.2 262.9 L 428.4 233.2 L 450.6 161.8 L 472.9 102.8 L 495.1 81.6 L 517.3 88.7 L 539.5 106 L 561.7 128.7 L 583.9 172.9" stroke-width="2" fill="none" stroke="#7EB26D"/>
+<circle cx="73.1" cy="190.9" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="95.3" cy="214.7" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="117.5" cy="227.5" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
 <circle cx="139.7" cy="221.9" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
 <circle cx="161.9" cy="227.6" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
 <circle cx="184.1" cy="222.1" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
@@ -174,10 +174,10 @@ Grid Demand without P2P
 <circle cx="583.9" cy="172.9" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
 </g>
 <g>
-<path d="M 73.1 93.3 L 95.3 163.7 L 117.5 206.6 L 139.7 221.9 L 161.9 227.6 L 184.1 221.9 L 206.4 211.2 L 228.6 223.9 L 250.8 198.1 L 273 201.8 L 295.2 216.2 L 317.4 214 L 339.6 207.9 L 361.8 212 L 384 213.5 L 406.2 216.6 L 428.4 196.8 L 450.6 143.6 L 472.9 100 L 495.1 81.5 L 517.3 88.7 L 539.5 106 L 561.7 128.7 L 583.9 172.9" stroke-width="2" fill="none" stroke="#EAB839"/>
-<circle cx="73.1" cy="93.3" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="95.3" cy="163.7" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
-<circle cx="117.5" cy="206.6" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<path d="M 73.1 190.9 L 95.3 214.7 L 117.5 227.5 L 139.7 221.9 L 161.9 227.6 L 184.1 221.9 L 206.4 211.2 L 228.6 223.9 L 250.8 198.1 L 273 201.8 L 295.2 216.2 L 317.4 214 L 339.6 207.9 L 361.8 212 L 384 213.5 L 406.2 216.6 L 428.4 196.8 L 450.6 143.6 L 472.9 100 L 495.1 81.5 L 517.3 88.7 L 539.5 106 L 561.7 128.7 L 583.9 172.9" stroke-width="2" fill="none" stroke="#EAB839"/>
+<circle cx="73.1" cy="190.9" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="95.3" cy="214.7" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="117.5" cy="227.5" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
 <circle cx="139.7" cy="221.9" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
 <circle cx="161.9" cy="227.6" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
 <circle cx="184.1" cy="221.9" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
