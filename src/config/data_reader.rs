@@ -1,13 +1,12 @@
+use csv::ReaderBuilder;
 use serde::{Deserialize, de::DeserializeOwned};
 use std::fs::File;
 use std::path::PathBuf;
-use csv::ReaderBuilder;
-
 
 #[derive(Debug, Deserialize)]
 pub struct LCLEnergyConsumptionRecord {
     #[serde(rename = "LCLid")]
-    pub lclid: String,
+    pub _lclid: String,
     #[serde(rename = "stdorToU")]
     pub _std_or_tou: String,
     #[serde(rename = "DateTime")]
@@ -29,7 +28,7 @@ pub struct UkPvSolarGenerationRecord {
 pub fn load_dataset<T: DeserializeOwned>(dataset_path: &PathBuf) -> Vec<T> {
     let file = File::open(dataset_path).expect("Failed to open file");
     let mut rdr = ReaderBuilder::new().from_reader(file);
-    
+
     let mut records = Vec::new();
     for result in rdr.deserialize() {
         match result {

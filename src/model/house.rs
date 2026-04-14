@@ -19,19 +19,29 @@ impl House {
             energy_production_schedule,
         }
     }
-    
+
     pub fn current_energy_production(&self) -> Energy {
-        match self.energy_production_schedule.get(Period::current().value() as usize) {
+        match self
+            .energy_production_schedule
+            .get(Period::current().value() as usize)
+        {
             Some(energy) => *energy,
             None => Energy::new(0),
         }
     }
-    
+
     pub fn current_energy_consumption(&self) -> Energy {
-        match self.energy_consumption_schedule.get(Period::current().value() as usize) {
+        match self
+            .energy_consumption_schedule
+            .get(Period::current().value() as usize)
+        {
             Some(energy) => *energy,
             None => {
-                panic!("No energy consumption data for current period: {}, house: {}", Period::current().value(), self.id);
+                panic!(
+                    "No energy consumption data for current period: {}, house: {}",
+                    Period::current().value(),
+                    self.id
+                );
             }
         }
     }

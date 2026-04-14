@@ -61,7 +61,7 @@ pub mod units {
         pub fn current() -> Self {
             CURRENT_PERIOD.with(|p| *p.borrow())
         }
-        
+
         pub fn new(value: u32) -> Self {
             Period(value)
         }
@@ -75,6 +75,13 @@ pub mod units {
                 let mut period = p.borrow_mut();
                 *period = Period(period.value() + 1);
             });
+        }
+
+        /// Returns the date and time corresponding to this period, given a start date.
+        /// Each period is assumed to be a half-hour (30 minutes) interval from the start.
+        pub fn datetime_from_start(&self, start: &chrono::NaiveDateTime) -> chrono::NaiveDateTime {
+            use chrono::Duration;
+            *start + Duration::minutes((self.0 as i64) * 30)
         }
     }
 
