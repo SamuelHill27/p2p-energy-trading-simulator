@@ -1,49 +1,34 @@
+mod charts;
+mod config;
 mod model;
-mod sim_config;
-mod sim_controller;
-mod trade;
+mod sim;
+mod trading;
 mod utils;
 
-use sim_config::SimConfig;
-use sim_controller::SimController;
+use config::loader::Config;
+use sim::Sim;
+use trading::market::Market;
 
-use model::*;
-use utils::units::*;
+use std::fs;
 
+/// Entry point for the energy trading simulation executable.
+///
+/// This function builds the simulation, runs it, and generates chart outputs.
 fn main() {
-    start_sim();
+    let mut sim = build_sim("resources/config.json");
+    sim.run();
+    sim.generate_charts();
 }
 
-fn start_sim() {
-    let sim_config = SimConfig { frequency: 1000 };
-
-    let appliances = vec![
-        appliance::Appliance::new("dishwasher".to_string(), Energy::new(10.0), vec![10, 11]),
-        appliance::Appliance::new(
-            "washing machine".to_string(),
-            Energy::new(20.0),
-            vec![11, 12],
-        ),
-    ];
-    let solar_panels = Option::Some(vec![solar_panel::SolarPanel::new(Energy::new(10.0), 10.0)]);
-    let house1 = house::House::new(appliances, solar_panels);
-
-    let appliances = vec![
-        appliance::Appliance::new("oven".to_string(), Energy::new(5.0), vec![11]),
-        appliance::Appliance::new(
-            "heater".to_string(),
-            Energy::new(15.0),
-            vec![19, 20, 21, 22],
-        ),
-    ];
-    let house2 = house::House::new(appliances, None);
-
-    let world = world::World::new(
-        grid::Grid::new(Price::new(0.06), Price::new(0.03)),
-        environment::Environment::new(0.0, 0.0),
-    );
-
-    let mut sim = SimController::new(sim_config, vec![house1, house2], world);
-
-    sim.run();
+/// Builds a simulation from a JSON configuration file.
+///
+/// # Arguments
+///
+/// * `config_path` - Path to the JSON configuration file.
+fn build_sim(config_path: &str) -> Sim {
+    let json_string = fs::read_to_string(config_path).unwrap();
+    let config: Config = serde_json::from_str(&json_string).unwrap();
+    let houses = config.load_houses();
+    let market = Market::new(config.grid.clone());
+    Sim::new(config.period_config(), houses, market)
 }

@@ -1,0 +1,128 @@
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="600" height="400" fill="#1F1D1D"/>
+<g>
+<line stroke-width="2" x1="109.5" y1="15" x2="134.5" y2="15" stroke="#7EB26D"/>
+<circle cx="122" cy="15" r="5.5" stroke-width="2" stroke="#7EB26D" fill="#7EB26D"/>
+<text font-size="14" x="137.5" y="19" font-family="Roboto" fill="#D8D9DA">
+Grid Demand with P2P
+</text>
+</g>
+<g>
+<line stroke-width="2" x1="290.5" y1="15" x2="315.5" y2="15" stroke="#EAB839"/>
+<circle cx="303" cy="15" r="5.5" stroke-width="2" stroke="#EAB839" fill="#EAB839"/>
+<text font-size="14" x="318.5" y="19" font-family="Roboto" fill="#D8D9DA">
+Grid Demand without P2P
+</text>
+</g>
+<g stroke="#444343">
+<line stroke-width="1" x1="74" y1="27" x2="595" y2="27"/><line stroke-width="1" x1="74" y1="83.3" x2="595" y2="83.3"/><line stroke-width="1" x1="74" y1="139.7" x2="595" y2="139.7"/><line stroke-width="1" x1="74" y1="196" x2="595" y2="196"/><line stroke-width="1" x1="74" y1="252.3" x2="595" y2="252.3"/><line stroke-width="1" x1="74" y1="308.7" x2="595" y2="308.7"/>
+</g>
+<g>
+
+<text font-size="14" x="2" y="32" font-family="Roboto" fill="#B9B8CE">
+5.8k units
+</text>
+<text font-size="14" x="2" y="88.3" font-family="Roboto" fill="#B9B8CE">
+4.8k units
+</text>
+<text font-size="14" x="2" y="144.7" font-family="Roboto" fill="#B9B8CE">
+3.8k units
+</text>
+<text font-size="14" x="2" y="201" font-family="Roboto" fill="#B9B8CE">
+2.9k units
+</text>
+<text font-size="14" x="2" y="257.3" font-family="Roboto" fill="#B9B8CE">
+1.9k units
+</text>
+<text font-size="14" x="6" y="313.7" font-family="Roboto" fill="#B9B8CE">
+960 units
+</text>
+<text font-size="14" x="22" y="370" font-family="Roboto" fill="#B9B8CE">
+0 units
+</text>
+</g>
+<g>
+<g stroke="#B9B8CE">
+<line stroke-width="1" x1="74" y1="365" x2="595" y2="365"/>
+<line stroke-width="1" x1="74" y1="365" x2="74" y2="370"/>
+<line stroke-width="1" x1="117.4" y1="365" x2="117.4" y2="370"/>
+<line stroke-width="1" x1="160.8" y1="365" x2="160.8" y2="370"/>
+<line stroke-width="1" x1="204.2" y1="365" x2="204.2" y2="370"/>
+<line stroke-width="1" x1="247.7" y1="365" x2="247.7" y2="370"/>
+<line stroke-width="1" x1="291.1" y1="365" x2="291.1" y2="370"/>
+<line stroke-width="1" x1="334.5" y1="365" x2="334.5" y2="370"/>
+<line stroke-width="1" x1="377.9" y1="365" x2="377.9" y2="370"/>
+<line stroke-width="1" x1="421.3" y1="365" x2="421.3" y2="370"/>
+<line stroke-width="1" x1="464.8" y1="365" x2="464.8" y2="370"/>
+<line stroke-width="1" x1="508.2" y1="365" x2="508.2" y2="370"/>
+<line stroke-width="1" x1="551.6" y1="365" x2="551.6" y2="370"/>
+<line stroke-width="1" x1="595" y1="365" x2="595" y2="370"/>
+</g>
+<text font-size="14" x="89.2" y="384" font-family="Roboto" fill="#B9B8CE">
+01
+</text>
+<text font-size="14" x="131.1" y="384" font-family="Roboto" fill="#B9B8CE">
+02
+</text>
+<text font-size="14" x="175" y="384" font-family="Roboto" fill="#B9B8CE">
+03
+</text>
+<text font-size="14" x="218" y="384" font-family="Roboto" fill="#B9B8CE">
+04
+</text>
+<text font-size="14" x="261.4" y="384" font-family="Roboto" fill="#B9B8CE">
+05
+</text>
+<text font-size="14" x="304.8" y="384" font-family="Roboto" fill="#B9B8CE">
+06
+</text>
+<text font-size="14" x="348.2" y="384" font-family="Roboto" fill="#B9B8CE">
+07
+</text>
+<text font-size="14" x="391.6" y="384" font-family="Roboto" fill="#B9B8CE">
+08
+</text>
+<text font-size="14" x="435.5" y="384" font-family="Roboto" fill="#B9B8CE">
+09
+</text>
+<text font-size="14" x="478.5" y="384" font-family="Roboto" fill="#B9B8CE">
+10
+</text>
+<text font-size="14" x="523.4" y="384" font-family="Roboto" fill="#B9B8CE">
+11
+</text>
+<text font-size="14" x="565.3" y="384" font-family="Roboto" fill="#B9B8CE">
+12
+</text>
+</g>
+<g>
+<path d="M 95.7 39.2 L 139.1 71.1 L 182.5 95.4 L 226 185.2 L 269.4 222.4 L 312.8 236.3 L 356.2 263.7 L 399.6 252 L 443 213.2 L 486.5 173.4 L 529.9 137.5 L 573.3 94.6" stroke-width="2" fill="none" stroke="#7EB26D"/>
+<circle cx="95.7" cy="39.2" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="139.1" cy="71.1" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="182.5" cy="95.4" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="226" cy="185.2" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="269.4" cy="222.4" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="312.8" cy="236.3" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="356.2" cy="263.7" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="399.6" cy="252" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="443" cy="213.2" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="486.5" cy="173.4" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="529.9" cy="137.5" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+<circle cx="573.3" cy="94.6" r="2" stroke-width="2" stroke="#7EB26D" fill="#1F1D1D"/>
+</g>
+<g>
+<path d="M 95.7 31 L 139.1 55 L 182.5 73.1 L 226 144 L 269.4 182.6 L 312.8 195.4 L 356.2 216.8 L 399.6 214 L 443 183 L 486.5 151.7 L 529.9 117 L 573.3 84.3" stroke-width="2" fill="none" stroke="#EAB839"/>
+<circle cx="95.7" cy="31" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="139.1" cy="55" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="182.5" cy="73.1" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="226" cy="144" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="269.4" cy="182.6" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="312.8" cy="195.4" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="356.2" cy="216.8" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="399.6" cy="214" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="443" cy="183" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="486.5" cy="151.7" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="529.9" cy="117" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+<circle cx="573.3" cy="84.3" r="2" stroke-width="2" stroke="#EAB839" fill="#1F1D1D"/>
+</g>
+</svg>
