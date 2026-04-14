@@ -1,13 +1,12 @@
 use crate::utils::units::{Energy, Period, Price};
-
 use crate::trading::grid::Grid;
-use crate::trading::order_book::{OrderBook, OrderSide};
+use crate::trading::order_book::{Order, OrderBook, OrderSide};
 
 use std::cmp;
-
+use std::collections::HashMap;
 
 pub struct Market {
-    pub book: OrderBook,
+    book: OrderBook,
     pub grid: Grid,
 }
 
@@ -19,37 +18,36 @@ impl Market {
         }
     }
 
-    pub fn progress(&mut self, hour: Period) {
-        self.grid.progress(hour);
+    pub fn trades(&self) -> &HashMap<Period, Vec<Order>> {
+        self.book.trades()
     }
 
     pub fn create_order(&mut self, id: u32, order_type: OrderSide, volume: Energy) {
         let price = match order_type {
-            OrderSide::Ask => self.grid.buy_price,
-            OrderSide::Bid => self.grid.sell_price,
+            OrderSide::Ask => self.grid.buy_price(),
+            OrderSide::Bid => self.grid.sell_price(),
         };
         self.book.add_order(id, order_type, price, volume, None);
     }
 
-    pub fn trade(&mut self, period: Period) {
+    pub fn trade(&mut self) {
         let market_price: Price = self.calc_market_price();
         self.match_orders(market_price); // distribute order volumes fairly
 
         // make the trades
-        for order in self.book.get_orders_mut() {
+        for order in self.book.orders_mut() {
             match order.matched {
                 true => {
-                    order.set_price(Price::new(market_price.value() * order.volume.value()));
+                    order.price = Price::new(market_price.value() * order.volume.value());
                 }
                 false => match order.side {
-                    OrderSide::Ask => order.set_price(self.grid.sell(order.volume)),
-                    OrderSide::Bid => order.set_price(self.grid.buy(order.volume)),
+                    OrderSide::Ask => order.price = self.grid.sell(order.volume),
+                    OrderSide::Bid => order.price = self.grid.buy(order.volume),
                 },
             }
         }
 
-        let trades = std::mem::take(&mut self.book.orders);
-        self.book.record_trades(period, trades);
+        self.book.record_trades(Period::current());
     }
 
     fn calc_market_price(&self) -> Price {
@@ -62,19 +60,20 @@ impl Market {
         };
 
         let mid_price_bias =
-            (self.grid.buy_price.value() as f64 - self.grid.mid_price_value()) * demand;
+            (self.grid.buy_price().value() as f64 - self.grid.mid_price_value()) * demand;
         let market_price = self.grid.mid_price_value() + mid_price_bias;
 
         Price::new(cmp::min(
             market_price.round() as u32,
-            self.grid.buy_price.value() - 1,
+            self.grid.buy_price().value() - 1, // minus 1 to ensure market price is always below grid price
         ))
     }
 
     fn match_orders(&mut self, market_price: Price) {
         let max_vol = cmp::max(self.book.bid_vol(), self.book.ask_vol()).value() as f64;
         let min_vol = cmp::min(self.book.bid_vol(), self.book.ask_vol()).value() as f64;
-        let proportionate_vol = |vol: Energy| (vol.value() as f64 / max_vol) * min_vol;
+        // Calculate volume to be traded on the market
+        let proportion_vol = |vol: Energy| (vol.value() as f64 / max_vol) * min_vol;
 
         let dominant_side = match self.book.ask_vol() > self.book.bid_vol() {
             true => OrderSide::Ask,
@@ -82,28 +81,24 @@ impl Market {
         };
 
         let mut new_order_details: Vec<(u32, u32)> = Vec::new();
-        let mut orders_to_remove: Vec<u32> = Vec::new();
-        for order in self.book.get_orders_mut() {
+        for order in self.book.orders_mut() {
             match order.side == dominant_side {
                 true => {
-                    let new_volume = proportionate_vol(order.volume).round() as u32;
-                    order.set_volume(Energy::new(order.volume.value() - new_volume));
-                    // edge case to handle volume for bid and ask being equal
-                    if order.volume.value() == 0 {
-                        orders_to_remove.push(order.id);
-                    }
-                    // Are there orders to match against
+                    let new_volume = proportion_vol(order.volume).round() as u32;
+                    order.volume = Energy::new(order.volume.value() - new_volume);
+                    // Are there orders to match against?
                     if new_volume > 0 {
                         new_order_details.push((order.id, new_volume));
                     }
                 }
                 false => {
-                    order.set_price(market_price);
-                    order.set_matched(true);
+                    order.price = market_price;
+                    order.matched = true;
                 }
             }
         }
-        for (id, volume) in new_order_details { // add new orders
+        for (id, volume) in new_order_details {
+            // add new orders
             self.book.add_order(
                 id,
                 dominant_side,
@@ -118,129 +113,3 @@ impl Market {
         assert!(max_vol as u32 - self.book.total_side_volume(dominant_side).value() == 0);
     }
 }
-
-// #[cfg(test)]
-// mod tests {
-//     use super::*;
-
-//     static SCENARIOS: [fn() -> Market; 7] = [
-//         scenario_1, scenario_2, scenario_3, scenario_4, scenario_5, scenario_6, scenario_7,
-//     ];
-
-//     fn new_test_market(grid_buy_price: u32, grid_sell_price: u32) -> Market {
-//         let json_grid: &str = r#"
-//             { "grid": { "buy_schedule": [{}], "sell_schedule": [{}], "buy_price": {}, "sell_price": {} } }
-//         "#;
-//         let grid = serde_json::from_str(json_grid).unwrap();
-//         Market::new(grid)
-//     }
-
-//     #[test]
-//     fn test_calc_market_price() {
-//         let scenario_values = [13, 14, 15, 15, 19, 19, 16];
-//         for (idx, scenario) in SCENARIOS.iter().enumerate() {
-//             let market = scenario();
-//             assert!(
-//                 market.calc_market_price().value() == scenario_values[idx],
-//                 "market price: {}",
-//                 market.calc_market_price().value()
-//             );
-//         }
-//     }
-
-//     #[test]
-//     fn test_match_orders() {
-//         for scenario in SCENARIOS.iter() {
-//             let mut market = scenario();
-//             market.match_orders(market.calc_market_price());
-//         }
-
-//         let display = |market: &Market| {
-//             println!("Orders:");
-//             for order in &market.book.orders {
-//                 println!("{:?}", order);
-//             }
-//             println!("Trades:");
-//             for trade in &market.book.trades {
-//                 println!("{:?}", trade);
-//             }
-//         };
-
-//         let mut market = SCENARIOS[4]();
-//         market.match_orders(market.calc_market_price());
-//         display(&market);
-
-//         println!("---");
-
-//         let mut market = SCENARIOS[6]();
-//         market.match_orders(market.calc_market_price());
-//         display(&market);
-//     }
-
-//     fn scenario_1() -> Market {
-//         new_test_market()
-//     }
-
-//     fn scenario_2() -> Market {
-//         Market::new(
-//             OrderBook::default(),
-//             Grid::new(Price::new(17), Price::new(10)),
-//         )
-//     }
-
-//     fn scenario_3() -> Market {
-//         let mut market = Market::new(
-//             OrderBook::default(),
-//             Grid::new(Price::new(20), Price::new(10)),
-//         );
-//         market.create_order(0, OrderSide::Ask, Energy::new(20));
-//         market.create_order(1, OrderSide::Bid, Energy::new(20));
-//         market
-//     }
-
-//     fn scenario_4() -> Market {
-//         let mut market = Market::new(
-//             OrderBook::default(),
-//             Grid::new(Price::new(20), Price::new(10)),
-//         );
-//         market.create_order(0, OrderSide::Ask, Energy::new(20));
-//         market.create_order(1, OrderSide::Bid, Energy::new(0));
-//         market
-//     }
-
-//     fn scenario_5() -> Market {
-//         let mut market = Market::new(
-//             OrderBook::default(),
-//             Grid::new(Price::new(20), Price::new(10)),
-//         );
-//         market.create_order(0, OrderSide::Ask, Energy::new(50));
-//         market.create_order(1, OrderSide::Ask, Energy::new(20));
-//         market.create_order(2, OrderSide::Bid, Energy::new(10));
-//         market
-//     }
-
-//     fn scenario_6() -> Market {
-//         let mut market = Market::new(
-//             OrderBook::default(),
-//             Grid::new(Price::new(20), Price::new(10)),
-//         );
-//         market.create_order(0, OrderSide::Ask, Energy::new(500));
-//         market.create_order(1, OrderSide::Bid, Energy::new(10));
-//         market
-//     }
-
-//     fn scenario_7() -> Market {
-//         let mut market = Market::new(
-//             OrderBook::default(),
-//             Grid::new(Price::new(20), Price::new(10)),
-//         );
-//         market.create_order(0, OrderSide::Ask, Energy::new(15));
-//         market.create_order(1, OrderSide::Ask, Energy::new(60));
-//         market.create_order(2, OrderSide::Ask, Energy::new(29));
-//         market.create_order(3, OrderSide::Bid, Energy::new(10));
-//         market.create_order(4, OrderSide::Bid, Energy::new(6));
-//         market.create_order(5, OrderSide::Bid, Energy::new(40));
-//         market.create_order(6, OrderSide::Bid, Energy::new(20));
-//         market
-//     }
-// }

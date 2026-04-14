@@ -1,8 +1,9 @@
 pub mod units {
     use serde::{Deserialize, Serialize};
-    use std::{fmt::Display, iter::Sum};
+    use std::cell::RefCell;
+    use std::fmt::Display;
+    use std::iter::Sum;
 
-    
     #[derive(
         Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize, Default,
     )]
@@ -29,7 +30,9 @@ pub mod units {
         }
     }
 
-    #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize, Default)]
+    #[derive(
+        Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize, Default,
+    )]
     pub struct Price(u32);
 
     impl Price {
@@ -50,18 +53,34 @@ pub mod units {
     #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
     pub struct Period(u32);
 
+    thread_local! {
+        static CURRENT_PERIOD: RefCell<Period> = RefCell::new(Period(0));
+    }
+
     impl Period {
+        pub fn current() -> Self {
+            CURRENT_PERIOD.with(|p| *p.borrow())
+        }
+        
         pub fn new(value: u32) -> Self {
             Period(value)
         }
+
         pub fn value(&self) -> u32 {
             self.0
+        }
+
+        pub(crate) fn increment() {
+            CURRENT_PERIOD.with(|p| {
+                let mut period = p.borrow_mut();
+                *period = Period(period.value() + 1);
+            });
         }
     }
 
     impl Display for Period {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "{} hours", self.0)
+            write!(f, "{} half-hours", self.0)
         }
     }
 }

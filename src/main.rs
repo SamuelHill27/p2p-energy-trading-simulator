@@ -1,4 +1,4 @@
-mod chart;
+mod charts;
 mod config;
 mod model;
 mod sim;
@@ -11,7 +11,6 @@ use trading::market::Market;
 
 use std::fs;
 
-
 fn main() {
     let mut sim = build_sim("resources/config.json");
     sim.run();
@@ -22,6 +21,6 @@ fn build_sim(config_path: &str) -> Sim {
     let json_string = fs::read_to_string(config_path).unwrap();
     let config: Config = serde_json::from_str(&json_string).unwrap();
     let houses = config.load_houses();
-    let market = Market::new(config.grid);
-    Sim::new(config.periods, houses, market)
+    let market = Market::new(config.grid.clone());
+    Sim::new(config.period_config(), houses, market)
 }
